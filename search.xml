@@ -23,4 +23,40 @@
     <url>/2023/12/26/title1/</url>
     <content><![CDATA[<h1 id="Title-1"><a href="#Title-1" class="headerlink" title="Title 1"></a>Title 1</h1>]]></content>
   </entry>
+  <entry>
+    <title>P0总结</title>
+    <url>/2023/12/30/CO/P0/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>P3总结</title>
+    <url>/2023/12/30/CO/P3/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>P1总结</title>
+    <url>/2023/12/30/CO/P1/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>P2总结</title>
+    <url>/2023/12/30/CO/P2/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>Pre总结</title>
+    <url>/2023/12/30/CO/Pre/</url>
+    <content><![CDATA[<h1 id="Pre总结"><a href="#Pre总结" class="headerlink" title="Pre总结"></a>Pre总结</h1><h3 id="课上内容"><a href="#课上内容" class="headerlink" title="课上内容"></a>课上内容</h3><p>&ensp;&ensp;&ensp;&ensp;个人认为Pre是所有上机题目里面最难的了（假期没有好好预习:cry:）</p>
+<p>&ensp;&ensp;&ensp;&ensp;Pre包含对Logisim、Verilog和MIPS三个大环节的考察。Logisim和Verilog集中考察有限状态机的搭建，MIPS只需要写一个简单的程序就行（我不会数组不会分支不会循环什么都不会:cry:）</p>
+<h3 id="准备内容"><a href="#准备内容" class="headerlink" title="准备内容"></a>准备内容</h3><p>&ensp;&ensp;&ensp;&ensp;Pre整体难度不高，主要是考察基础知识。因此建议熟悉有限状态机的搭建，并提前熟悉Logisim的用法和Verilog与MIPS的基础语法。Pre之前要是准备得好的话之后的P0、P1和P2会轻松不少。</p>
+<p>&ensp;&ensp;&ensp;&ensp;2023秋计算机组成实验课Pre不计入实验总成绩，实在做不出来可以放心挂掉（bushi）</p>
+]]></content>
+      <categories>
+        <category>CO</category>
+      </categories>
+      <tags>
+        <tag>CO</tag>
+        <tag>FSM</tag>
+      </tags>
+  </entry>
 </search>
