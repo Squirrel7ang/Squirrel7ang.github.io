@@ -36,18 +36,6 @@
       </tags>
   </entry>
   <entry>
-    <title>P2总结</title>
-    <url>/2023/12/30/CO/P2/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>CO</category>
-      </categories>
-      <tags>
-        <tag>CO</tag>
-        <tag>MIPS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>P1总结</title>
     <url>/2023/12/30/CO/P1/</url>
     <content><![CDATA[]]></content>
@@ -57,6 +45,18 @@
       <tags>
         <tag>CO</tag>
         <tag>FSM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>P2总结</title>
+    <url>/2023/12/30/CO/P2/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>CO</category>
+      </categories>
+      <tags>
+        <tag>CO</tag>
+        <tag>MIPS</tag>
       </tags>
   </entry>
   <entry>
