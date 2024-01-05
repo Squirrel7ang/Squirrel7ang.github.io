@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/2023/12/26/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a class="link"   href="https://hexo.io/" >Hexo <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>! This is your very first post. Check <a class="link"   href="https://hexo.io/docs/" >documentation <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> for more info. If you get any problems when using Hexo, you can find the answer in <a class="link"   href="https://hexo.io/docs/troubleshooting.html" >troubleshooting <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> or you can ask me on <a class="link"   href="https://github.com/hexojs/hexo/issues" >GitHub <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/writing.html" >Writing <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/server.html" >Server <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/generating.html" >Generating <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/one-command-deployment.html" >Deployment <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>title1</title>
-    <url>/2023/12/26/title1/</url>
-    <content><![CDATA[<h1 id="Title-1"><a href="#Title-1" class="headerlink" title="Title 1"></a>Title 1</h1>]]></content>
-  </entry>
-  <entry>
     <title>关于课下设计的说明</title>
     <url>/2023/12/30/CO/About/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h3 id="关于课程"><a href="#关于课程" class="headerlink" title="关于课程"></a>关于课程</h3><p>课下设计指北航2023-2024学年上学期的计算机组成课程的实验部分设计，包括Pre到P7的9次课下设计。22级计组取消P8，助教们辛苦了！</p>
+<p>由于22级今年的计组没有P8，因此在文章的内容和质量上或许不尽人意。关于P8大家可以参考FlyingLandlord等学长的博客（<a class="link"   href="https://flyinglandlord.github.io/2021/12/29/BUAA-CO-2021/P8/P8%E8%AF%BE%E4%B8%8A&%E8%AF%BE%E4%B8%8B/" >FlyingLandlord’s Blog <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>）。P8的缺失意味着在我的设计中没有过多考虑代码的可综合性，也可能没有做好Bridge的相关规范，更是和FPGA完全不沾边。</p>
+<h3 id="关于这个分类"><a href="#关于这个分类" class="headerlink" title="关于这个分类"></a>关于这个分类</h3><p>本人只是一名计组小菜鸡，只是希望自己能够给后来者提供一些建议而已。因此只打算在这个系列里讲一下本人在计组课程中遇到的问题和解决方法。</p>
+<h3 id="关于本人设计的不足"><a href="#关于本人设计的不足" class="headerlink" title="关于本人设计的不足"></a>关于本人设计的不足</h3><p>设计文档和代码在<a class="link"   href="https://github.com/Squirrel7ang/BUAA-CO-2023-Aut" >这里 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。需要着重说明的是，本人的设计有许多不妥善之处，仅供参考。如有未提及到的错误，欢迎指正！</p>
+<p>下面是我觉得不妥的地方:</p>
+<h4 id="P1"><a href="#P1" class="headerlink" title="P1"></a>P1</h4><ul>
+<li>P1-GRF的同步复位&#x2F;异步复位有误，导致我在P3中debug了很久。P1的GRF测试并没有测出同步复位和异步复位的差异。</li>
+</ul>
+<h4 id="P5"><a href="#P5" class="headerlink" title="P5"></a>P5</h4><p>从P5开始进行流水线CPU的迭代开发。因此P6和P7都继承了P5的问题。毕竟过了P7，因此在正确性上基本不会出现太离谱的问题。但是会存在非常多的效率问题。P5的问题大致有以下几点:</p>
+<ol>
+<li>D级叫Decode级不是没有原因的，不应该像我一样把控制器ctrl放在F级。这样会使得F级需要同时完成取值和译码操作，大大增加始终周期；同时D级由于不需要进行译码操作，读写几个寄存器不会花费太多时间。因此会降低CPU性能。好处就是F级也有控制信号啦(ˊᗜˋ*)。F级的控制信号使得我在P7中可以在F级完成对RI异常的判断并进行流水。</li>
+<li>转发应当从流水寄存器转发，但是在本人的设计中是过了一到两个多路选择器，延长关键路径，降低CPU性能。设计初衷在于将所有值都流水下去，以应对变幻莫测的上机题。事实证明上机题虽然诡异，但基本不会对设计进行大改，因此在可扩展性方面只需要考虑一些正常的指令就行。课上的诡异指令如果直接阻塞住一般不会卡周期数。</li>
+<li>没有使用内部转发，而是使用向D级转发进行了替代。起初是因为懒得实现内部转发，因此使用了一个等价的转发进行替代。事实证明正确性确实没问题，但是完全没必要。内部转发确实更好，封装起来真的是舒服多了。</li>
+<li>转发模块没有进行$T_{Use}$和$T_{New}$的比较。只要后面的流水级对寄存器数值进行了更新就进行转发。$T_{Use}$和$T_{New}$只用于阻塞的判断。事实证明这也没有什么大问题。</li>
+</ol>
+<h4 id="P6"><a href="#P6" class="headerlink" title="P6"></a>P6</h4><p>P6进行新增指令，并实现八条和乘除有关的指令。认真读题就几乎没难度。P6的设计问题主要在于增加了一个不必要的<code>MDStall</code>信号，属于是在开发过程中遗留下来的无伤大雅的问题，其效果和Stall信号完全一致。</p>
+<h4 id="P7"><a href="#P7" class="headerlink" title="P7"></a>P7</h4><p>P7的问题可多了。</p>
+<ol>
+<li>要对异常优先级进行判断。但是由于我F级有控制信号，当我没有进行异常优先级判断的时候也可以得到正确的异常。</li>
+<li>分布式和集中式译码杂糅在一块了。主要是在M级进行了大量的分布式译码使得整体结构相当混乱，只能说正确性没问题。</li>
+<li>进入核心态时除F级以外全部流水线PC置<code>32&#39;h0000_3000</code>，使得宏观PC鬼畜。但是由于此时已经进入核心态，不会响应异常中断，因此可以保障正确性。</li>
+</ol>
+]]></content>
       <categories>
         <category>CO</category>
       </categories>
@@ -35,59 +34,111 @@
       </tags>
   </entry>
   <entry>
-    <title>P0总结</title>
-    <url>/2023/12/30/CO/P0/</url>
-    <content><![CDATA[<p>待补充~</p>
+    <title>P7</title>
+    <url>/2024/01/02/CO/P7/</url>
+    <content><![CDATA[<h2 id="主要任务"><a href="#主要任务" class="headerlink" title="主要任务"></a>主要任务</h2><ul>
+<li>新增指令：<code>nop</code>, <code>mfc0</code>, <code>mtc0</code>, <code>eret</code>, <code>syscall</code></li>
+<li>新增模块：<code>总线Bridge</code>, <code>CP0协处理器</code>, <code>Timer0</code>, <code>Timer1</code></li>
+<li>新增功能：完成对五类异常和中断的响应</li>
+</ul>
+<h2 id="顶层设计"><a href="#顶层设计" class="headerlink" title="顶层设计"></a>顶层设计</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/CO/P7/CIRC.png"
+                      alt="P7_CIRC"
+                ></p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="1-关于CP0及其实现"><a href="#1-关于CP0及其实现" class="headerlink" title="1.关于CP0及其实现"></a>1.关于CP0及其实现</h3><p>P7添加了协处理器CP0，实现了其中的<code>sr(state register)</code>, <code>cause</code>和<code>EPC</code>三个寄存器的一些位。<strong>未实现位需要保持0</strong>。<br>功能定义如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">Reg</th>
+<th align="center">Byte</th>
+<th align="center">Name</th>
+<th align="center">Function</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">cause</td>
+<td align="center">31</td>
+<td align="center"><code>BD</code></td>
+<td align="center">如果<code>CP0</code>所在级指令为延迟槽<br>指令就接入1，否则接0</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">15:10</td>
+<td align="center"><code>IP/HWInt[5:0]</code></td>
+<td align="center"><code>HWInt[5:3]</code>永远保持0；<br><code>Interrupt</code>信号接入<code>HWInt[2]</code><br><code>Timer1</code>的<code>IRQ</code>信号接入<code>HWInt[1]</code><br><code>Timer0</code>的<code>IRQ</code>信号接入<code>HWInt[0]</code></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">6:2</td>
+<td align="center"><code>Exc_code</code></td>
+<td align="center">如果发生异常或者中断，<br>则将对应的异常码写入</td>
+</tr>
+<tr>
+<td align="center">sr</td>
+<td align="center">15:10</td>
+<td align="center"><code>IM</code></td>
+<td align="center"><code>sr[i]</code>置1表示不对<code>HWInt[i]</code><br>的中断信号进行响应</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">1</td>
+<td align="center"><code>EXL</code></td>
+<td align="center">进入核心态时置1，<br>退出核心态时置0<br>置1时不响应异常中断</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">0</td>
+<td align="center"><code>IE</code></td>
+<td align="center">置1响应中断信号</td>
+</tr>
+<tr>
+<td align="center">EPC</td>
+<td align="center">31:0</td>
+<td align="center"><code>epc</code></td>
+<td align="center">写入<code>VPC</code>。需要注意延迟槽</td>
+</tr>
+</tbody></table>
+<p>此外需要说明的是<code>cause</code>寄存器是不可写的。这意味着用户没发通过执行<code>mtc0</code>指令来修改<code>cause</code>指令。<code>cause</code>寄存器的写入是由硬件完成的。每个周期都需要对<code>cause</code>寄存器的[15:10]进行写入。</p>
+<h3 id="2-关于新增指令"><a href="#2-关于新增指令" class="headerlink" title="2.关于新增指令"></a>2.关于新增指令</h3><p>新增指令会引入新的冒险。这主要发生在：</p>
+<ol>
+<li><code>eret</code>无延迟槽，D级跳转会产生控制冒险，需要清空延迟槽；或者F级跳转。</li>
+<li><code>mtc0</code>和<code>eret</code>产生供需模型形成数据冒险，需要转发或者阻塞解决冒险。</li>
+<li><code>mtc0</code>和<code>mfc0</code>与其他指令的冲突…</li>
+</ol>
+<h3 id="3-关于CPU和操作系统的界限"><a href="#3-关于CPU和操作系统的界限" class="headerlink" title="3.关于CPU和操作系统的界限"></a>3.关于CPU和操作系统的界限</h3><p>P7要实现的事情只有：</p>
+<ol>
+<li>翻译指令</li>
+<li>在需要响应中断或者发生异常的时候要能够正确跳转到<code>0x4180</code>的入口。</li>
+</ol>
+<p>比如，在异常或者中断的时候，我们只需要向<code>CP0</code>中写入对应的<code>VPC</code>和性质（比如是否是延迟槽）。至于要保存哪些寄存器值，根据指令性质不同执行差异化的异常中断响应代码，这些都不是我们需要考虑的。</p>
+<h3 id="5-关于中断及其对拍"><a href="#5-关于中断及其对拍" class="headerlink" title="5.关于中断及其对拍"></a>5.关于中断及其对拍</h3><h4 id="关于中断响应"><a href="#关于中断响应" class="headerlink" title="关于中断响应"></a>关于中断响应</h4><p>程序对中断的响应是通过许许多多的开关实现的。在上机中可能也会遇到添加许多开关，根据这些开关的状态决定是否执行对应程序的情况。<br>（待补充~）</p>
+<h4 id="关于中断的对拍"><a href="#关于中断的对拍" class="headerlink" title="关于中断的对拍"></a>关于中断的对拍</h4><p>很不幸中断无法和<code>Mars</code>对拍。流水线CPU中时钟周期与指令周期是不相等的，而<code>Timer</code>的中断是根据时钟周期来定的；<code>Interrupt</code>信号是根据宏观<code>PC</code>和定，因此也无法得知<code>CPU</code>内部的阻塞情况。也就是说中断信号可以在任意一个时钟周期而非指令周期产生。<code>Mars</code>模拟的是<code>单周期CPU</code>的运行，与<code>流水线CPU</code>不同。此外哪怕是在不会产生冒险的汇编代码下用和<code>Mars</code>进行对拍，个人也观测到过官方<code>Mars</code>的鬼畜行为。</p>
+<p>如果对自己的中断响应不放心的话，建议找一个设计相当的小伙伴进行对拍，以避免时钟周期不同。</p>
+<h4 id="关于Timer"><a href="#关于Timer" class="headerlink" title="关于Timer"></a>关于Timer</h4><p>官方教程中对<code>Timer</code>有专门的文件进行规范，在2023秋的计算机组成课程中又提供了官方的Timer源代码，读懂以后实例化两个Timer即可。需要注意的是只有每个Timer中的三个寄存器只有俩可写，另一个只可读。另外就是<code>Timer</code>访问的字对齐问题。</p>
+<h3 id="6-关于异常和异常优先级"><a href="#6-关于异常和异常优先级" class="headerlink" title="6.关于异常和异常优先级"></a>6.关于异常和异常优先级</h3><h4 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h4><p>P7需要实现的异常有5种：<code>Adel</code> <code>Ades</code> <code>Overflow</code> <code>RI</code> <code>Syscall</code>。每一种异常在教程中已经写的十分详细了。</p>
+<h4 id="跳转指令异常"><a href="#跳转指令异常" class="headerlink" title="跳转指令异常"></a>跳转指令异常</h4><ul>
+<li>跳转指令不会因为PC不对齐或越界而成为受害指令，异常只会发生在跳转到的那条指令上。</li>
+<li><code>beq``bne``jal</code>不会发生未字对齐的情况，只可能越界。</li>
+<li><code>jr</code>可能未字对齐，也可能越界。</li>
+</ul>
+<h4 id="异常优先级"><a href="#异常优先级" class="headerlink" title="异常优先级"></a>异常优先级</h4><p>简单来说，就是先发生的异常产生的会顶替掉后发生的异常。比方说当指令取址异常和未知指令异常同时发生时，我们肯定会先考虑取址异常而非未知指令异常。除了从直观感觉来判断以外，可以通过流水线级来判断异常优先级，即在<strong>F级发生的异常 &gt; D级发生的异常 &gt; E级发生的异常 &gt; M级发生的异常</strong>。F级取址，D级译码，因此指令取址异常优先于未知指令异常。</p>
+<h3 id="7-关于延迟槽"><a href="#7-关于延迟槽" class="headerlink" title="7.关于延迟槽"></a>7.关于延迟槽</h3><p>指令是否是延迟槽需要在F级进行判断，并进行流水。特例如下：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">div $t0, $t1</span><br><span class="line">beq $t0, $t1, TARGET</span><br><span class="line">mfhi $t0</span><br></pre></td></tr></table></figure></div>
+<p><code>mfhi</code>会被阻塞在D级，因此等于或晚于D级进行判断都会使得延迟槽判断不准确。</p>
+<p>指令是否是延迟槽是由上一条执行的指令决定的，也就是说这条指令的存储空间上的前一条指令是不是跳转指令，以及这条指令的下一级流水级是不是跳转指令都不能决定这条指令是不是延迟槽。</p>
+<h3 id="8-关于空泡和宏观PC"><a href="#8-关于空泡和宏观PC" class="headerlink" title="8.关于空泡和宏观PC"></a>8.关于空泡和宏观PC</h3><p>流水线<code>CPU</code>应当保持宏观PC的连续性，因此空泡的<code>PC</code>不能随便选。一般来说，空泡的<code>PC</code>应当永远保持与下一条指令的<code>PC</code>一致：阻塞产生空泡的话就保持与被阻塞指令一致，<code>eret</code>清空延迟槽的空泡应当与EPC一致（如果是用清空延迟槽实现<code>eret</code>的话）。</p>
+<p>将空泡的PC永远置成<code>32&#39;h0000_3000</code>也是不行的。尽管程序在第一次运行<code>32&#39;h0000_3000</code>处的指令时会因为没有将<code>EXL</code>置1而不对中断做出响应，但是之后可就不好说了。这样就会导致程序在某一个位置因为阻塞了一下使得<code>EPC</code>置<code>3000</code>。这可就坏事了。此外，空泡的<code>BD</code>也应当与下一条指令保持一致。</p>
+<p>至于为什么空泡的<code>PC</code>不能和上一条指令一致呢？这是因为当上一条指令进入<code>CP0</code>所在级的下一级时，我们应当认为这条指令已经执行完了，这个时候异常中断的<code>VPC</code>就不应当发生在这条已经执行完的指令上（除非延迟槽指令<code>VPC-4</code>）——都执行完了怎么受害？</p>
 ]]></content>
       <categories>
         <category>CO</category>
       </categories>
       <tags>
         <tag>CO</tag>
-        <tag>FSM</tag>
-        <tag>Logisim</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>P1总结</title>
-    <url>/2023/12/30/CO/P1/</url>
-    <content><![CDATA[<p>待补充~</p>
-]]></content>
-      <categories>
-        <category>CO</category>
-      </categories>
-      <tags>
-        <tag>CO</tag>
-        <tag>FSM</tag>
         <tag>Verilog</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>P2总结</title>
-    <url>/2023/12/30/CO/P2/</url>
-    <content><![CDATA[<p>待补充~</p>
-]]></content>
-      <categories>
-        <category>CO</category>
-      </categories>
-      <tags>
-        <tag>CO</tag>
-        <tag>MIPS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>P3总结</title>
-    <url>/2023/12/30/CO/P3/</url>
-    <content><![CDATA[<p>待补充~</p>
-]]></content>
-      <categories>
-        <category>CO</category>
-      </categories>
-      <tags>
-        <tag>CO</tag>
-        <tag>Logisim</tag>
-        <tag>单周期CPU</tag>
-        <tag>[object Object]</tag>
+        <tag>流水线CPU</tag>
       </tags>
   </entry>
   <entry>
@@ -95,25 +146,27 @@
     <url>/2024/01/01/CO/verilog_error/</url>
     <content><![CDATA[<p>在P4以及后续的设计过程中，Verilog的语法不过关可能会带来十分糟糕的体验，因此列出了本人犯的错误和舍友们犯的错误。内容仅供参考交流，如有错误，欢迎指正。</p>
 <p>Verilog可以在<a class="link"   href="https://hdlbits.01xz.net/wiki/Main_Page" >HDLbits <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>进行练习，也可以参考<a class="link"   href="https://www.runoob.com/w3cnote/verilog-tutorial.html" >菜鸟教程 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>，</p>
-<h3 id="1、关于-signed"><a href="#1、关于-signed" class="headerlink" title="1、关于$signed()"></a>1、关于$signed()</h3><p>Verilog中默认一切未声明有符号的整型数均为无符号数，并默认有符号数与无符号数运算时，将有符号数自动转化为无符号数。比如：</p>
+<h3 id="1、关于-signed"><a href="#1、关于-signed" class="headerlink" title="1、关于$signed()"></a>1、关于$signed()</h3><p><code>Verilog</code>中默认一切未声明有符号的整型数均为无符号数，并默认有符号数与无符号数运算时，将有符号数自动转化为无符号数。比如：</p>
 <div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (opCode == <span class="number">1&#x27;b1</span>) ? <span class="keyword">signed</span>(a) * <span class="keyword">signed</span>(b) : a * b;</span><br></pre></td></tr></table></figure></div>
-<p>上述代码中，$signed(a) * signed(b)$与$a*b$通过三目运算符进行运算，因此默认将第二位操作数（$signed(a) * signed(b)$）转换为无符号的乘法。解决方案在官方教程中有提及。<br>此外还有一点与C代码不同的是，在Verilog中，不能将“&#x3D;”视为一种运算符。也就是说如果我在某一语句块里这么写：</p>
+<p>上述代码中，<code>signed(a) * signed(b)</code>与<code>a*b</code>通过三目运算符进行运算，因此默认将第二位操作数（<code>signed(a) * signed(b)</code>）转换为无符号的乘法。解决方案在官方教程中有提及。<br>此外还有一点与C代码不同的是，在<code>Verilog</code>中，不能将“&#x3D;”视为一种运算符。也就是说如果我在某一语句块里这么写：</p>
 <div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">  outcome = <span class="built_in">$signed</span>(a) * <span class="built_in">$signed</span>(b);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
-<p>outcome仍然是两个有符号数做乘法的运算结果。“&#x3D;”应当和“&lt;&#x3D;”视为一种<strong>赋值符</strong>。</p>
-<h3 id="2、关于条件运算和浮空"><a href="#2、关于条件运算和浮空" class="headerlink" title="2、关于条件运算和浮空"></a>2、关于条件运算和浮空</h3><p>使用三目运算符时，当第一位操作数，即条件，为浮空值的时候，表达式返回值也是浮空值。比方说:</p>
+<p><code>outcome</code>仍然是两个有符号数做乘法的运算结果。<code>=</code>应当和<code>&lt;=</code>视为一种<strong>赋值符</strong>。</p>
+<h3 id="2、关于条件运算和浮空"><a href="#2、关于条件运算和浮空" class="headerlink" title="2、关于条件运算和浮空"></a>2、关于条件运算和浮空</h3><p>使用三目运算符时，<strong>当第一位操作数，即条件，为浮空值的时候，表达式返回值也是浮空值。</strong> 比方说:</p>
 <div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (<span class="number">1&#x27;bx</span>) ? <span class="number">1&#x27;b1</span> : <span class="number">1&#x27;b0</span>;</span><br></pre></td></tr></table></figure></div>
-<p>在上述代码中，outcome会得到1位的浮空值。Verilog不知道条件是真是假，因此无法给出结果。</p>
+<p>在上述代码中，<code>outcome</code>会得到1位的浮空值。<code>Verilog</code>不知道条件是真是假，因此无法给出结果。</p>
 <p>但是如果这样写：</p>
 <div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> [<span class="number">1</span> : <span class="number">0</span>] outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (<span class="number">1&#x27;bx</span>) ? <span class="number">2&#x27;b01</span> : <span class="number">2&#x27;b00</span>;</span><br></pre></td></tr></table></figure></div>
-<p>outcome就会得到2’b0x的值，理由是尽管Verilog不知道结果是第二个操作数还是第三个操作数，但是不论是哪一个，其第1位一定是0，但是无法确定其第0位究竟是0还是1，因此第0位浮空。</p>
-<p>在if-else语句中则不一样。比如：</p>
+<p><code>outcome</code>就会得到<code>2&#39;b0x</code>的值，理由是尽管<code>Verilog</code>不知道结果是第二个操作数还是第三个操作数，但是不论是哪一个，其第1位一定是0，但是无法确定其第0位究竟是0还是1，因此第0位浮空。</p>
+<p>在<code>if-else</code>语句中则不一样。比如：</p>
 <div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (a == <span class="number">1&#x27;b1</span>) </span><br><span class="line">  b &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">  b &lt;= <span class="number">1&#x27;b0</span>;</span><br></pre></td></tr></table></figure></div>
-<p>在上述代码中，如果a为一位浮空值，程序仍然会执行else语句块内的代码。if-else是安全的。</p>
-<h3 id="3、关于”-”和”-”以及“自动类型转换”"><a href="#3、关于”-”和”-”以及“自动类型转换”" class="headerlink" title="3、关于”~”和”!”以及“自动类型转换”"></a>3、关于”~”和”!”以及“自动类型转换”</h3><p>省流版就是：不要用位宽不同的两个数进行相互赋值，理由是Verilog在进行位扩展的时候会进行一些很诡异的操作。<br>下面讲一个具体的例子。下例由室友LJC提出，愣是把我看傻了。</p>
+<p>在上述代码中，如果<code>a</code>为一位浮空值，程序仍然会执行<code>else</code>语句块内的代码。<code>if-else</code>是安全的。</p>
+<p>在一些情况下，我们希望判断语句能够更加保险，即能够对浮空值也进行判断。这是可以使用<code>===</code>和<code>!===</code>，这双目两个运算符可以连同高阻态<code>z</code>和浮空值<code>x</code>一并进行判断。</p>
+<h3 id="3、关于”-”和”-”以及“自动类型转换”"><a href="#3、关于”-”和”-”以及“自动类型转换”" class="headerlink" title="3、关于”~”和”!”以及“自动类型转换”"></a>3、关于”~”和”!”以及“自动类型转换”</h3><p>省流版就是：不要用位宽不同的两个数进行相互赋值，理由是<code>Verilog</code>在进行位扩展的时候会进行一些很诡异的操作。<br>下面讲一个具体的例子。下例由室友LJC提出，愣是把我看傻了。</p>
 <div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> test(</span><br><span class="line"></span><br><span class="line">);</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">1</span> : <span class="number">0</span>] a;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line">    <span class="keyword">reg</span> clk;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">            c = ~a;</span><br><span class="line">            <span class="built_in">$display</span>(<span class="string">&quot;when a = 1&#x27;b%b, c = ~ a = 4&#x27;b%b&quot;</span>, a, c);</span><br><span class="line">            c = !a;</span><br><span class="line">            <span class="built_in">$display</span>(<span class="string">&quot;when a = 1&#x27;b%b, c = ! a = 4&#x27;b%b&quot;</span>, a, c);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">        a = <span class="number">2&#x27;b00</span>;</span><br><span class="line">        c = <span class="number">4&#x27;b00</span>;</span><br><span class="line">        clk = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b01</span>;</span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b10</span>;</span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b11</span>;</span><br><span class="line">        #<span class="number">2</span> <span class="built_in">$finish</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> #<span class="number">1</span> clk &lt;= ~clk;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure></div>
-<p>使用iverilog进行编译和仿真会得到：</p>
+<p>使用<code>iverilog</code>进行编译和仿真会得到：</p>
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ iverilog -o a.out test.v</span><br><span class="line">$ vvp a.out</span><br><span class="line">when a = 1&#x27;b00, c = ~ a = 4&#x27;b1111</span><br><span class="line">when a = 1&#x27;b00, c = ! a = 4&#x27;b0001</span><br><span class="line">when a = 1&#x27;b01, c = ~ a = 4&#x27;b1110</span><br><span class="line">when a = 1&#x27;b01, c = ! a = 4&#x27;b0000</span><br><span class="line">when a = 1&#x27;b10, c = ~ a = 4&#x27;b1101</span><br><span class="line">when a = 1&#x27;b10, c = ! a = 4&#x27;b0000</span><br><span class="line">when a = 1&#x27;b11, c = ~ a = 4&#x27;b1100</span><br><span class="line">when a = 1&#x27;b11, c = ! a = 4&#x27;b0000</span><br><span class="line">test3.v:23: $finish called at 8 (1s)</span><br></pre></td></tr></table></figure></div>
-<p>可以看出，~a和!a在进行符号扩展时是十分抽象的玩意，因此强烈建议用vector也就是花括号 { } 手动进行扩展。</p>
+<p>可以看出，<code>~a</code>和<code>!a</code>在进行符号扩展时是十分抽象的玩意，编译时会先进行1拓展或者0拓展再进行赋值。因此当一个稍微复杂的表达式中出现了位宽的改变时，强烈建议用<code>vector</code>也就是花括号<code>&#123;,&#125;</code>手动进行扩展。</p>
+<p>P.S.样例中在时序逻辑中进行阻塞赋值是不合规范的，请勿模仿。</p>
 <h3 id="4、位宽"><a href="#4、位宽" class="headerlink" title="4、位宽"></a>4、位宽</h3><p>不声明位宽时，默认1位。这与整数不同，后者默认32位。<br>下例来自舍友ZHX，这种事情一旦发生，debug可就困难了。大家可以试着找找下图中的错误。<br><img  
                      lazyload
                      src="/images/loading.svg"
@@ -129,15 +182,19 @@
 <h3 id="5、关于循环"><a href="#5、关于循环" class="headerlink" title="5、关于循环"></a>5、关于循环</h3><p>在P4以及后续的上机题中，可能会需要统计一个32位数中的1的个数，或者32位数中是否存在连续的4个1。这时需要使用循环写组合逻辑。比如前者可写为：</p>
 <div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">integer</span> i;</span><br><span class="line"><span class="keyword">reg</span>  [<span class="number">31</span>: <span class="number">0</span>] sum;</span><br><span class="line"><span class="keyword">wire</span> [<span class="number">31</span>: <span class="number">0</span>] target;</span><br><span class="line"><span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">  sum = <span class="number">0</span></span><br><span class="line">  <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;<span class="number">32</span>; i=i+<span class="number">1</span>) <span class="keyword">begin</span></span><br><span class="line">    sum = sum + target[i];</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
 
-<h3 id="6、关于切片"><a href="#6、关于切片" class="headerlink" title="6、关于切片"></a>6、关于切片</h3><p>对于wire类型或者reg类型变量，我们会经常用到 [:] 取出特定位宽，再利用 { } 进行拼接。但是当我们想取出的位置随变量改变时，就会出现问题，比如：</p>
+<h3 id="6、关于切片"><a href="#6、关于切片" class="headerlink" title="6、关于切片"></a>6、关于切片</h3><p>对于<code>wire</code>类型或者<code>reg</code>类型变量，我们会经常用到<code>[:]</code>取出特定位宽，再利用<code>&#123;,&#125;</code>进行拼接。但是当我们想取出的位置随变量改变时，就会出现问题，比如：</p>
 <div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> test(</span><br><span class="line">);</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">integer</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line"><span class="keyword">assign</span> c = c[(i + <span class="number">1</span>):i]</span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure></div>
-<p>用iverilog编译会报错。</p>
+<p>用<code>iverilog</code>编译会报错。</p>
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">test.v:6: error: Part select expressions must be constant.</span><br></pre></td></tr></table></figure></div>
 <p>个人猜测Verilog要求返回值的位宽必须是恒定的，因此要求用常数选择位宽。</p>
-<p>解决方案有俩。第一个是利用位移运算去挪它，再用常数选出来；</p>
-<p>第二个方案更简洁，利用System Verilog中的切片完成。比如上述例子可写成：</p>
+<p>解决方案有三。第一个是利用位移运算去挪它，再用常数选出来；第二个是用vector把每一位取出来并进行拼接，如<code>assign c = &#123;&#123;c[i+1]&#125;, &#123;c[i]&#125;&#125;;</code>。</p>
+<p>第三个方案更简洁，利用System Verilog中的切片完成。比如上述例子可写成：</p>
 <div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>     <span class="keyword">module</span> test(</span><br><span class="line"><span class="number">2</span>     );</span><br><span class="line">...</span><br><span class="line"><span class="number">12</span>    <span class="keyword">integer</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="number">13</span>    <span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line"><span class="number">14</span>    <span class="keyword">assign</span> c = c[(i + <span class="number">1</span>) -: <span class="number">2</span>]</span><br><span class="line">...</span><br></pre></td></tr></table></figure></div>
-<p>不要用[i+:2]，这会返回[i:i+1]。</p>
+<p>不要用<code>[i+:2]</code>，这会返回<code>[i:i+1]</code>。</p>
+<h3 id="7、关于阻塞和非阻塞"><a href="#7、关于阻塞和非阻塞" class="headerlink" title="7、关于阻塞和非阻塞"></a>7、关于阻塞和非阻塞</h3><p>阻塞赋值和非阻塞赋值看似简单，但实际上在编译过程中又不是那么简单。个人建议将阻塞赋值和非阻塞赋值分开，即在<code>always @(*)</code>中进行阻塞赋值，在<code>always @(posedge clk)</code>中进行非阻塞赋值。请不要在阻塞赋值中掺杂非阻塞赋值。比如我的天才构思，实现了在时钟上升沿的瞬间利用上升沿后的数据对寄存器值进行更新：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    flag = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// process coming data...</span></span><br><span class="line">    flag = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> flag) <span class="keyword">begin</span></span><br><span class="line">    <span class="comment">// do sth...</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
+<p>我不知道第一个语句块中是否真的读到了上升沿后的数据，因为仿真得到的全是浮空值。</p>
+<p>非阻塞赋值是在利用上升沿之前的数据在上升沿对寄存器进行一次更新，所以请不要在同一个上升沿对同一个寄存器更新两次，即不要在同一次<code>always</code>中执行多次对同一个<code>reg</code>类型变量的非阻塞赋值操作。</p>
 <p>待补充~</p>
 ]]></content>
       <categories>
@@ -145,26 +202,6 @@
       </categories>
       <tags>
         <tag>Verilog</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Pre总结</title>
-    <url>/2023/12/30/CO/Pre/</url>
-    <content><![CDATA[<h3 id="课上内容"><a href="#课上内容" class="headerlink" title="课上内容"></a>课上内容</h3><p>&ensp;&ensp;&ensp;&ensp;个人认为Pre是所有上机题目里面最难的了（假期没有好好预习）</p>
-<p>&ensp;&ensp;&ensp;&ensp;Pre包含对Logisim、Verilog和MIPS三个大环节的考察。Logisim和Verilog集中考察有限状态机的搭建，MIPS只需要写一个简单的程序就行（我不会数组不会分支不会循环什么都不会）</p>
-<h3 id="准备内容"><a href="#准备内容" class="headerlink" title="准备内容"></a>准备内容</h3><p>&ensp;&ensp;&ensp;&ensp;Pre整体难度不高，主要是考察基础知识。因此建议熟悉有限状态机的搭建，并提前熟悉Logisim的用法和Verilog与MIPS的基础语法。Pre之前要是准备得好的话之后的P0、P1和P2会轻松不少。</p>
-<p>&ensp;&ensp;&ensp;&ensp;2023秋计算机组成实验课Pre不计入实验总成绩，实在做不出来可以放心挂掉（bushi）</p>
-<p>待补充~</p>
-]]></content>
-      <categories>
-        <category>CO</category>
-      </categories>
-      <tags>
-        <tag>CO</tag>
-        <tag>FSM</tag>
-        <tag>Logisim</tag>
-        <tag>Verilog</tag>
-        <tag>MIPS</tag>
       </tags>
   </entry>
   <entry>
