@@ -4,7 +4,7 @@
     <title>「BUAA CO」关于课下设计的说明</title>
     <url>/2023/12/30/CO/About/</url>
     <content><![CDATA[<h3 id="关于课程"><a href="#关于课程" class="headerlink" title="关于课程"></a>关于课程</h3><p>课下设计指北航2023-2024学年上学期的计算机组成课程的实验部分设计，包括Pre到P7的9次课下设计。22级计组取消P8，助教们辛苦了！</p>
-<p>由于22级今年的计组没有P8，因此在文章的内容和质量上或许不尽人意。关于P8大家可以参考FlyingLandlord等学长的博客（<a class="link"   href="https://flyinglandlord.github.io/2021/12/29/BUAA-CO-2021/P8/P8%E8%AF%BE%E4%B8%8A&%E8%AF%BE%E4%B8%8B/" >FlyingLandlord’s Blog <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>）。P8的缺失意味着在我的设计中没有过多考虑代码的可综合性，也可能没有做好Bridge的相关规范，更是和FPGA完全不沾边。</p>
+<p>由于22级今年的计组没有P8，因此在文章的内容和质量上或许不尽人意。P8的缺失意味着在我的设计中没有过多考虑代码的可综合性，也可能没有做好Bridge的相关规范，更是和FPGA完全不沾边。</p>
 <h3 id="关于这个分类"><a href="#关于这个分类" class="headerlink" title="关于这个分类"></a>关于这个分类</h3><p>本人只是一名计组小菜鸡，只是希望自己能够给后来者提供一些建议而已。因此只打算在这个系列里讲一下本人在计组课程中遇到的问题和解决方法。</p>
 <h3 id="关于本人设计的不足"><a href="#关于本人设计的不足" class="headerlink" title="关于本人设计的不足"></a>关于本人设计的不足</h3><p>设计文档和代码在<a class="link"   href="https://github.com/Squirrel7ang/BUAA-CO-2023-Aut" >这里 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。需要着重说明的是，本人的设计有许多不妥善之处，仅供参考。如有未提及到的错误，欢迎指正！</p>
 <p>下面是我觉得不妥的地方:</p>
@@ -25,6 +25,7 @@
 <li>分布式和集中式译码杂糅在一块了。主要是在M级进行了大量的分布式译码使得整体结构相当混乱，只能说正确性没问题。</li>
 <li>进入核心态时除F级以外全部流水线PC置<code>32&#39;h0000_3000</code>，使得宏观PC鬼畜。但是由于此时已经进入核心态，不会响应异常中断，因此可以保障正确性。</li>
 </ol>
+<p>最后祝大家计组上机顺利！</p>
 ]]></content>
       <categories>
         <category>CO</category>
@@ -34,21 +35,64 @@
       </tags>
   </entry>
   <entry>
-    <title>About me</title>
-    <url>/2023/12/31/about/me/</url>
-    <content><![CDATA[<p>现在是2023年12月31号的晚上19:35。距离bilibili跨年晚会的开始还有25分钟，距离2024年还有五个小时不到。2023年是我迈入北航计算机学院的第一年。回顾过去的一学期，我感受过离散数学和量子力学的美丽，也体验了数理统计和随机过程的离奇和神秘；既在面向对象先导课的一次次debug中挣扎，也在计算机组成实验课上一次次死去。</p>
-<p>我从来没有想过自己也会有写博客的一天。或许是希望自己同样身为菜鸡能给后来者一点启发，或许是对自己一学期的回顾与复盘，又或许是单纯想找个地方说话，总之一学期下来，我想记录一下我经历的每次不可思议，记录我每一次崩溃和有一次的涅槃。</p>
-<p>正当我没处说话的时候，我想起了Roife学长、TobyShi学长和FlyingLandlord学长制作的博客，又正巧在群里刷到了Tan学长的博客。受学长们启发，有了做一篇自己的博客的想法。</p>
-<p>希望这篇博客能够坚持到大三，直到我走完北航6系的基本课程。期间可能会换主题和博客的排版，不过希望我能坚持到最后。</p>
-<p>感谢每一位身边的人。</p>
-<p>现在是2023年12月31号19:56:36，就把这个时间定为一切的开始吧</p>
+    <title>「BUAA CO」P5总结</title>
+    <url>/2024/01/02/CO/P5/</url>
+    <content><![CDATA[<h2 id="主要任务"><a href="#主要任务" class="headerlink" title="主要任务"></a>主要任务</h2><h2 id="顶层设计"><a href="#顶层设计" class="headerlink" title="顶层设计"></a>顶层设计</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/CO/P5/CIRC.png"
+                      alt="P5_CIRC"
+                ></p>
+<p>其中红色为转发有关设计、绿色为阻塞有关设计</p>
+<h2 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h2><p>P5是一个难点，代码量也比P4要多很多，很容易挂或者<code>Gap</code>，建议合理分配时间。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="1-集中式译码和分布式译码"><a href="#1-集中式译码和分布式译码" class="headerlink" title="1. 集中式译码和分布式译码"></a>1. 集中式译码和分布式译码</h3><p>集中式译码将控制信号集中译码出来，再逐级流水；而分布式译码在每一级都设置译码单元，将该流水级需要使用的控制信号译码出来。我在P5的设计中采用了集中式译码，但是经历了P7之后，个人认为分布式译码方便不止一点点。</p>
+<h4 id="集中式译码的控制信号表示"><a href="#集中式译码的控制信号表示" class="headerlink" title="集中式译码的控制信号表示"></a>集中式译码的控制信号表示</h4><p>由于集中式译码会一次性产生大量控制信号，需要为每一个控制信号专门在流水级分配一个寄存器。但是这种方式太麻烦，因此可以规定控制信号的排列顺序，用<code>vector</code>将控制信号合并一同传递。这种方式的缺点是可读性低，每次都需要查询控制信号的某一位对应的是什么控制信号。因此我在<code>mips.v</code>文件的开头将控制信号全部用<code>wire</code>类型变量接了出来，使得还不如直接分布式译码。</p>
+<!-- （附一张图片吧） -->
+
+<p>个人认为集中式译码的一个好处在于可以将控制信号流水。这意味着如果某一流水级的结果对后续流水级造成影响时，可以通过改变传递给下一流水级的控制信号来实现。但是分布式译码的结果直接取决于指令本身。</p>
+<p>举个例子，比方说写入寄存器的<code>reg_write</code>控制信号，描述了一条指令是否需要写入寄存器。指令<code>beqal $t0, $t1, TARGET</code>表示如果<code>$t0</code>和<code>$t1</code>相等，则跳转到<code>TARGET</code>并链接（将当前<code>PC</code>写入<code>$31</code>）。这时候分布式译码无法根据指令本身判断<code>reg_write</code>的值，因此指令在W级时需要保留D级<code>CMP</code>模块的比较结果，因此需要额外流水D级<code>CMP</code>比较结果。但是集中式译码只需要根据D级的比较结果选择指定信号传递给E级的<code>reg_write</code>就行。</p>
+<p>在之后的设计中，流水数据或信号是很常见的，也并不困难。因此集中式译码的上述优势并不显著。在P7的异常判断中，分布式译码会表现出一定的优势<del>所以我将分布式和集中式进行了混搭</del>。<strong>建议分布式译码</strong>。</p>
+<h3 id="2-T-new-T-use"><a href="#2-T-new-T-use" class="headerlink" title="2. $T_{new}$ &amp; $T_{use}$"></a>2. $T_{new}$ &amp; $T_{use}$</h3><p>$T_{new}$和$T_{use}$可以方便地描述转发和暂停条件。建议在着手写转发和暂停之前先理解$T_{new}$和$T_{use}$再推进进度。需要注意的有：</p>
+<ul>
+<li>$T_{new}$不能减为负数，在一些设计中可能会出问题。</li>
+<li>$T_{new}&#x3D;0$时可以视为这条指令不会写入寄存器；</li>
+<li>$T_{use}&#x3D;\infty$可以视为这条指令不会使用到寄存器。$\infty$可以用$\geq3$的任何一个数去表示，因为$\geq3$时在W流水级及之后不会有任何接受转发的位点。</li>
+</ul>
+<h3 id="3-转发-Forwarding"><a href="#3-转发-Forwarding" class="headerlink" title="3. 转发 $Forwarding$"></a>3. 转发 $Forwarding$</h3><p>2023计组课程组要求能转发尽量转发。但是这个要求是针对P5课下而言的。在P7的<code>eret</code>的实现中可以阻塞也可以转发。</p>
+<h4 id="转发位置"><a href="#转发位置" class="headerlink" title="转发位置"></a>转发位置</h4><p>转发位点见顶层设计图。</p>
+<p>转出位点有：</p>
+<ol>
+<li>W级写入数据</li>
+<li>M级写入数据</li>
+</ol>
+<p>接受转发位点有：</p>
+<ol>
+<li>M级DM的地址</li>
+<li>E级的两个操作数</li>
+<li>D级GRF（内部转发）</li>
+</ol>
+<p>转发要求从流水寄存器转发，这样能够缩短流水级的关键路径，使得时钟周期不会因为转发而增加太多，甚至是不增加。</p>
+<p>我在设计的过程中并没有使用内部转发，而是改成了向D级转发。效果完全相同，不过不建议这么做</p>
+<h4 id="转发条件"><a href="#转发条件" class="headerlink" title="转发条件"></a>转发条件</h4><p>$T_{new} \leq T_{use}$或者无脑转发——只要后续流水级有对寄存器的更新就转发。</p>
+<p>接受转发时先接受M级转发在接受W级转发。</p>
+<h4 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h4><p>可以用分布式的转发模块对转发进行管理，也可以使用一个集中转发控制模块对全部转发任务进行控制。我选择了前者，在每一个转发位点实例化了一个<code>_FWD</code>模块对该位点是否接受转发进行判断<del>然后被助教骂了一顿</del>。</p>
+<h3 id="4-暂停-Stall"><a href="#4-暂停-Stall" class="headerlink" title="4. 暂停 $Stall$"></a>4. 暂停 $Stall$</h3><h4 id="阻塞位置"><a href="#阻塞位置" class="headerlink" title="阻塞位置"></a>阻塞位置</h4><p>全部指令需要阻塞在D级，也就是说包括D级在内的所有流水级都要冻住，E级流水寄存器要产生空泡。具体来说，暂停信号作用的地方有</p>
+<ul>
+<li>D级流水寄存器，使之不更新</li>
+<li>PC，使之不更新（或者NPC，使之等于PC）</li>
+<li>E级流水寄存器，使之产生空泡</li>
+</ul>
+<h4 id="阻塞条件"><a href="#阻塞条件" class="headerlink" title="阻塞条件"></a>阻塞条件</h4><p>$T_{new} \gt T_{use}$ 且 目标寄存器号相等 且 <strong>都不等于0</strong>。</p>
+<h4 id="关于空泡"><a href="#关于空泡" class="headerlink" title="关于空泡"></a>关于空泡</h4><p>空泡的PC建议保留为被阻塞指令的PC，比方说beq被阻塞在D级，那么E级产生的空泡的PC就保持和beq的PC相同。这在P7中会用到，不过也可以等到P7再改。</p>
+<p><strong>祝P5一切顺利！</strong></p>
 ]]></content>
       <categories>
-        <category>me</category>
+        <category>CO</category>
       </categories>
       <tags>
-        <tag>me</tag>
-        <tag>talks</tag>
+        <tag>CO</tag>
+        <tag>Verilog</tag>
+        <tag>流水线CPU</tag>
       </tags>
   </entry>
   <entry>
@@ -75,6 +119,7 @@
                      data-src="/images/CO/P6/CIRC.png"
                       alt="P6_CIRC"
                 ></p>
+<p>其中红色为转发有关设计，绿色为阻塞有关设计，蓝色为乘除有关设计。</p>
 <h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="1-单条乘除指令的实现"><a href="#1-单条乘除指令的实现" class="headerlink" title="1.单条乘除指令的实现"></a>1.单条乘除指令的实现</h3><p>官方大大简化了乘除指令的实现，使得我们不需要搭建乘法器和除法器，只需要在相应的时钟周期内完成乘法和除法就行。</p>
 <h4 id="乘除指令的时钟周期"><a href="#乘除指令的时钟周期" class="headerlink" title="乘除指令的时钟周期"></a>乘除指令的时钟周期</h4><p>乘法占用5个周期，除法10个周期。但是实际上可能并不是这样。拿<code>mult</code>来说，根据教程的波形图我们可以知道：</p>
 <ul>
@@ -116,9 +161,10 @@
                      data-src="/images/CO/P7/CIRC.png"
                       alt="P7_CIRC"
                 ></p>
+<p>其中红色为转发有关设计，绿色为阻塞有关设计，蓝色为乘除有关设计，黄色为CP0有关设计或外设，浅绿色虚线内为CPU，粉色为Bridge。</p>
 <h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>P7忘写设计文档Gap了一周…</p>
 <p><strong>一定要写设计文档！！！</strong></p>
-<h3 id="1-关于CP0及其实现"><a href="#1-关于CP0及其实现" class="headerlink" title="1.关于CP0及其实现"></a>1.关于CP0及其实现</h3><p>P7添加了协处理器CP0，实现了其中的<code>sr(state register)</code>, <code>cause</code>和<code>EPC</code>三个寄存器的一些位。<strong>未实现位需要保持0</strong>。<br>功能定义如下：</p>
+<h3 id="1-关于CP0及其实现"><a href="#1-关于CP0及其实现" class="headerlink" title="1. 关于CP0及其实现"></a>1. 关于CP0及其实现</h3><p>P7添加了协处理器CP0，实现了其中的<code>sr(state register)</code>, <code>cause</code>和<code>EPC</code>三个寄存器的一些位。<strong>未实现位需要保持0</strong>。<br>功能定义如下：</p>
 <table>
 <thead>
 <tr>
@@ -172,34 +218,35 @@
 </tr>
 </tbody></table>
 <p>此外需要说明的是<code>cause</code>寄存器是不可写的。这意味着用户没发通过执行<code>mtc0</code>指令来修改<code>cause</code>指令。<code>cause</code>寄存器的写入是由硬件完成的。每个周期都需要对<code>cause</code>寄存器的[15:10]进行写入。</p>
-<h3 id="2-关于新增指令"><a href="#2-关于新增指令" class="headerlink" title="2.关于新增指令"></a>2.关于新增指令</h3><p>新增指令会引入新的冒险。这主要发生在：</p>
+<h3 id="2-关于新增指令"><a href="#2-关于新增指令" class="headerlink" title="2. 关于新增指令"></a>2. 关于新增指令</h3><p>新增指令会引入新的冒险。这主要发生在：</p>
 <ol>
 <li><code>eret</code>无延迟槽，D级跳转会产生控制冒险，需要清空延迟槽；或者F级跳转。</li>
 <li><code>mtc0</code>和<code>eret</code>产生供需模型形成数据冒险，需要转发或者阻塞解决冒险。</li>
 <li><code>mtc0</code>和<code>mfc0</code>与其他指令的冲突…</li>
 </ol>
-<h3 id="3-关于CPU和操作系统的界限"><a href="#3-关于CPU和操作系统的界限" class="headerlink" title="3.关于CPU和操作系统的界限"></a>3.关于CPU和操作系统的界限</h3><p>P7要实现的事情只有：</p>
+<h3 id="3-关于CPU和操作系统的界限"><a href="#3-关于CPU和操作系统的界限" class="headerlink" title="3. 关于CPU和操作系统的界限"></a>3. 关于CPU和操作系统的界限</h3><p>P7要实现的事情只有：</p>
 <ol>
-<li>翻译指令</li>
+<li>翻译指令。</li>
 <li>在需要响应中断或者发生异常的时候要能够正确跳转到<code>0x4180</code>的入口。</li>
+<li>周期性写入<code>cause[15:10]</code>。</li>
 </ol>
-<p>比如，在异常或者中断的时候，我们只需要向<code>CP0</code>中写入对应的<code>VPC</code>和性质（比如是否是延迟槽）。至于要保存哪些寄存器值，根据指令性质不同执行差异化的异常中断响应代码，这些都不是我们需要考虑的。</p>
-<h3 id="5-关于中断及其对拍"><a href="#5-关于中断及其对拍" class="headerlink" title="5.关于中断及其对拍"></a>5.关于中断及其对拍</h3><h4 id="关于中断响应"><a href="#关于中断响应" class="headerlink" title="关于中断响应"></a>关于中断响应</h4><p>程序对中断的响应是通过许许多多的开关实现的。在上机中可能也会遇到添加许多开关，根据这些开关的状态决定是否执行对应程序的情况。<br>（待补充~）</p>
+<p>比如，在异常或者中断的时候，我们只需要向<code>CP0</code>中写入对应的<code>VPC</code>和性质（比如是否是延迟槽）。至于要保存哪些寄存器值，根据指令性质不同执行差异化的异常中断响应代码，这些都不是我们需要考虑的，而是编写异常处理程序的程序员需要操心的事。</p>
+<h3 id="4-关于中断及其对拍"><a href="#4-关于中断及其对拍" class="headerlink" title="4. 关于中断及其对拍"></a>4. 关于中断及其对拍</h3><h4 id="关于中断响应"><a href="#关于中断响应" class="headerlink" title="关于中断响应"></a>关于中断响应</h4><p>程序对中断的响应是通过许许多多的开关实现的。在上机中可能也会遇到添加许多开关，根据这些开关的状态决定是否执行对应程序的情况。<br>（待补充~）</p>
 <h4 id="关于中断的对拍"><a href="#关于中断的对拍" class="headerlink" title="关于中断的对拍"></a>关于中断的对拍</h4><p>很不幸中断无法和<code>Mars</code>对拍。流水线CPU中时钟周期与指令周期是不相等的，而<code>Timer</code>的中断是根据时钟周期来定的；<code>Interrupt</code>信号是根据宏观<code>PC</code>和定，因此也无法得知<code>CPU</code>内部的阻塞情况。也就是说中断信号可以在任意一个时钟周期而非指令周期产生。<code>Mars</code>模拟的是<code>单周期CPU</code>的运行，与<code>流水线CPU</code>不同。此外哪怕是在不会产生冒险的汇编代码下用和<code>Mars</code>进行对拍，个人也观测到过官方<code>Mars</code>的鬼畜行为。</p>
 <p>如果对自己的中断响应不放心的话，建议找一个设计相当的小伙伴进行对拍，以避免时钟周期不同。</p>
 <h4 id="关于Timer"><a href="#关于Timer" class="headerlink" title="关于Timer"></a>关于Timer</h4><p>官方教程中对<code>Timer</code>有专门的文件进行规范，在2023秋的计算机组成课程中又提供了官方的Timer源代码，读懂以后实例化两个Timer即可。需要注意的是只有每个Timer中的三个寄存器只有俩可写，另一个只可读。另外就是<code>Timer</code>访问的字对齐问题。</p>
-<h3 id="6-关于异常和异常优先级"><a href="#6-关于异常和异常优先级" class="headerlink" title="6.关于异常和异常优先级"></a>6.关于异常和异常优先级</h3><h4 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h4><p>P7需要实现的异常有5种：<code>Adel</code> <code>Ades</code> <code>Overflow</code> <code>RI</code> <code>Syscall</code>。每一种异常在教程中已经写的十分详细了。</p>
+<h3 id="5-关于异常和异常优先级"><a href="#5-关于异常和异常优先级" class="headerlink" title="5.关于异常和异常优先级"></a>5.关于异常和异常优先级</h3><h4 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h4><p>P7需要实现的异常有5种：<code>Adel</code> <code>Ades</code> <code>Overflow</code> <code>RI</code> <code>Syscall</code>。每一种异常在教程中已经写的十分详细了。</p>
 <h4 id="跳转指令异常"><a href="#跳转指令异常" class="headerlink" title="跳转指令异常"></a>跳转指令异常</h4><ul>
 <li>跳转指令不会因为PC不对齐或越界而成为受害指令，异常只会发生在跳转到的那条指令上。</li>
 <li><code>beq``bne``jal</code>不会发生未字对齐的情况，只可能越界。</li>
 <li><code>jr</code>可能未字对齐，也可能越界。</li>
 </ul>
 <h4 id="异常优先级"><a href="#异常优先级" class="headerlink" title="异常优先级"></a>异常优先级</h4><p>简单来说，就是先发生的异常产生的会顶替掉后发生的异常。比方说当指令取址异常和未知指令异常同时发生时，我们肯定会先考虑取址异常而非未知指令异常。除了从直观感觉来判断以外，可以通过流水线级来判断异常优先级，即在<strong>F级发生的异常 &gt; D级发生的异常 &gt; E级发生的异常 &gt; M级发生的异常</strong>。F级取址，D级译码，因此指令取址异常优先于未知指令异常。</p>
-<h3 id="7-关于延迟槽"><a href="#7-关于延迟槽" class="headerlink" title="7.关于延迟槽"></a>7.关于延迟槽</h3><p>指令是否是延迟槽需要在F级进行判断，并进行流水。特例如下：</p>
+<h3 id="6-关于延迟槽"><a href="#6-关于延迟槽" class="headerlink" title="6.关于延迟槽"></a>6.关于延迟槽</h3><p>指令是否是延迟槽需要在F级进行判断，并进行流水。特例如下：</p>
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">div $t0, $t1</span><br><span class="line">beq $t0, $t1, TARGET</span><br><span class="line">mfhi $t0</span><br></pre></td></tr></table></figure></div>
 <p><code>mfhi</code>会被阻塞在D级，因此等于或晚于D级进行判断都会使得延迟槽判断不准确。</p>
 <p>指令是否是延迟槽是由上一条执行的指令决定的，也就是说这条指令的存储空间上的前一条指令是不是跳转指令，以及这条指令的下一级流水级是不是跳转指令都不能决定这条指令是不是延迟槽。</p>
-<h3 id="8-关于空泡和宏观PC"><a href="#8-关于空泡和宏观PC" class="headerlink" title="8.关于空泡和宏观PC"></a>8.关于空泡和宏观PC</h3><p>流水线<code>CPU</code>应当保持宏观PC的连续性，因此空泡的<code>PC</code>不能随便选。一般来说，空泡的<code>PC</code>应当永远保持与下一条指令的<code>PC</code>一致：阻塞产生空泡的话就保持与被阻塞指令一致，<code>eret</code>清空延迟槽的空泡应当与EPC一致（如果是用清空延迟槽实现<code>eret</code>的话）。</p>
+<h3 id="7-关于空泡和宏观PC"><a href="#7-关于空泡和宏观PC" class="headerlink" title="7.关于空泡和宏观PC"></a>7.关于空泡和宏观PC</h3><p>流水线<code>CPU</code>应当保持宏观PC的连续性，因此空泡的<code>PC</code>不能随便选。一般来说，空泡的<code>PC</code>应当永远保持与下一条指令的<code>PC</code>一致：阻塞产生空泡的话就保持与被阻塞指令一致，<code>eret</code>清空延迟槽的空泡应当与EPC一致（如果是用清空延迟槽实现<code>eret</code>的话）。</p>
 <p>将空泡的PC永远置成<code>32&#39;h0000_3000</code>也是不行的。尽管程序在第一次运行<code>32&#39;h0000_3000</code>处的指令时会因为没有将<code>EXL</code>置1而不对中断做出响应，但是之后可就不好说了。这样就会导致程序在某一个位置因为阻塞了一下使得<code>EPC</code>置<code>3000</code>。这可就坏事了。此外，空泡的<code>BD</code>也应当与下一条指令保持一致。</p>
 <p>至于为什么空泡的<code>PC</code>不能和上一条指令一致呢？这是因为当上一条指令进入<code>CP0</code>所在级的下一级时，我们应当认为这条指令已经执行完了，这个时候异常中断的<code>VPC</code>就不应当发生在这条已经执行完的指令上（除非延迟槽指令<code>VPC-4</code>）——都执行完了怎么受害？</p>
 ]]></content>
@@ -273,6 +320,24 @@
       </categories>
       <tags>
         <tag>Verilog</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>About me</title>
+    <url>/2023/12/31/about/me/</url>
+    <content><![CDATA[<p>现在是2023年12月31号的晚上19:35。距离bilibili跨年晚会的开始还有25分钟，距离2024年还有五个小时不到。2023年是我迈入北航计算机学院的第一年。回顾过去的一学期，我感受过离散数学和量子力学的美丽，也体验了数理统计和随机过程的离奇和神秘；既在面向对象先导课的一次次debug中挣扎，也在计算机组成实验课上一次次死去。</p>
+<p>我从来没有想过自己也会有写博客的一天。或许是希望自己同样身为菜鸡能给后来者一点启发，或许是对自己一学期的回顾与复盘，又或许是单纯想找个地方说话，总之一学期下来，我想记录一下我经历的每次不可思议，记录我每一次崩溃和有一次的涅槃。</p>
+<p>正当我没处说话的时候，我想起了Roife学长、TobyShi学长和FlyingLandlord学长制作的博客，又正巧在群里刷到了Tan学长的博客。受学长们启发，有了做一篇自己的博客的想法。</p>
+<p>希望这篇博客能够坚持到大三，直到我走完北航6系的基本课程。期间可能会换主题和博客的排版，不过希望我能坚持到最后。</p>
+<p>感谢每一位身边的人。</p>
+<p>现在是2023年12月31号19:56:36，就把这个时间定为一切的开始吧</p>
+]]></content>
+      <categories>
+        <category>me</category>
+      </categories>
+      <tags>
+        <tag>me</tag>
+        <tag>talks</tag>
       </tags>
   </entry>
 </search>

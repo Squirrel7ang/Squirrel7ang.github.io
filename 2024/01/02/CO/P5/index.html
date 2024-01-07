@@ -13,24 +13,27 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://squirrel7ang.github.io/2023/12/31/about/me/"/>
+    <link rel="canonical" href="https://squirrel7ang.github.io/2024/01/02/co/p5/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="什么？这篇博客的作者是个小菜鸡？o.O？">
+        <meta name="description" content="是实验的及格线，也是实验的开始。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="About me">
-<meta property="og:url" content="https://squirrel7ang.github.io/2023/12/31/about/me/index.html">
+<meta property="og:title" content="「BUAA CO」P5总结">
+<meta property="og:url" content="https://squirrel7ang.github.io/2024/01/02/CO/P5/index.html">
 <meta property="og:site_name" content="Squirrel7ang Blog">
-<meta property="og:description" content="什么？这篇博客的作者是个小菜鸡？o.O？">
+<meta property="og:description" content="是实验的及格线，也是实验的开始。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-12-31T11:56:36.000Z">
-<meta property="article:modified_time" content="2024-01-01T15:15:44.381Z">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/CO/P5/CIRC.png">
+<meta property="article:published_time" content="2024-01-02T14:12:14.000Z">
+<meta property="article:modified_time" content="2024-01-07T09:50:30.141Z">
 <meta property="article:author" content="Squirrel7ang">
-<meta property="article:tag" content="me">
-<meta property="article:tag" content="talks">
+<meta property="article:tag" content="CO">
+<meta property="article:tag" content="Verilog">
+<meta property="article:tag" content="流水线CPU">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://squirrel7ang.github.io/images/CO/P5/CIRC.png">
     
     
     <!--- Icon Part-->
@@ -42,7 +45,7 @@
     
     <title>
         
-            About me -
+            「BUAA CO」P5总结 -
         
         Squirrel7ang&#39;s Blog
     </title>
@@ -659,10 +662,10 @@
             
                 
                 
-                <img src="https://squirrel7ang.github.io/images/cover/me_cover.jpg" alt="About me" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                <img src="https://squirrel7ang.github.io/images/cover/cover_7.jpg" alt="「BUAA CO」P5总结" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
                 
                 <div class="w-full flex items-center absolute bottom-0 justify-start">
-                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">About me</h1>
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">「BUAA CO」P5总结</h1>
                 </div>
             
             </div>
@@ -683,15 +686,15 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2023-12-31 19:56:36</span>
-        <span class="mobile">2023-12-31 19:56:36</span>
+        <span class="desktop">2024-01-02 22:12:14</span>
+        <span class="mobile">2024-01-02 22:12:14</span>
         <span class="hover-info">创建</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-01-01 23:15:44</span>
-            <span class="mobile">2024-01-01 23:15:44</span>
+            <span class="desktop">2024-01-07 17:50:30</span>
+            <span class="mobile">2024-01-07 17:50:30</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -705,7 +708,7 @@
                     
                         
                         <li>
-                            <a href="/categories/me/">me</a>&nbsp;
+                            <a href="/categories/CO/">CO</a>&nbsp;
                         </li>
                     
                     
@@ -719,11 +722,15 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/me/">me</a>&nbsp;
+                        <a href="/tags/CO/">CO</a>&nbsp;
                     </li>
                 
                     <li>
-                        | <a href="/tags/talks/">talks</a>&nbsp;
+                        | <a href="/tags/Verilog/">Verilog</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E6%B5%81%E6%B0%B4%E7%BA%BFCPU/">流水线CPU</a>&nbsp;
                     </li>
                 
             </ul>
@@ -749,12 +756,54 @@
 
 
         <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-            <p>现在是2023年12月31号的晚上19:35。距离bilibili跨年晚会的开始还有25分钟，距离2024年还有五个小时不到。2023年是我迈入北航计算机学院的第一年。回顾过去的一学期，我感受过离散数学和量子力学的美丽，也体验了数理统计和随机过程的离奇和神秘；既在面向对象先导课的一次次debug中挣扎，也在计算机组成实验课上一次次死去。</p>
-<p>我从来没有想过自己也会有写博客的一天。或许是希望自己同样身为菜鸡能给后来者一点启发，或许是对自己一学期的回顾与复盘，又或许是单纯想找个地方说话，总之一学期下来，我想记录一下我经历的每次不可思议，记录我每一次崩溃和有一次的涅槃。</p>
-<p>正当我没处说话的时候，我想起了Roife学长、TobyShi学长和FlyingLandlord学长制作的博客，又正巧在群里刷到了Tan学长的博客。受学长们启发，有了做一篇自己的博客的想法。</p>
-<p>希望这篇博客能够坚持到大三，直到我走完北航6系的基本课程。期间可能会换主题和博客的排版，不过希望我能坚持到最后。</p>
-<p>感谢每一位身边的人。</p>
-<p>现在是2023年12月31号19:56:36，就把这个时间定为一切的开始吧</p>
+            <h2 id="主要任务"><a href="#主要任务" class="headerlink" title="主要任务"></a>主要任务</h2><h2 id="顶层设计"><a href="#顶层设计" class="headerlink" title="顶层设计"></a>顶层设计</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/CO/P5/CIRC.png"
+                      alt="P5_CIRC"
+                ></p>
+<p>其中红色为转发有关设计、绿色为阻塞有关设计</p>
+<h2 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h2><p>P5是一个难点，代码量也比P4要多很多，很容易挂或者<code>Gap</code>，建议合理分配时间。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="1-集中式译码和分布式译码"><a href="#1-集中式译码和分布式译码" class="headerlink" title="1. 集中式译码和分布式译码"></a>1. 集中式译码和分布式译码</h3><p>集中式译码将控制信号集中译码出来，再逐级流水；而分布式译码在每一级都设置译码单元，将该流水级需要使用的控制信号译码出来。我在P5的设计中采用了集中式译码，但是经历了P7之后，个人认为分布式译码方便不止一点点。</p>
+<h4 id="集中式译码的控制信号表示"><a href="#集中式译码的控制信号表示" class="headerlink" title="集中式译码的控制信号表示"></a>集中式译码的控制信号表示</h4><p>由于集中式译码会一次性产生大量控制信号，需要为每一个控制信号专门在流水级分配一个寄存器。但是这种方式太麻烦，因此可以规定控制信号的排列顺序，用<code>vector</code>将控制信号合并一同传递。这种方式的缺点是可读性低，每次都需要查询控制信号的某一位对应的是什么控制信号。因此我在<code>mips.v</code>文件的开头将控制信号全部用<code>wire</code>类型变量接了出来，使得还不如直接分布式译码。</p>
+<!-- （附一张图片吧） -->
+
+<p>个人认为集中式译码的一个好处在于可以将控制信号流水。这意味着如果某一流水级的结果对后续流水级造成影响时，可以通过改变传递给下一流水级的控制信号来实现。但是分布式译码的结果直接取决于指令本身。</p>
+<p>举个例子，比方说写入寄存器的<code>reg_write</code>控制信号，描述了一条指令是否需要写入寄存器。指令<code>beqal $t0, $t1, TARGET</code>表示如果<code>$t0</code>和<code>$t1</code>相等，则跳转到<code>TARGET</code>并链接（将当前<code>PC</code>写入<code>$31</code>）。这时候分布式译码无法根据指令本身判断<code>reg_write</code>的值，因此指令在W级时需要保留D级<code>CMP</code>模块的比较结果，因此需要额外流水D级<code>CMP</code>比较结果。但是集中式译码只需要根据D级的比较结果选择指定信号传递给E级的<code>reg_write</code>就行。</p>
+<p>在之后的设计中，流水数据或信号是很常见的，也并不困难。因此集中式译码的上述优势并不显著。在P7的异常判断中，分布式译码会表现出一定的优势<del>所以我将分布式和集中式进行了混搭</del>。<strong>建议分布式译码</strong>。</p>
+<h3 id="2-T-new-T-use"><a href="#2-T-new-T-use" class="headerlink" title="2. $T_{new}$ &amp; $T_{use}$"></a>2. $T_{new}$ &amp; $T_{use}$</h3><p>$T_{new}$和$T_{use}$可以方便地描述转发和暂停条件。建议在着手写转发和暂停之前先理解$T_{new}$和$T_{use}$再推进进度。需要注意的有：</p>
+<ul>
+<li>$T_{new}$不能减为负数，在一些设计中可能会出问题。</li>
+<li>$T_{new}&#x3D;0$时可以视为这条指令不会写入寄存器；</li>
+<li>$T_{use}&#x3D;\infty$可以视为这条指令不会使用到寄存器。$\infty$可以用$\geq3$的任何一个数去表示，因为$\geq3$时在W流水级及之后不会有任何接受转发的位点。</li>
+</ul>
+<h3 id="3-转发-Forwarding"><a href="#3-转发-Forwarding" class="headerlink" title="3. 转发 $Forwarding$"></a>3. 转发 $Forwarding$</h3><p>2023计组课程组要求能转发尽量转发。但是这个要求是针对P5课下而言的。在P7的<code>eret</code>的实现中可以阻塞也可以转发。</p>
+<h4 id="转发位置"><a href="#转发位置" class="headerlink" title="转发位置"></a>转发位置</h4><p>转发位点见顶层设计图。</p>
+<p>转出位点有：</p>
+<ol>
+<li>W级写入数据</li>
+<li>M级写入数据</li>
+</ol>
+<p>接受转发位点有：</p>
+<ol>
+<li>M级DM的地址</li>
+<li>E级的两个操作数</li>
+<li>D级GRF（内部转发）</li>
+</ol>
+<p>转发要求从流水寄存器转发，这样能够缩短流水级的关键路径，使得时钟周期不会因为转发而增加太多，甚至是不增加。</p>
+<p>我在设计的过程中并没有使用内部转发，而是改成了向D级转发。效果完全相同，不过不建议这么做</p>
+<h4 id="转发条件"><a href="#转发条件" class="headerlink" title="转发条件"></a>转发条件</h4><p>$T_{new} \leq T_{use}$或者无脑转发——只要后续流水级有对寄存器的更新就转发。</p>
+<p>接受转发时先接受M级转发在接受W级转发。</p>
+<h4 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h4><p>可以用分布式的转发模块对转发进行管理，也可以使用一个集中转发控制模块对全部转发任务进行控制。我选择了前者，在每一个转发位点实例化了一个<code>_FWD</code>模块对该位点是否接受转发进行判断<del>然后被助教骂了一顿</del>。</p>
+<h3 id="4-暂停-Stall"><a href="#4-暂停-Stall" class="headerlink" title="4. 暂停 $Stall$"></a>4. 暂停 $Stall$</h3><h4 id="阻塞位置"><a href="#阻塞位置" class="headerlink" title="阻塞位置"></a>阻塞位置</h4><p>全部指令需要阻塞在D级，也就是说包括D级在内的所有流水级都要冻住，E级流水寄存器要产生空泡。具体来说，暂停信号作用的地方有</p>
+<ul>
+<li>D级流水寄存器，使之不更新</li>
+<li>PC，使之不更新（或者NPC，使之等于PC）</li>
+<li>E级流水寄存器，使之产生空泡</li>
+</ul>
+<h4 id="阻塞条件"><a href="#阻塞条件" class="headerlink" title="阻塞条件"></a>阻塞条件</h4><p>$T_{new} \gt T_{use}$ 且 目标寄存器号相等 且 <strong>都不等于0</strong>。</p>
+<h4 id="关于空泡"><a href="#关于空泡" class="headerlink" title="关于空泡"></a>关于空泡</h4><p>空泡的PC建议保留为被阻塞指令的PC，比方说beq被阻塞在D级，那么E级产生的空泡的PC就保持和beq的PC相同。这在P7中会用到，不过也可以等到P7再改。</p>
+<p><strong>祝P5一切顺利！</strong></p>
 
         </div>
 
@@ -762,18 +811,18 @@
             <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
                 <div class="article-copyright-info-container">
     <ul>
-        <li><strong>标题:</strong> About me</li>
+        <li><strong>标题:</strong> 「BUAA CO」P5总结</li>
         <li><strong>作者:</strong> Squirrel7ang</li>
         <li><strong>创建于
-                :</strong> 2023-12-31 19:56:36</li>
+                :</strong> 2024-01-02 22:12:14</li>
         
             <li>
                 <strong>更新于
-                    :</strong> 2024-01-01 23:15:44
+                    :</strong> 2024-01-07 17:50:30
             </li>
         
         <li>
-            <strong>链接:</strong> https://redefine.ohevan.com/2023/12/31/about/me/
+            <strong>链接:</strong> https://redefine.ohevan.com/2024/01/02/CO/P5/
         </li>
         <li>
             <strong>
@@ -795,11 +844,15 @@
             <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
                 
                     <li class="tag-item mx-0.5">
-                        <a href="/tags/me/">#me</a>&nbsp;
+                        <a href="/tags/CO/">#CO</a>&nbsp;
                     </li>
                 
                     <li class="tag-item mx-0.5">
-                        <a href="/tags/talks/">#talks</a>&nbsp;
+                        <a href="/tags/Verilog/">#Verilog</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E6%B5%81%E6%B0%B4%E7%BA%BFCPU/">#流水线CPU</a>&nbsp;
                     </li>
                 
             </ul>
@@ -810,29 +863,14 @@
         
             <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
                 
-                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-                        <a class="prev"
-                        rel="prev"
-                        href="/2024/01/01/CO/verilog_error/"
-                        >
-                            <span class="left arrow-icon flex justify-center items-center">
-                                <i class="fa-solid fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">「BUAA CO」Verilog易错点</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
                         <a class="next"
                         rel="next"
-                        href="/2023/12/30/CO/About/"
+                        href="/2024/01/02/CO/P6/"
                         >
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">「BUAA CO」关于课下设计的说明</span>
+                                <span class="post-nav-title-item">「BUAA CO」P6总结</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex justify-center items-center">
@@ -895,8 +933,8 @@
             <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
-        <div class="page-title">About me</div>
-        
+        <div class="page-title">「BUAA CO」P5总结</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E4%BB%BB%E5%8A%A1"><span class="nav-text">主要任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B6%E5%B1%82%E8%AE%BE%E8%AE%A1"><span class="nav-text">顶层设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E8%AE%AE"><span class="nav-text">建议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-text">注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%9B%86%E4%B8%AD%E5%BC%8F%E8%AF%91%E7%A0%81%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E8%AF%91%E7%A0%81"><span class="nav-text">1. 集中式译码和分布式译码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-T-new-T-use"><span class="nav-text">2. $T_{new}$ &amp; $T_{use}$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%BD%AC%E5%8F%91-Forwarding"><span class="nav-text">3. 转发 $Forwarding$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%9A%82%E5%81%9C-Stall"><span class="nav-text">4. 暂停 $Stall$</span></a></li></ol></li></ol>
 
     </div>
 </div>
