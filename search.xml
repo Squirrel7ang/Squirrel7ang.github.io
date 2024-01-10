@@ -49,7 +49,7 @@
 <h2 id="用MARS输出标准答案"><a href="#用MARS输出标准答案" class="headerlink" title="用MARS输出标准答案"></a>用MARS输出标准答案</h2><p>标准MARS无法使用命令行在运行过程中对寄存器或者内存进行监视，建议自行寻找解决方案，比如自己魔改MARS或者写一个自动化仿真程序</p>
 <details class="blue" data-header-exclude=""><summary><i class="fa-solid fa-chevron-right"></i>Folding 但是如果改不了一点... </summary>
               <div class="content">
-              <p>可以使用Toby学长改好的MARS，<a class="link" href="https://github.com/Toby-Shi-cloud/Mars-with-BUAA-CO-extension">链接 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p><p>将下载的文件重命名为<code>mars.jar</code>，并放在和test.asm文件相同的文件夹下，在该目录的终端下运行：</p><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ java -jar mars.jar mc CompactLargeText coL1 test.asm &gt;&gt; mars_tmp.txt</span><br></pre></td></tr></table></figure></div><p>这会将mars运行test.asm的正确结果连通mars的输出信息重定向写入mars_tmp.txt文件中。文件除了包含正确输出以外，还包含Mars的输出信息。因此需要在后续步骤中对格式进行检查。这我们在后面再说。</p>
+              <p>可以使用Toby学长改好的MARS，<a class="link" href="https://github.com/Toby-Shi-cloud/Mars-with-BUAA-CO-extension">链接 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p><p>将下载的文件重命名为<code>mars.jar</code>，并放在和test.asm文件相同的文件夹下，在该目录的终端下运行：</p><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ java -jar mars.jar mc CompactLargeText coL1 test.asm &gt; mars_tmp.txt</span><br></pre></td></tr></table></figure></div><p>这会将mars运行test.asm的正确结果连通mars的输出信息重定向写入mars_tmp.txt文件中。文件除了包含正确输出以外，还包含Mars的输出信息。因此需要在后续步骤中对格式进行检查。这我们在后面再说。</p>
               </div>
             </details>
 
@@ -89,12 +89,12 @@
 
 <p>其中<code>-y</code>表示将文件“肩并肩”地输出。<code>-H</code>用于大规模文本比对，我们的规模比较小，不需要。<code>-B</code>表示不对空行进行比对。<code>-b</code>表示不对空格进行比对。我们将比较的结果重定向到了<code>result.txt</code>文件中。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>大概要用到这些指令：</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ java -jar mars.jar mc CompactLargeText coL1 test.asm &gt;&gt; mars_tmp.txt</span><br><span class="line"></span><br><span class="line">$ java -jar mars.jar dump .text HexText code.txt mc CompactLargeText test.asm</span><br><span class="line"></span><br><span class="line">$ iverilog -s mips_tb -o mips_tb.out *.v</span><br><span class="line">$ vvp mips_tb.out &gt; my_tmp.txt</span><br><span class="line"></span><br><span class="line">$ grep <span class="string">'@'</span> my_tmp.txt &gt; my.txt</span><br><span class="line">$ grep <span class="string">'@'</span> mars_tmp.txt &gt; mars.txt</span><br><span class="line"></span><br><span class="line">$ diff -y (-H) -B -b my.txt mars.txt &gt; result.txt</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ java -jar mars.jar mc CompactLargeText coL1 test.asm &gt; mars_tmp.txt</span><br><span class="line"></span><br><span class="line">$ java -jar mars.jar dump .text HexText code.txt mc CompactLargeText test.asm</span><br><span class="line"></span><br><span class="line">$ iverilog -s mips_tb -o mips_tb.out *.v</span><br><span class="line">$ vvp mips_tb.out &gt; my_tmp.txt</span><br><span class="line"></span><br><span class="line">$ grep <span class="string">'@'</span> my_tmp.txt &gt; my.txt</span><br><span class="line">$ grep <span class="string">'@'</span> mars_tmp.txt &gt; mars.txt</span><br><span class="line"></span><br><span class="line">$ diff -y (-H) -B -b my.txt mars.txt &gt; result.txt</span><br></pre></td></tr></table></figure></div>
 
 <h2 id="编写成shell脚本"><a href="#编写成shell脚本" class="headerlink" title="编写成shell脚本"></a>编写成shell脚本</h2><p>shell脚本在linux中能够方便的运行多条linux指令。在第二学年的春季学期我们也会接触到它的具体写法，因此我也不会。</p>
 <p>不过我们也不需要会。</p>
 <p>打开<code>ChatGPT</code>，耐(man)心(man)指(tiao)导(jiao)它帮我们写一个小shell脚本。</p>
-<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">文件路径</span></span><br><span class="line">mars_jar="mars.jar"</span><br><span class="line">code_txt="code.txt"</span><br><span class="line">verilog_files="*.v"</span><br><span class="line">mars_tmp="mars_tmp.txt"</span><br><span class="line">my_tmp="my_tmp.txt"</span><br><span class="line">tb_out="mips_tb.out"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">存储临时文件名的数组</span></span><br><span class="line">tmp_files=("$mars_tmp" "$my_tmp" "$my_tmp.txt" "$mars_tmp.txt" "$tb_out")</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">清理临时文件的函数</span></span><br><span class="line">clean_tmp_files() {</span><br><span class="line">  for file in "${tmp_files[@]}"; do</span><br><span class="line">    if [ -f "$file" ]; then</span><br><span class="line">      rm "$file"</span><br><span class="line">    fi</span><br><span class="line">  done</span><br><span class="line">}</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">循环处理每个test.asm文件</span></span><br><span class="line">for asm_file in test*.asm; do</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">生成对应的result.txt文件名</span></span><br><span class="line">  result_file="${asm_file%.asm}_result.txt"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第一条指令</span></span><br><span class="line">  java -jar "$mars_jar" mc CompactLargeText coL1 "$asm_file" &gt;&gt; "$mars_tmp"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第二条指令</span></span><br><span class="line">  java -jar "$mars_jar" dump .text HexText "$code_txt" mc CompactLargeText "$asm_file" &gt; /dev/null 2&gt;&amp;1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第三条指令</span></span><br><span class="line">  iverilog -s mips_tb -o $tb_out $verilog_files &gt; /dev/null 2&gt;&amp;1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第四条指令</span></span><br><span class="line">  vvp $tb_out &gt; "$my_tmp"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第五条指令</span></span><br><span class="line">  grep '@' "$my_tmp" &gt; "$my_tmp.txt"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第六条指令</span></span><br><span class="line">  grep '@' "$mars_tmp" &gt; "$mars_tmp.txt"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第七条指令</span></span><br><span class="line">  if ! diff -q "$my_tmp.txt" "$mars_tmp.txt"; then</span><br><span class="line">    diff -y -H -B -b "$my_tmp.txt" "$mars_tmp.txt" &gt; "$result_file"</span><br><span class="line">    echo "$asm_file 运行不正确，比对结果在 $result_file 中。"</span><br><span class="line">  else</span><br><span class="line">    echo "$asm_file 运行正确。"</span><br><span class="line">  fi</span><br><span class="line">done</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">清理临时文件</span></span><br><span class="line">clean_tmp_files</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">文件路径</span></span><br><span class="line">mars_jar="mars.jar"</span><br><span class="line">code_txt="code.txt"</span><br><span class="line">verilog_files="*.v"</span><br><span class="line">mars_tmp="mars_tmp.txt"</span><br><span class="line">my_tmp="my_tmp.txt"</span><br><span class="line">tb_out="mips_tb.out"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">存储临时文件名的数组</span></span><br><span class="line">tmp_files=("$mars_tmp" "$my_tmp" "$my_tmp.txt" "$mars_tmp.txt" "$tb_out")</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">清理临时文件的函数</span></span><br><span class="line">clean_tmp_files() {</span><br><span class="line">  for file in "${tmp_files[@]}"; do</span><br><span class="line">    if [ -f "$file" ]; then</span><br><span class="line">      rm "$file"</span><br><span class="line">    fi</span><br><span class="line">  done</span><br><span class="line">}</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">循环处理每个test.asm文件</span></span><br><span class="line">for asm_file in test*.asm; do</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">生成对应的result.txt文件名</span></span><br><span class="line">  result_file="${asm_file%.asm}_result.txt"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第一条指令</span></span><br><span class="line">  java -jar "$mars_jar" mc CompactLargeText coL1 "$asm_file" &gt; "$mars_tmp"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第二条指令</span></span><br><span class="line">  java -jar "$mars_jar" dump .text HexText "$code_txt" mc CompactLargeText "$asm_file" &gt; /dev/null 2&gt;&amp;1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第三条指令</span></span><br><span class="line">  iverilog -s mips_tb -o $tb_out $verilog_files &gt; /dev/null 2&gt;&amp;1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第四条指令</span></span><br><span class="line">  vvp $tb_out &gt; "$my_tmp"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第五条指令</span></span><br><span class="line">  grep '@' "$my_tmp" &gt; "$my_tmp.txt"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第六条指令</span></span><br><span class="line">  grep '@' "$mars_tmp" &gt; "$mars_tmp.txt"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第七条指令</span></span><br><span class="line">  if ! diff -q "$my_tmp.txt" "$mars_tmp.txt"; then</span><br><span class="line">    diff -y -H -B -b "$my_tmp.txt" "$mars_tmp.txt" &gt; "$result_file"</span><br><span class="line">    echo "$asm_file 运行不正确，比对结果在 $result_file 中。"</span><br><span class="line">  else</span><br><span class="line">    echo "$asm_file 运行正确。"</span><br><span class="line">  fi</span><br><span class="line">done</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">清理临时文件</span></span><br><span class="line">clean_tmp_files</span><br></pre></td></tr></table></figure></div>
 <p>将之前提到的所有文件都放在同一个文件目录下。</p>
 <p>调用指令</p>
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">touch</span> test.sh</span><br></pre></td></tr></table></figure></div>
@@ -170,110 +170,21 @@
       </tags>
   </entry>
   <entry>
-    <title>「BUAA CO」P7总结</title>
-    <url>/2024/01/02/CO/P7/</url>
-    <content><![CDATA[<h2 id="主要任务"><a href="#主要任务" class="headerlink" title="主要任务"></a>主要任务</h2><ul>
-<li>新增指令：<code>nop</code>, <code>mfc0</code>, <code>mtc0</code>, <code>eret</code>, <code>syscall</code></li>
-<li>新增模块：<code>总线Bridge</code>, <code>CP0协处理器</code>, <code>Timer0</code>, <code>Timer1</code></li>
-<li>新增功能：完成对五类异常和中断的响应</li>
-</ul>
-<h2 id="顶层设计"><a href="#顶层设计" class="headerlink" title="顶层设计"></a>顶层设计</h2><p><img lazyload="" src="/images/loading.svg" data-src="/images/CO/P7/CIRC.png" alt="P7_CIRC"></p>
-<p>其中红色为转发有关设计，绿色为阻塞有关设计，蓝色为乘除有关设计，黄色为CP0有关设计或外设，浅绿色虚线内为CPU，粉色为Bridge。</p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>P7忘写设计文档Gap了一周…</p>
-<p><strong>一定要写设计文档！！！</strong></p>
-<h3 id="1-关于CP0及其实现"><a href="#1-关于CP0及其实现" class="headerlink" title="1. 关于CP0及其实现"></a>1. 关于CP0及其实现</h3><p>P7添加了协处理器CP0，实现了其中的<code>sr(state register)</code>, <code>cause</code>和<code>EPC</code>三个寄存器的一些位。<strong>未实现位需要保持0</strong>。<br>功能定义如下：</p>
-<table>
-<thead>
-<tr>
-<th align="center">Reg</th>
-<th align="center">Byte</th>
-<th align="center">Name</th>
-<th align="center">Function</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">cause</td>
-<td align="center">31</td>
-<td align="center"><code>BD</code></td>
-<td align="center">如果<code>CP0</code>所在级指令为延迟槽<br>指令就接入1，否则接0</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center">15:10</td>
-<td align="center"><code>IP/HWInt[5:0]</code></td>
-<td align="center"><code>HWInt[5:3]</code>永远保持0；<br><code>Interrupt</code>信号接入<code>HWInt[2]</code><br><code>Timer1</code>的<code>IRQ</code>信号接入<code>HWInt[1]</code><br><code>Timer0</code>的<code>IRQ</code>信号接入<code>HWInt[0]</code></td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center">6:2</td>
-<td align="center"><code>Exc_code</code></td>
-<td align="center">如果发生异常或者中断，<br>则将对应的异常码写入</td>
-</tr>
-<tr>
-<td align="center">sr</td>
-<td align="center">15:10</td>
-<td align="center"><code>IM</code></td>
-<td align="center"><code>sr[i]</code>置1表示不对<code>HWInt[i]</code><br>的中断信号进行响应</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center">1</td>
-<td align="center"><code>EXL</code></td>
-<td align="center">进入核心态时置1，<br>退出核心态时置0<br>置1时不响应异常中断</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center">0</td>
-<td align="center"><code>IE</code></td>
-<td align="center">置1响应中断信号</td>
-</tr>
-<tr>
-<td align="center">EPC</td>
-<td align="center">31:0</td>
-<td align="center"><code>epc</code></td>
-<td align="center">写入<code>VPC</code>。需要注意延迟槽</td>
-</tr>
-</tbody></table>
-<p>此外需要说明的是<code>cause</code>寄存器是不可写的。这意味着用户没发通过执行<code>mtc0</code>指令来修改<code>cause</code>指令。<code>cause</code>寄存器的写入是由硬件完成的。每个周期都需要对<code>cause</code>寄存器的[15:10]进行写入。</p>
-<h3 id="2-关于新增指令"><a href="#2-关于新增指令" class="headerlink" title="2. 关于新增指令"></a>2. 关于新增指令</h3><p>新增指令会引入新的冒险。这主要发生在：</p>
-<ol>
-<li><code>eret</code>无延迟槽，D级跳转会产生控制冒险，需要清空延迟槽；或者F级跳转。</li>
-<li><code>mtc0</code>和<code>eret</code>产生供需模型形成数据冒险，需要转发或者阻塞解决冒险。</li>
-<li><code>mtc0</code>和<code>mfc0</code>与其他指令的冲突…</li>
-</ol>
-<h3 id="3-关于CPU和操作系统的界限"><a href="#3-关于CPU和操作系统的界限" class="headerlink" title="3. 关于CPU和操作系统的界限"></a>3. 关于CPU和操作系统的界限</h3><p>P7要实现的事情只有：</p>
-<ol>
-<li>翻译指令。</li>
-<li>在需要响应中断或者发生异常的时候要能够正确跳转到<code>0x4180</code>的入口。</li>
-<li>周期性写入<code>cause[15:10]</code>。</li>
-</ol>
-<p>比如，在异常或者中断的时候，我们只需要向<code>CP0</code>中写入对应的<code>VPC</code>和性质（比如是否是延迟槽）。至于要保存哪些寄存器值，根据指令性质不同执行差异化的异常中断响应代码，这些都不是我们需要考虑的，而是编写异常处理程序的程序员需要操心的事。</p>
-<h3 id="4-关于中断及其对拍"><a href="#4-关于中断及其对拍" class="headerlink" title="4. 关于中断及其对拍"></a>4. 关于中断及其对拍</h3><h4 id="关于中断响应"><a href="#关于中断响应" class="headerlink" title="关于中断响应"></a>关于中断响应</h4><p>程序对中断的响应是通过许许多多的开关实现的。在上机中可能也会遇到添加许多开关，根据这些开关的状态决定是否执行对应程序的情况。<br>（待补充~）</p>
-<h4 id="关于中断的对拍"><a href="#关于中断的对拍" class="headerlink" title="关于中断的对拍"></a>关于中断的对拍</h4><p>很不幸中断无法和<code>Mars</code>对拍。流水线CPU中时钟周期与指令周期是不相等的，而<code>Timer</code>的中断是根据时钟周期来定的；<code>Interrupt</code>信号是根据宏观<code>PC</code>和定，因此也无法得知<code>CPU</code>内部的阻塞情况。也就是说中断信号可以在任意一个时钟周期而非指令周期产生。<code>Mars</code>模拟的是<code>单周期CPU</code>的运行，与<code>流水线CPU</code>不同。此外哪怕是在不会产生冒险的汇编代码下用和<code>Mars</code>进行对拍，个人也观测到过官方<code>Mars</code>的鬼畜行为。</p>
-<p>如果对自己的中断响应不放心的话，建议找一个设计相当的小伙伴进行对拍，以避免时钟周期不同。</p>
-<h4 id="关于Timer"><a href="#关于Timer" class="headerlink" title="关于Timer"></a>关于Timer</h4><p>官方教程中对<code>Timer</code>有专门的文件进行规范，在2023秋的计算机组成课程中又提供了官方的Timer源代码，读懂以后实例化两个Timer即可。需要注意的是只有每个Timer中的三个寄存器只有俩可写，另一个只可读。另外就是<code>Timer</code>访问的字对齐问题。</p>
-<h3 id="5-关于异常和异常优先级"><a href="#5-关于异常和异常优先级" class="headerlink" title="5.关于异常和异常优先级"></a>5.关于异常和异常优先级</h3><h4 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h4><p>P7需要实现的异常有5种：<code>Adel</code> <code>Ades</code> <code>Overflow</code> <code>RI</code> <code>Syscall</code>。每一种异常在教程中已经写的十分详细了。</p>
-<h4 id="跳转指令异常"><a href="#跳转指令异常" class="headerlink" title="跳转指令异常"></a>跳转指令异常</h4><ul>
-<li>跳转指令不会因为PC不对齐或越界而成为受害指令，异常只会发生在跳转到的那条指令上。</li>
-<li><code>beq``bne``jal</code>不会发生未字对齐的情况，只可能越界。</li>
-<li><code>jr</code>可能未字对齐，也可能越界。</li>
-</ul>
-<h4 id="异常优先级"><a href="#异常优先级" class="headerlink" title="异常优先级"></a>异常优先级</h4><p>简单来说，就是先发生的异常产生的会顶替掉后发生的异常。比方说当指令取址异常和未知指令异常同时发生时，我们肯定会先考虑取址异常而非未知指令异常。除了从直观感觉来判断以外，可以通过流水线级来判断异常优先级，即在<strong>F级发生的异常 &gt; D级发生的异常 &gt; E级发生的异常 &gt; M级发生的异常</strong>。F级取址，D级译码，因此指令取址异常优先于未知指令异常。</p>
-<h3 id="6-关于延迟槽"><a href="#6-关于延迟槽" class="headerlink" title="6.关于延迟槽"></a>6.关于延迟槽</h3><p>指令是否是延迟槽需要在F级进行判断，并进行流水。特例如下：</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">div $t0, $t1</span><br><span class="line">beq $t0, $t1, TARGET</span><br><span class="line">mfhi $t0</span><br></pre></td></tr></table></figure></div>
-<p><code>mfhi</code>会被阻塞在D级，因此等于或晚于D级进行判断都会使得延迟槽判断不准确。</p>
-<p>指令是否是延迟槽是由上一条执行的指令决定的，也就是说这条指令的存储空间上的前一条指令是不是跳转指令，以及这条指令的下一级流水级是不是跳转指令都不能决定这条指令是不是延迟槽。</p>
-<h3 id="7-关于空泡和宏观PC"><a href="#7-关于空泡和宏观PC" class="headerlink" title="7.关于空泡和宏观PC"></a>7.关于空泡和宏观PC</h3><p>流水线<code>CPU</code>应当保持宏观PC的连续性，因此空泡的<code>PC</code>不能随便选。一般来说，空泡的<code>PC</code>应当永远保持与下一条指令的<code>PC</code>一致：阻塞产生空泡的话就保持与被阻塞指令一致，<code>eret</code>清空延迟槽的空泡应当与EPC一致（如果是用清空延迟槽实现<code>eret</code>的话）。</p>
-<p>将空泡的PC永远置成<code>32'h0000_3000</code>也是不行的。尽管程序在第一次运行<code>32'h0000_3000</code>处的指令时会因为没有将<code>EXL</code>置1而不对中断做出响应，但是之后可就不好说了。这样就会导致程序在某一个位置因为阻塞了一下使得<code>EPC</code>置<code>3000</code>。这可就坏事了。此外，空泡的<code>BD</code>也应当与下一条指令保持一致。</p>
-<p>至于为什么空泡的<code>PC</code>不能和上一条指令一致呢？这是因为当上一条指令进入<code>CP0</code>所在级的下一级时，我们应当认为这条指令已经执行完了，这个时候异常中断的<code>VPC</code>就不应当发生在这条已经执行完的指令上（除非延迟槽指令<code>VPC-4</code>）——都执行完了怎么受害？</p>
+    <title>About me</title>
+    <url>/2023/12/31/about/me/</url>
+    <content><![CDATA[<p>现在是2023年12月31号的晚上19:35。距离bilibili跨年晚会的开始还有25分钟，距离2024年还有五个小时不到。2023年是我迈入北航计算机学院的第一年。回顾过去的一学期，我感受过离散数学和量子力学的美丽，也体验了数理统计和随机过程的离奇和神秘；既在面向对象先导课的一次次debug中挣扎，也在计算机组成实验课上一次次死去。</p>
+<p>我从来没有想过自己也会有写博客的一天。或许是希望自己同样身为菜鸡能给后来者一点启发，或许是对自己一学期的回顾与复盘，又或许是单纯想找个地方说话，总之一学期下来，我想记录一下我经历的每次不可思议，记录我每一次崩溃和有一次的涅槃。</p>
+<p>正当我没处说话的时候，我想起了Roife学长、TobyShi学长和FlyingLandlord学长制作的博客，又正巧在群里刷到了Tan学长的博客。受学长们启发，有了做一篇自己的博客的想法。</p>
+<p>希望这篇博客能够坚持到大三，直到我走完北航6系的基本课程。期间可能会换主题和博客的排版，不过希望我能坚持到最后。</p>
+<p>感谢每一位身边的人。</p>
+<p>现在是2023年12月31号19:56:36，就把这个时间定为一切的开始吧</p>
 ]]></content>
       <categories>
-        <category>CO</category>
+        <category>me</category>
       </categories>
       <tags>
-        <tag>CO</tag>
-        <tag>Verilog</tag>
-        <tag>流水线CPU</tag>
+        <tag>me</tag>
+        <tag>talks</tag>
       </tags>
   </entry>
   <entry>
@@ -388,21 +299,110 @@
       </tags>
   </entry>
   <entry>
-    <title>About me</title>
-    <url>/2023/12/31/about/me/</url>
-    <content><![CDATA[<p>现在是2023年12月31号的晚上19:35。距离bilibili跨年晚会的开始还有25分钟，距离2024年还有五个小时不到。2023年是我迈入北航计算机学院的第一年。回顾过去的一学期，我感受过离散数学和量子力学的美丽，也体验了数理统计和随机过程的离奇和神秘；既在面向对象先导课的一次次debug中挣扎，也在计算机组成实验课上一次次死去。</p>
-<p>我从来没有想过自己也会有写博客的一天。或许是希望自己同样身为菜鸡能给后来者一点启发，或许是对自己一学期的回顾与复盘，又或许是单纯想找个地方说话，总之一学期下来，我想记录一下我经历的每次不可思议，记录我每一次崩溃和有一次的涅槃。</p>
-<p>正当我没处说话的时候，我想起了Roife学长、TobyShi学长和FlyingLandlord学长制作的博客，又正巧在群里刷到了Tan学长的博客。受学长们启发，有了做一篇自己的博客的想法。</p>
-<p>希望这篇博客能够坚持到大三，直到我走完北航6系的基本课程。期间可能会换主题和博客的排版，不过希望我能坚持到最后。</p>
-<p>感谢每一位身边的人。</p>
-<p>现在是2023年12月31号19:56:36，就把这个时间定为一切的开始吧</p>
+    <title>「BUAA CO」P7总结</title>
+    <url>/2024/01/02/CO/P7/</url>
+    <content><![CDATA[<h2 id="主要任务"><a href="#主要任务" class="headerlink" title="主要任务"></a>主要任务</h2><ul>
+<li>新增指令：<code>nop</code>, <code>mfc0</code>, <code>mtc0</code>, <code>eret</code>, <code>syscall</code></li>
+<li>新增模块：<code>总线Bridge</code>, <code>CP0协处理器</code>, <code>Timer0</code>, <code>Timer1</code></li>
+<li>新增功能：完成对五类异常和中断的响应</li>
+</ul>
+<h2 id="顶层设计"><a href="#顶层设计" class="headerlink" title="顶层设计"></a>顶层设计</h2><p><img lazyload="" src="/images/loading.svg" data-src="/images/CO/P7/CIRC.png" alt="P7_CIRC"></p>
+<p>其中红色为转发有关设计，绿色为阻塞有关设计，蓝色为乘除有关设计，黄色为CP0有关设计或外设，浅绿色虚线内为CPU，粉色为Bridge。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>P7忘写设计文档Gap了一周…</p>
+<p><strong>一定要写设计文档！！！</strong></p>
+<h3 id="1-关于CP0及其实现"><a href="#1-关于CP0及其实现" class="headerlink" title="1. 关于CP0及其实现"></a>1. 关于CP0及其实现</h3><p>P7添加了协处理器CP0，实现了其中的<code>sr(state register)</code>, <code>cause</code>和<code>EPC</code>三个寄存器的一些位。<strong>未实现位需要保持0</strong>。<br>功能定义如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">Reg</th>
+<th align="center">Byte</th>
+<th align="center">Name</th>
+<th align="center">Function</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">cause</td>
+<td align="center">31</td>
+<td align="center"><code>BD</code></td>
+<td align="center">如果<code>CP0</code>所在级指令为延迟槽<br>指令就接入1，否则接0</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">15:10</td>
+<td align="center"><code>IP/HWInt[5:0]</code></td>
+<td align="center"><code>HWInt[5:3]</code>永远保持0；<br><code>Interrupt</code>信号接入<code>HWInt[2]</code><br><code>Timer1</code>的<code>IRQ</code>信号接入<code>HWInt[1]</code><br><code>Timer0</code>的<code>IRQ</code>信号接入<code>HWInt[0]</code></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">6:2</td>
+<td align="center"><code>Exc_code</code></td>
+<td align="center">如果发生异常或者中断，<br>则将对应的异常码写入</td>
+</tr>
+<tr>
+<td align="center">sr</td>
+<td align="center">15:10</td>
+<td align="center"><code>IM</code></td>
+<td align="center"><code>sr[i]</code>置1表示不对<code>HWInt[i]</code><br>的中断信号进行响应</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">1</td>
+<td align="center"><code>EXL</code></td>
+<td align="center">进入核心态时置1，<br>退出核心态时置0<br>置1时不响应异常中断</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">0</td>
+<td align="center"><code>IE</code></td>
+<td align="center">置1响应中断信号</td>
+</tr>
+<tr>
+<td align="center">EPC</td>
+<td align="center">31:0</td>
+<td align="center"><code>epc</code></td>
+<td align="center">写入<code>VPC</code>。需要注意延迟槽</td>
+</tr>
+</tbody></table>
+<p>此外需要说明的是<code>cause</code>寄存器是不可写的。这意味着用户没发通过执行<code>mtc0</code>指令来修改<code>cause</code>指令。<code>cause</code>寄存器的写入是由硬件完成的。每个周期都需要对<code>cause</code>寄存器的[15:10]进行写入。</p>
+<h3 id="2-关于新增指令"><a href="#2-关于新增指令" class="headerlink" title="2. 关于新增指令"></a>2. 关于新增指令</h3><p>新增指令会引入新的冒险。这主要发生在：</p>
+<ol>
+<li><code>eret</code>无延迟槽，D级跳转会产生控制冒险，需要清空延迟槽；或者F级跳转。</li>
+<li><code>mtc0</code>和<code>eret</code>产生供需模型形成数据冒险，需要转发或者阻塞解决冒险。</li>
+<li><code>mtc0</code>和<code>mfc0</code>与其他指令的冲突…</li>
+</ol>
+<h3 id="3-关于CPU和操作系统的界限"><a href="#3-关于CPU和操作系统的界限" class="headerlink" title="3. 关于CPU和操作系统的界限"></a>3. 关于CPU和操作系统的界限</h3><p>P7要实现的事情只有：</p>
+<ol>
+<li>翻译指令。</li>
+<li>在需要响应中断或者发生异常的时候要能够正确跳转到<code>0x4180</code>的入口。</li>
+<li>周期性写入<code>cause[15:10]</code>。</li>
+</ol>
+<p>比如，在异常或者中断的时候，我们只需要向<code>CP0</code>中写入对应的<code>VPC</code>和性质（比如是否是延迟槽）。至于要保存哪些寄存器值，根据指令性质不同执行差异化的异常中断响应代码，这些都不是我们需要考虑的，而是编写异常处理程序的程序员需要操心的事。</p>
+<h3 id="4-关于中断及其对拍"><a href="#4-关于中断及其对拍" class="headerlink" title="4. 关于中断及其对拍"></a>4. 关于中断及其对拍</h3><h4 id="关于中断响应"><a href="#关于中断响应" class="headerlink" title="关于中断响应"></a>关于中断响应</h4><p>程序对中断的响应是通过许许多多的开关实现的。在上机中可能也会遇到添加许多开关，根据这些开关的状态决定是否执行对应程序的情况。<br>（待补充~）</p>
+<h4 id="关于中断的对拍"><a href="#关于中断的对拍" class="headerlink" title="关于中断的对拍"></a>关于中断的对拍</h4><p>很不幸中断无法和<code>Mars</code>对拍。流水线CPU中时钟周期与指令周期是不相等的，而<code>Timer</code>的中断是根据时钟周期来定的；<code>Interrupt</code>信号是根据宏观<code>PC</code>和定，因此也无法得知<code>CPU</code>内部的阻塞情况。也就是说中断信号可以在任意一个时钟周期而非指令周期产生。<code>Mars</code>模拟的是<code>单周期CPU</code>的运行，与<code>流水线CPU</code>不同。此外哪怕是在不会产生冒险的汇编代码下用和<code>Mars</code>进行对拍，个人也观测到过官方<code>Mars</code>的鬼畜行为。</p>
+<p>如果对自己的中断响应不放心的话，建议找一个设计相当的小伙伴进行对拍，以避免时钟周期不同。</p>
+<h4 id="关于Timer"><a href="#关于Timer" class="headerlink" title="关于Timer"></a>关于Timer</h4><p>官方教程中对<code>Timer</code>有专门的文件进行规范，在2023秋的计算机组成课程中又提供了官方的Timer源代码，读懂以后实例化两个Timer即可。需要注意的是只有每个Timer中的三个寄存器只有俩可写，另一个只可读。另外就是<code>Timer</code>访问的字对齐问题。</p>
+<h3 id="5-关于异常和异常优先级"><a href="#5-关于异常和异常优先级" class="headerlink" title="5.关于异常和异常优先级"></a>5.关于异常和异常优先级</h3><h4 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h4><p>P7需要实现的异常有5种：<code>Adel</code> <code>Ades</code> <code>Overflow</code> <code>RI</code> <code>Syscall</code>。每一种异常在教程中已经写的十分详细了。</p>
+<h4 id="跳转指令异常"><a href="#跳转指令异常" class="headerlink" title="跳转指令异常"></a>跳转指令异常</h4><ul>
+<li>跳转指令不会因为PC不对齐或越界而成为受害指令，异常只会发生在跳转到的那条指令上。</li>
+<li><code>beq``bne``jal</code>不会发生未字对齐的情况，只可能越界。</li>
+<li><code>jr</code>可能未字对齐，也可能越界。</li>
+</ul>
+<h4 id="异常优先级"><a href="#异常优先级" class="headerlink" title="异常优先级"></a>异常优先级</h4><p>简单来说，就是先发生的异常产生的会顶替掉后发生的异常。比方说当指令取址异常和未知指令异常同时发生时，我们肯定会先考虑取址异常而非未知指令异常。除了从直观感觉来判断以外，可以通过流水线级来判断异常优先级，即在<strong>F级发生的异常 &gt; D级发生的异常 &gt; E级发生的异常 &gt; M级发生的异常</strong>。F级取址，D级译码，因此指令取址异常优先于未知指令异常。</p>
+<h3 id="6-关于延迟槽"><a href="#6-关于延迟槽" class="headerlink" title="6.关于延迟槽"></a>6.关于延迟槽</h3><p>指令是否是延迟槽需要在F级进行判断，并进行流水。特例如下：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">div $t0, $t1</span><br><span class="line">beq $t0, $t1, TARGET</span><br><span class="line">mfhi $t0</span><br></pre></td></tr></table></figure></div>
+<p><code>mfhi</code>会被阻塞在D级，因此等于或晚于D级进行判断都会使得延迟槽判断不准确。</p>
+<p>指令是否是延迟槽是由上一条执行的指令决定的，也就是说这条指令的存储空间上的前一条指令是不是跳转指令，以及这条指令的下一级流水级是不是跳转指令都不能决定这条指令是不是延迟槽。</p>
+<h3 id="7-关于空泡和宏观PC"><a href="#7-关于空泡和宏观PC" class="headerlink" title="7.关于空泡和宏观PC"></a>7.关于空泡和宏观PC</h3><p>流水线<code>CPU</code>应当保持宏观PC的连续性，因此空泡的<code>PC</code>不能随便选。一般来说，空泡的<code>PC</code>应当永远保持与下一条指令的<code>PC</code>一致：阻塞产生空泡的话就保持与被阻塞指令一致，<code>eret</code>清空延迟槽的空泡应当与EPC一致（如果是用清空延迟槽实现<code>eret</code>的话）。</p>
+<p>将空泡的PC永远置成<code>32'h0000_3000</code>也是不行的。尽管程序在第一次运行<code>32'h0000_3000</code>处的指令时会因为没有将<code>EXL</code>置1而不对中断做出响应，但是之后可就不好说了。这样就会导致程序在某一个位置因为阻塞了一下使得<code>EPC</code>置<code>3000</code>。这可就坏事了。此外，空泡的<code>BD</code>也应当与下一条指令保持一致。</p>
+<p>至于为什么空泡的<code>PC</code>不能和上一条指令一致呢？这是因为当上一条指令进入<code>CP0</code>所在级的下一级时，我们应当认为这条指令已经执行完了，这个时候异常中断的<code>VPC</code>就不应当发生在这条已经执行完的指令上（除非延迟槽指令<code>VPC-4</code>）——都执行完了怎么受害？</p>
 ]]></content>
       <categories>
-        <category>me</category>
+        <category>CO</category>
       </categories>
       <tags>
-        <tag>me</tag>
-        <tag>talks</tag>
+        <tag>CO</tag>
+        <tag>Verilog</tag>
+        <tag>流水线CPU</tag>
       </tags>
   </entry>
 </search>
