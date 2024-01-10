@@ -25,12 +25,14 @@
 <meta property="og:site_name" content="Squirrel7ang Blog">
 <meta property="og:description" content="球球助教gg不要骂了，人家真的一点不会测试www">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/CO/AutoTest/chat.png">
 <meta property="article:published_time" content="2024-01-09T13:40:00.000Z">
-<meta property="article:modified_time" content="2024-01-09T15:09:52.867Z">
+<meta property="article:modified_time" content="2024-01-10T01:52:49.134Z">
 <meta property="article:author" content="Squirrel7ang">
 <meta property="article:tag" content="CO">
 <meta property="article:tag" content="Verilog">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://squirrel7ang.github.io/images/CO/AutoTest/chat.png">
     
     
     <!--- Icon Part-->
@@ -802,8 +804,8 @@ mjx-container[display="true"] + br {
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-01-09 23:09:52</span>
-            <span class="mobile">2024-01-09 23:09:52</span>
+            <span class="desktop">2024-01-10 09:52:49</span>
+            <span class="mobile">2024-01-10 09:52:49</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -862,7 +864,7 @@ mjx-container[display="true"] + br {
 
         <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
             <h1 id="关于iverilog和verilog的自动化测试"><a href="#关于iverilog和verilog的自动化测试" class="headerlink" title="关于iverilog和verilog的自动化测试"></a>关于iverilog和verilog的自动化测试</h1><p>从P4开始的CPU搭建全部是使用Verilog语言来实现的，使用iverilog进行轻量自动化测试还是很方便的。需要注意的是，考试用的虚拟机有<code>python</code>和<code>gcc</code>，但是没有<code>iverilog</code> <code>vvp</code> <code>gtkwave</code>，<code>windows</code>中也没有。</p>
-<p>下面简单介绍一下自动化测试的方式，以避免<strong>像我这样的计组小白</strong>走弯路。下面使用的是22级计组官方debian虚拟机进行自动化测试。windows与之类似。</p>
+<p>下面以P4为例，简单介绍一下自动化测试的方式，以避免像我这样的<strong>计组小白</strong>走弯路。下面使用的是22级计组官方debian虚拟机进行自动化测试。windows与之类似。</p>
 <p>假设写好的测试文件名为<code>test.asm</code>。</p>
 
   <div class="note p-4 mb-4 rounded-small primary">
@@ -870,31 +872,30 @@ mjx-container[display="true"] + br {
 
   </div>
 
-<p>下面还有很多地方没有说明的非常详细。之后我会慢慢补充~</p>
 <h2 id="用MARS输出标准答案"><a href="#用MARS输出标准答案" class="headerlink" title="用MARS输出标准答案"></a>用MARS输出标准答案</h2><p>标准MARS无法使用命令行在运行过程中对寄存器或者内存进行监视，建议自行寻找解决方案，比如自己魔改MARS或者写一个自动化仿真程序</p>
 <details class="blue" data-header-exclude=""><summary><i class="fa-solid fa-chevron-right"></i>Folding 但是如果改不了一点... </summary>
               <div class="content">
-              <p>可以使用Toby学长改好的MARS，<a class="link" target="_blank" rel="noopener" href="https://github.com/Toby-Shi-cloud/Mars-with-BUAA-CO-extension">链接 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p><p>将下载的文件重命名为<code>mars.jar</code>，并放在和test.asm文件相同的文件夹下，在该目录的终端下运行：</p><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ java -jar mars.jar mc CompactLargeText coL1 test.asm &gt;&gt; mars_tmp.txt</span><br></pre></td></tr></table></figure></div><p>这会将mars运行test.asm的正确结果连通mars的输出信息重定向写入mars_tmp.txt文件中。文件除了包含正确输出以外，还包含Mars的输出信息。因此需要在后续步骤中对格式进行检查。这我们在后面再说。</p>
+              <p>可以使用Toby学长改好的MARS，<a class="link" target="_blank" rel="noopener" href="https://github.com/Toby-Shi-cloud/Mars-with-BUAA-CO-extension">链接 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p><p>将下载的文件重命名为<code>mars.jar</code>，并放在和test.asm文件相同的文件夹下，在该目录的终端下运行：</p><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ java -jar mars.jar mc CompactLargeText coL1 test.asm &gt;&gt; mars_tmp.txt</span><br></pre></td></tr></table></figure></div><p>这会将mars运行test.asm的正确结果连通mars的输出信息重定向写入mars_tmp.txt文件中。文件除了包含正确输出以外，还包含Mars的输出信息。因此需要在后续步骤中对格式进行检查。这我们在后面再说。</p>
               </div>
             </details>
 
 <h2 id="用MARS输出机器码"><a href="#用MARS输出机器码" class="headerlink" title="用MARS输出机器码"></a>用MARS输出机器码</h2><p>标准Mars、魔改Mars和课程组官方Mars都能实现这一点，只需要运行</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ java -jar mars.jar dump .text HexText code.txt mc CompactLargeText test.asm</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ java -jar mars.jar dump .text HexText code.txt mc CompactLargeText test.asm</span><br></pre></td></tr></table></figure></div>
 <p>就会在本地生成一个code.txt文件</p>
 <h2 id="用iverilog对CPU进行仿真"><a href="#用iverilog对CPU进行仿真" class="headerlink" title="用iverilog对CPU进行仿真"></a>用iverilog对CPU进行仿真</h2><p>下面是关于如何实现在有正确输出结果的情况下，将CPU的输出结果输出到文本文件中。</p>
 <h3 id="1-安装iverilog和vvp"><a href="#1-安装iverilog和vvp" class="headerlink" title="1. 安装iverilog和vvp"></a>1. 安装iverilog和vvp</h3><p>打开Debian终端，或者在Debian虚拟机中按下<code>Win</code>+<code>R</code>键，在其中输入：</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install iverilog</span><br></pre></td></tr></table></figure></div>
-<p>这会安装iverilog以及vvp。</p>
-<h3 id="2-编写testbench"><a href="#2-编写testbench" class="headerlink" title="2. 编写testbench"></a>2. 编写testbench</h3><p>在testbench的initial语句块的结束写上<code># [仿真时长] $finish;</code>告诉iverilog要仿真多久结束。不加就会一直仿真。用<code>$stop</code>替代<code>$finish</code>相当于断点的效果，在仿真结束后vvp会进入interact模式而非直接退出。</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install iverilog</span><br></pre></td></tr></table></figure></div>
+<p>这会安装<code>iverilog</code>以及<code>vvp</code>。<code>iverilog</code>是用于对<code>verilog</code>进行仿真的工具，其中<code>iverilog</code>能够对<code>verilog</code>进行编译，而<code>vvp</code>能够对编译出来的结果进行仿真。可以理解为前者编译后者运行。</p>
+<h3 id="2-编写testbench"><a href="#2-编写testbench" class="headerlink" title="2. 编写testbench"></a>2. 编写testbench</h3><p>在testbench的initial语句块的结束写上<code># [仿真时长] $finish;</code>告诉<code>iverilog</code>要仿真多久结束。和<code>ISE</code>不同，<code>ISE</code>的仿真似乎默认1000周期，但是iverilog默认一直仿真。用<code>$stop</code>替代<code>$finish</code>相当于断点的效果，在仿真结束后vvp会进入interact模式而非直接退出。</p>
 <p><code>Ctrl</code>+<code>C</code>可以停止仿真。</p>
 <div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line"><span class="comment">// dumpfile("wave.vcd") // 用于gtkwave示波</span></span><br><span class="line"><span class="comment">// dumpvars(0, mips_tb) // 同上</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"># <span class="number">4000</span> <span class="built_in">$finish</span>;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
 
 <h3 id="3-用iverilog运行代码"><a href="#3-用iverilog运行代码" class="headerlink" title="3. 用iverilog运行代码"></a>3. 用iverilog运行代码</h3><p>假设<code>mips_tb.v</code>中的模块为<code>mips_tb</code>。其中包含了<code>mips</code>模块</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ iverilog -s mips_tb -o mips_tb.out *.v</span><br><span class="line">$ vvp mips_tb.out</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ iverilog -s mips_tb -o mips_tb.out *.v</span><br><span class="line">$ vvp mips_tb.out</span><br></pre></td></tr></table></figure></div>
 
 <p><code>-o</code>表示将编译结果输出到当前目录下的<code>mips_tb.out</code>文件中，<code>-s mips_tb</code>指定仿真的顶层<strong>模块名</strong>。iverilog默认将没有被实例化的模块设置为root模块，这意味着如果有多个testbench文件的话，iverilog会一起进行仿真。在P7中我们可能会利用不同的testbench进行不同的中断测试，当我们想要使用特定的testbench进行仿真的时候就会需要使用到<code>-s</code>参数。只有1个testbench的时候可以不加<code>-s</code>参数。</p>
 <h3 id="4-重定向输出"><a href="#4-重定向输出" class="headerlink" title="4. 重定向输出"></a>4. 重定向输出</h3><p><code>vvp</code>进行仿真之后会将<code>CPU</code>和<code>iverilog</code>的信息一同输出到标准输出中，我们将这些输出重定向到文件<code>tmp.txt</code>中。这个文件中不仅包含了<code>CPU</code>的输出，也包含了<code>iverilog</code>的仿真信息。我们先将其输出到一个临时文件中。</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vvp mips_tb.out &gt;&gt; my_tmp.txt</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vvp mips_tb.out &gt; my_tmp.txt</span><br></pre></td></tr></table></figure></div>
 
 <h3 id="5-检查输出格式"><a href="#5-检查输出格式" class="headerlink" title="5. 检查输出格式"></a>5. 检查输出格式</h3><p>22级计算机组成对CPU输出格式有要求，在测评的时候也会忽略掉不符合输出格式的输出。</p>
 
@@ -907,36 +908,29 @@ mjx-container[display="true"] + br {
 <p><code>linux</code>中的<code>grep</code>指令可以方便地按照正则表达式对文本进行匹配查找。</p>
 <p>CPU输出格式的正则表达式可以写为<code>'(@[0-9a-f]{8}: *\*[0-9a-f]{8} *&lt;= *[0-9a-f]{8} *\n)|(@[0-9a-f]{8}: *\$[0-9]{2} *&lt;= *[0-9a-f]{8} *\n)'</code></p>
 <p>但是为了简单起见，我们用<code>@</code>进行匹配就行。运行：</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ grep '@' my_tmp.txt &gt; my.txt</span><br><span class="line">$ grep '@' mars_tmp.txt &gt; mars.txt</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ grep <span class="string">'@'</span> my_tmp.txt &gt; my.txt</span><br><span class="line">$ grep <span class="string">'@'</span> mars_tmp.txt &gt; mars.txt</span><br></pre></td></tr></table></figure></div>
 <p>这样子我们就把所有含有<code>@</code>的行选出来输出到后面的文件中了。</p>
 <h2 id="比对输出文件"><a href="#比对输出文件" class="headerlink" title="比对输出文件"></a>比对输出文件</h2><p><code>linux</code>中的<code>diff</code>指令可以清晰地看到两个文件的差异，缺点是看到的太详细了。不过我个人不太计较。</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ diff -y (-H) -B -b my.txt mars.txt &gt; result.txt</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ diff -y (-H) -B -b my.txt mars.txt &gt; result.txt</span><br></pre></td></tr></table></figure></div>
 
 <p>其中<code>-y</code>表示将文件“肩并肩”地输出。<code>-H</code>用于大规模文本比对，我们的规模比较小，不需要。<code>-B</code>表示不对空行进行比对。<code>-b</code>表示不对空格进行比对。我们将比较的结果重定向到了<code>result.txt</code>文件中。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>大概要用到这些指令：</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ java -jar mars.jar mc CompactLargeText coL1 test.asm &gt;&gt; mars_tmp.txt</span><br><span class="line"></span><br><span class="line">$ java -jar mars.jar dump .text HexText code.txt mc CompactLargeText test.asm</span><br><span class="line"></span><br><span class="line">$ iverilog -s mips_tb -o mips_tb.out *.v</span><br><span class="line">$ vvp mips_tb.out &gt;&gt; my_tmp.txt</span><br><span class="line"></span><br><span class="line">$ grep '@' my_tmp.txt &gt; my.txt</span><br><span class="line">$ grep '@' mars_tmp.txt &gt; mars.txt</span><br><span class="line"></span><br><span class="line">$ diff -y (-H) -B -b my.txt mars.txt &gt; result.txt</span><br></pre></td></tr></table></figure></div>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ java -jar mars.jar mc CompactLargeText coL1 test.asm &gt;&gt; mars_tmp.txt</span><br><span class="line"></span><br><span class="line">$ java -jar mars.jar dump .text HexText code.txt mc CompactLargeText test.asm</span><br><span class="line"></span><br><span class="line">$ iverilog -s mips_tb -o mips_tb.out *.v</span><br><span class="line">$ vvp mips_tb.out &gt; my_tmp.txt</span><br><span class="line"></span><br><span class="line">$ grep <span class="string">'@'</span> my_tmp.txt &gt; my.txt</span><br><span class="line">$ grep <span class="string">'@'</span> mars_tmp.txt &gt; mars.txt</span><br><span class="line"></span><br><span class="line">$ diff -y (-H) -B -b my.txt mars.txt &gt; result.txt</span><br></pre></td></tr></table></figure></div>
 
-<h2 id="编写成shell脚本"><a href="#编写成shell脚本" class="headerlink" title="编写成shell脚本"></a>编写成shell脚本</h2><p>待补充~</p>
-<!-- .sh文件的shell脚本文件能够方便地执行linux系统下的多条指令。将上述指令编写成shell脚本就有:
-```shell
+<h2 id="编写成shell脚本"><a href="#编写成shell脚本" class="headerlink" title="编写成shell脚本"></a>编写成shell脚本</h2><p>shell脚本在linux中能够方便的运行多条linux指令。在第二学年的春季学期我们也会接触到它的具体写法，因此我也不会。</p>
+<p>不过我们也不需要会。</p>
+<p>打开<code>ChatGPT</code>，耐(man)心(man)指(tiao)导(jiao)它帮我们写一个小shell脚本。</p>
+<div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">文件路径</span></span><br><span class="line">mars_jar="mars.jar"</span><br><span class="line">code_txt="code.txt"</span><br><span class="line">verilog_files="*.v"</span><br><span class="line">mars_tmp="mars_tmp.txt"</span><br><span class="line">my_tmp="my_tmp.txt"</span><br><span class="line">tb_out="mips_tb.out"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">存储临时文件名的数组</span></span><br><span class="line">tmp_files=("$mars_tmp" "$my_tmp" "$my_tmp.txt" "$mars_tmp.txt" "$tb_out")</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">清理临时文件的函数</span></span><br><span class="line">clean_tmp_files() {</span><br><span class="line">  for file in "${tmp_files[@]}"; do</span><br><span class="line">    if [ -f "$file" ]; then</span><br><span class="line">      rm "$file"</span><br><span class="line">    fi</span><br><span class="line">  done</span><br><span class="line">}</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">循环处理每个test.asm文件</span></span><br><span class="line">for asm_file in test*.asm; do</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">生成对应的result.txt文件名</span></span><br><span class="line">  result_file="${asm_file%.asm}_result.txt"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第一条指令</span></span><br><span class="line">  java -jar "$mars_jar" mc CompactLargeText coL1 "$asm_file" &gt;&gt; "$mars_tmp"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第二条指令</span></span><br><span class="line">  java -jar "$mars_jar" dump .text HexText "$code_txt" mc CompactLargeText "$asm_file" &gt; /dev/null 2&gt;&amp;1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第三条指令</span></span><br><span class="line">  iverilog -s mips_tb -o $tb_out $verilog_files &gt; /dev/null 2&gt;&amp;1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第四条指令</span></span><br><span class="line">  vvp $tb_out &gt; "$my_tmp"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第五条指令</span></span><br><span class="line">  grep '@' "$my_tmp" &gt; "$my_tmp.txt"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第六条指令</span></span><br><span class="line">  grep '@' "$mars_tmp" &gt; "$mars_tmp.txt"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第七条指令</span></span><br><span class="line">  if ! diff -q "$my_tmp.txt" "$mars_tmp.txt"; then</span><br><span class="line">    diff -y -H -B -b "$my_tmp.txt" "$mars_tmp.txt" &gt; "$result_file"</span><br><span class="line">    echo "$asm_file 运行不正确，比对结果在 $result_file 中。"</span><br><span class="line">  else</span><br><span class="line">    echo "$asm_file 运行正确。"</span><br><span class="line">  fi</span><br><span class="line">done</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">清理临时文件</span></span><br><span class="line">clean_tmp_files</span><br></pre></td></tr></table></figure></div>
+<p>将之前提到的所有文件都放在同一个文件目录下。</p>
+<p>调用指令</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">touch</span> test.sh</span><br></pre></td></tr></table></figure></div>
 
-asm_test="test.asm"
-mars_tmp="mars_tmp.txt"
-my_tmp="my_tmp.txt"
-module_name="mips_tb"
+<p>我们运行一下：</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ./test.sh</span><br><span class="line">test.asm 运行正确。</span><br><span class="line">$ <span class="built_in">ls</span></span><br><span class="line">ALU.v*     CTRL.v*  EXT.v*  header.v*  Mars.jar*   mips.v*    test.sh*</span><br><span class="line">code.txt*  DM.v*    GRF.v*  IFU.v*     mips_tb.v*  test.asm*</span><br></pre></td></tr></table></figure></div>
+<p>成功。</p>
+<p>即便不懂shell脚本，瞪几眼也大概能看懂，可读性还是很高的。可以在这个基础上修改一下，让自动化测试符合自己的预期要求。</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/images/CO/AutoTest/chat.png" alt="ChatGPT"></p>
 
-
-java -jar mars.jar mc CompactLargeText coL1 $asm_test >> mars_tmp
-java -jar mars.jar dump .text HexText code.txt mc CompactLargeText $asm_test
-
-iverilog -s $module_name -o mips_tb.out *.v
-vvp mips_tb.out >> my_tmp.txt
-
-grep '@' my_tmp.txt > my.txt
-grep '@' mars_tmp.txt > mars.txt
-
-diff -y (-H) -B -b my.txt mars.txt > result.txt
-``` -->
         </div>
 
         
@@ -950,7 +944,7 @@ diff -y (-H) -B -b my.txt mars.txt > result.txt
         
             <li>
                 <strong>更新于
-                    :</strong> 2024-01-09 23:09:52
+                    :</strong> 2024-01-10 09:52:49
             </li>
         
         <li>
