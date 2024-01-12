@@ -64,6 +64,7 @@
 <p><code>Ctrl</code>+<code>C</code>可以停止仿真。</p>
 <div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line"><span class="comment">// dumpfile("wave.vcd") // 用于gtkwave示波</span></span><br><span class="line"><span class="comment">// dumpvars(0, mips_tb) // 同上</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"># <span class="number">4000</span> <span class="built_in">$finish</span>;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
 
+<p>testbench我这里就不写了，毕竟不同人的写法不同，而且单周期的testbench基本上能跑起来就没问题，不需要考虑什么时钟周期乱七八糟的。</p>
 <h3 id="3-用iverilog运行代码"><a href="#3-用iverilog运行代码" class="headerlink" title="3. 用iverilog运行代码"></a>3. 用iverilog运行代码</h3><p>假设<code>mips_tb.v</code>中的模块为<code>mips_tb</code>。其中包含了<code>mips</code>模块</p>
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ iverilog -s mips_tb -o mips_tb.out *.v</span><br><span class="line">$ vvp mips_tb.out</span><br></pre></td></tr></table></figure></div>
 
@@ -97,13 +98,16 @@
 <div class="highlight-container" data-rel="Shell"><figure class="iseeu highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">文件路径</span></span><br><span class="line">mars_jar="mars.jar"</span><br><span class="line">code_txt="code.txt"</span><br><span class="line">verilog_files="*.v"</span><br><span class="line">mars_tmp="mars_tmp.txt"</span><br><span class="line">my_tmp="my_tmp.txt"</span><br><span class="line">tb_out="mips_tb.out"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">存储临时文件名的数组</span></span><br><span class="line">tmp_files=("$mars_tmp" "$my_tmp" "$my_tmp.txt" "$mars_tmp.txt" "$tb_out")</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">清理临时文件的函数</span></span><br><span class="line">clean_tmp_files() {</span><br><span class="line">  for file in "${tmp_files[@]}"; do</span><br><span class="line">    if [ -f "$file" ]; then</span><br><span class="line">      rm "$file"</span><br><span class="line">    fi</span><br><span class="line">  done</span><br><span class="line">}</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">循环处理每个test.asm文件</span></span><br><span class="line">for asm_file in test*.asm; do</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">生成对应的result.txt文件名</span></span><br><span class="line">  result_file="${asm_file%.asm}_result.txt"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第一条指令</span></span><br><span class="line">  java -jar "$mars_jar" mc CompactLargeText coL1 "$asm_file" &gt; "$mars_tmp"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第二条指令</span></span><br><span class="line">  java -jar "$mars_jar" dump .text HexText "$code_txt" mc CompactLargeText "$asm_file" &gt; /dev/null 2&gt;&amp;1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第三条指令</span></span><br><span class="line">  iverilog -s mips_tb -o $tb_out $verilog_files &gt; /dev/null 2&gt;&amp;1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第四条指令</span></span><br><span class="line">  vvp $tb_out &gt; "$my_tmp"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第五条指令</span></span><br><span class="line">  grep '@' "$my_tmp" &gt; "$my_tmp.txt"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第六条指令</span></span><br><span class="line">  grep '@' "$mars_tmp" &gt; "$mars_tmp.txt"</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">第七条指令</span></span><br><span class="line">  if ! diff -q "$my_tmp.txt" "$mars_tmp.txt"; then</span><br><span class="line">    diff -y -H -B -b "$my_tmp.txt" "$mars_tmp.txt" &gt; "$result_file"</span><br><span class="line">    echo "$asm_file 运行不正确，比对结果在 $result_file 中。"</span><br><span class="line">  else</span><br><span class="line">    echo "$asm_file 运行正确。"</span><br><span class="line">  fi</span><br><span class="line">done</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">清理临时文件</span></span><br><span class="line">clean_tmp_files</span><br></pre></td></tr></table></figure></div>
 <p>将之前提到的所有文件都放在同一个文件目录下。</p>
 <p>调用指令</p>
-<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">touch</span> test.sh</span><br></pre></td></tr></table></figure></div>
-
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">touch</span> test.sh</span><br><span class="line">$ <span class="built_in">chmod</span> +x test.sh</span><br></pre></td></tr></table></figure></div>
+<p>这回新建一个叫<code>test.sh</code>的文件，然后将这个文件标记为可执行文件。</p>
+<p>然后打开test.sh文件，将上述代码写进去。</p>
 <p>我们运行一下：</p>
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ ./test.sh</span><br><span class="line">test.asm 运行正确。</span><br><span class="line">$ <span class="built_in">ls</span></span><br><span class="line">ALU.v*     CTRL.v*  EXT.v*  header.v*  Mars.jar*   mips.v*    test.sh*</span><br><span class="line">code.txt*  DM.v*    GRF.v*  IFU.v*     mips_tb.v*  test.asm*</span><br></pre></td></tr></table></figure></div>
 <p>成功。</p>
 <p>即便不懂shell脚本，瞪几眼也大概能看懂，可读性还是很高的。可以在这个基础上修改一下，让自动化测试符合自己的预期要求。</p>
 <p><img lazyload="" src="/images/loading.svg" data-src="/images/CO/AutoTest/chat.png" alt="ChatGPT"></p>
+<h2 id="P5测试"><a href="#P5测试" class="headerlink" title="P5测试"></a>P5测试</h2><p>（待补充 ~）</p>
+<p>（概率不补充，因为自己也只会胡说八道）。</p>
 ]]></content>
       <categories>
         <category>CO</category>
@@ -170,24 +174,6 @@
       </tags>
   </entry>
   <entry>
-    <title>About me</title>
-    <url>/2023/12/31/about/me/</url>
-    <content><![CDATA[<p>现在是2023年12月31号的晚上19:35。距离bilibili跨年晚会的开始还有25分钟，距离2024年还有五个小时不到。2023年是我迈入北航计算机学院的第一年。回顾过去的一学期，我感受过离散数学和量子力学的美丽，也体验了数理统计和随机过程的离奇和神秘；既在面向对象先导课的一次次debug中挣扎，也在计算机组成实验课上一次次死去。</p>
-<p>我从来没有想过自己也会有写博客的一天。或许是希望自己同样身为菜鸡能给后来者一点启发，或许是对自己一学期的回顾与复盘，又或许是单纯想找个地方说话，总之一学期下来，我想记录一下我经历的每次不可思议，记录我每一次崩溃和有一次的涅槃。</p>
-<p>正当我没处说话的时候，我想起了Roife学长、TobyShi学长和FlyingLandlord学长制作的博客，又正巧在群里刷到了Tan学长的博客。受学长们启发，有了做一篇自己的博客的想法。</p>
-<p>希望这篇博客能够坚持到大三，直到我走完北航6系的基本课程。期间可能会换主题和博客的排版，不过希望我能坚持到最后。</p>
-<p>感谢每一位身边的人。</p>
-<p>现在是2023年12月31号19:56:36，就把这个时间定为一切的开始吧</p>
-]]></content>
-      <categories>
-        <category>me</category>
-      </categories>
-      <tags>
-        <tag>me</tag>
-        <tag>talks</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>「BUAA CO」P6总结</title>
     <url>/2024/01/02/CO/P6/</url>
     <content><![CDATA[<h2 id="主要任务"><a href="#主要任务" class="headerlink" title="主要任务"></a>主要任务</h2><h3 id="1-新增指令"><a href="#1-新增指令" class="headerlink" title="1.新增指令"></a>1.新增指令</h3><p>本次课下P6总共需要实现指令<strong>一共</strong>28条，其中</p>
@@ -241,7 +227,9 @@
 <p>Verilog可以在<a class="link"   href="https://hdlbits.01xz.net/wiki/Main_Page" >HDLbits <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>进行练习，也可以参考<a class="link"   href="https://www.runoob.com/w3cnote/verilog-tutorial.html" >菜鸟教程 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>，</p>
 <h3 id="1、关于-signed"><a href="#1、关于-signed" class="headerlink" title="1、关于$signed()"></a>1、关于$signed()</h3><p><code>Verilog</code>中默认一切未声明有符号的整型数均为无符号数，并默认有符号数与无符号数运算时，将有符号数自动转化为无符号数。比如：</p>
 <div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (opCode == <span class="number">1&#x27;b1</span>) ? <span class="keyword">signed</span>(a) * <span class="keyword">signed</span>(b) : a * b;</span><br></pre></td></tr></table></figure></div>
-<p>上述代码中，<code>signed(a) * signed(b)</code>与<code>a*b</code>通过三目运算符进行运算，因此默认将第二位操作数（<code>signed(a) * signed(b)</code>）转换为无符号的乘法。解决方案在官方教程中有提及。<br>此外还有一点与C代码不同的是，在<code>Verilog</code>中，不能将“&#x3D;”视为一种运算符。也就是说如果我在某一语句块里这么写：</p>
+<p>上述代码中，<code>signed(a) * signed(b)</code>与<code>a*b</code>通过三目运算符进行运算，因此默认将第二位操作数（<code>signed(a) * signed(b)</code>）转换为无符号的乘法。解决方案在官方教程中有提及。</p>
+<p>上面这个例子很容易看出问题，但是当运用多重三目运算符进行嵌套的时候，结构复杂，很可能会遗漏有符号数和无符号数的问题。</p>
+<p>此外还有一点与C代码不同的是，在<code>Verilog</code>中，不能将“&#x3D;”视为一种运算符。也就是说如果我在某一语句块里这么写：</p>
 <div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">  outcome = <span class="built_in">$signed</span>(a) * <span class="built_in">$signed</span>(b);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
 <p><code>outcome</code>仍然是两个有符号数做乘法的运算结果。<code>=</code>应当和<code>&lt;=</code>视为一种<strong>赋值符</strong>。</p>
 <h3 id="2、关于条件运算和浮空"><a href="#2、关于条件运算和浮空" class="headerlink" title="2、关于条件运算和浮空"></a>2、关于条件运算和浮空</h3><p>使用三目运算符时，<strong>当第一位操作数，即条件，为浮空值的时候，表达式返回值也是浮空值。</strong> 比方说:</p>
@@ -254,14 +242,15 @@
 <div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (a == <span class="number">1&#x27;b1</span>) </span><br><span class="line">  b &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">  b &lt;= <span class="number">1&#x27;b0</span>;</span><br></pre></td></tr></table></figure></div>
 <p>在上述代码中，如果<code>a</code>为一位浮空值，程序仍然会执行<code>else</code>语句块内的代码。<code>if-else</code>是安全的。</p>
 <p>在一些情况下，我们希望判断语句能够更加保险，即能够对浮空值也进行判断。这是可以使用<code>===</code>和<code>!===</code>，这双目两个运算符可以连同高阻态<code>z</code>和浮空值<code>x</code>一并进行判断。</p>
+<p>三目运算符在进行简单的<code>if-else</code>判断是非常好用的，主要是写起来和读起来都比较舒服。但是不建议用于多重<code>if-else</code>判断，尤其是当不论<code>if</code>还是<code>else</code>里面都有<code>if-else</code>语句的时候。</p>
 <h3 id="3、关于”-”和”-”以及“自动类型转换”"><a href="#3、关于”-”和”-”以及“自动类型转换”" class="headerlink" title="3、关于”~”和”!”以及“自动类型转换”"></a>3、关于”~”和”!”以及“自动类型转换”</h3><p>省流版就是：不要用位宽不同的两个数进行相互赋值，理由是<code>Verilog</code>在进行位扩展的时候会进行一些很诡异的操作。</p>
 <p>下面讲一个具体的例子。下例由室友LJC提出，愣是把我看傻了。</p>
 <div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> test(</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">1</span> : <span class="number">0</span>] a;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line">    <span class="keyword">reg</span> clk;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">            c = ~a;</span><br><span class="line">            <span class="built_in">$display</span>(<span class="string">&quot;when a = 1&#x27;b%b, c = ~ a = 4&#x27;b%b&quot;</span>, a, c);</span><br><span class="line">            c = !a;</span><br><span class="line">            <span class="built_in">$display</span>(<span class="string">&quot;when a = 1&#x27;b%b, c = ! a = 4&#x27;b%b&quot;</span>, a, c);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">        a = <span class="number">2&#x27;b00</span>;</span><br><span class="line">        c = <span class="number">4&#x27;b00</span>;</span><br><span class="line">        clk = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b01</span>;</span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b10</span>;</span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b11</span>;</span><br><span class="line">        #<span class="number">2</span> <span class="built_in">$finish</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> #<span class="number">1</span> clk &lt;= ~clk;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure></div>
 <p>使用<code>iverilog</code>进行编译和仿真会得到：</p>
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ iverilog -o a.out test.v</span><br><span class="line">$ vvp a.out</span><br><span class="line">when a = 1&#x27;b00, c = ~ a = 4&#x27;b1111</span><br><span class="line">when a = 1&#x27;b00, c = ! a = 4&#x27;b0001</span><br><span class="line">when a = 1&#x27;b01, c = ~ a = 4&#x27;b1110</span><br><span class="line">when a = 1&#x27;b01, c = ! a = 4&#x27;b0000</span><br><span class="line">when a = 1&#x27;b10, c = ~ a = 4&#x27;b1101</span><br><span class="line">when a = 1&#x27;b10, c = ! a = 4&#x27;b0000</span><br><span class="line">when a = 1&#x27;b11, c = ~ a = 4&#x27;b1100</span><br><span class="line">when a = 1&#x27;b11, c = ! a = 4&#x27;b0000</span><br><span class="line">test3.v:23: $finish called at 8 (1s)</span><br></pre></td></tr></table></figure></div>
-<p>可以看出，<code>~a</code>和<code>!a</code>在进行符号扩展时是十分抽象的玩意，编译时会先进行1拓展或者0拓展再进行赋值。因此当一个稍微复杂的表达式中出现了位宽的改变时，强烈建议用<code>vector</code>也就是花括号<code>&#123;,&#125;</code>手动进行扩展。</p>
+<p>可以看出，<code>~a</code>和<code>!a</code>在进行位扩展时十分抽象，编译时会先进行1扩展或者0扩展再进行赋值。因此当一个稍微复杂的表达式中出现了位宽的改变时，强烈建议用<code>vector</code>也就是花括号<code>&#123;,&#125;</code>手动进行扩展。</p>
 <p>P.S.样例中在时序逻辑中进行阻塞赋值是不合规范的，请勿模仿。</p>
-<h3 id="4、位宽"><a href="#4、位宽" class="headerlink" title="4、位宽"></a>4、位宽</h3><p>不声明位宽时，默认1位。这与整数不同，后者默认32位。<br>下例来自舍友ZHX，这种事情一旦发生，debug可就困难了。大家可以试着找找下图中的错误。<br><img  
+<h3 id="4、位宽"><a href="#4、位宽" class="headerlink" title="4、位宽"></a>4、位宽</h3><p>下例来自舍友ZHX，这种事情一旦发生，debug可就困难了。大家可以试着找找下图中的错误。<br><img  
                      lazyload
                      src="/images/loading.svg"
                      data-src="/images/CO/verilog_error/1.png"
@@ -269,7 +258,7 @@
                 ></p>
 <details class="blue" data-header-exclude><summary><i class="fa-solid fa-chevron-right"></i>Answer </summary>
               <div class='content'>
-              <p>Addr是32位的地址，但是声明成了1位。 </p>
+              <p>不声明位宽时，默认1位。这与整数不同，后者默认32位。<br>Addr是32位的地址，但是声明成了1位。 </p>
               </div>
             </details>
 
@@ -403,6 +392,24 @@
         <tag>CO</tag>
         <tag>Verilog</tag>
         <tag>流水线CPU</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>About me</title>
+    <url>/2023/12/31/about/me/</url>
+    <content><![CDATA[<p>现在是2023年12月31号的晚上19:35。距离bilibili跨年晚会的开始还有25分钟，距离2024年还有五个小时不到。2023年是我迈入北航计算机学院的第一年。回顾过去的一学期，我感受过离散数学和量子力学的美丽，也体验了数理统计和随机过程的离奇和神秘；既在面向对象先导课的一次次debug中挣扎，也在计算机组成实验课上一次次死去。</p>
+<p>我从来没有想过自己也会有写博客的一天。或许是希望自己同样身为菜鸡能给后来者一点启发，或许是对自己一学期的回顾与复盘，又或许是单纯想找个地方说话，总之一学期下来，我想记录一下我经历的每次不可思议，记录我每一次崩溃和有一次的涅槃。</p>
+<p>正当我没处说话的时候，我想起了Roife学长、TobyShi学长和FlyingLandlord学长制作的博客，又正巧在群里刷到了Tan学长的博客。受学长们启发，有了做一篇自己的博客的想法。</p>
+<p>希望这篇博客能够坚持到大三，直到我走完北航6系的基本课程。期间可能会换主题和博客的排版，不过希望我能坚持到最后。</p>
+<p>感谢每一位身边的人。</p>
+<p>现在是2023年12月31号19:56:36，就把这个时间定为一切的开始吧</p>
+]]></content>
+      <categories>
+        <category>me</category>
+      </categories>
+      <tags>
+        <tag>me</tag>
+        <tag>talks</tag>
       </tags>
   </entry>
 </search>
