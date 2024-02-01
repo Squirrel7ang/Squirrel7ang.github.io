@@ -118,8 +118,8 @@
       </tags>
   </entry>
   <entry>
-    <title>P0总结</title>
-    <url>/2023/12/30/CO/P0/</url>
+    <title>「BUAA CO」P0总结</title>
+    <url>/2024/02/01/CO/P0/</url>
     <content><![CDATA[<h2 id="关于P0"><a href="#关于P0" class="headerlink" title="关于P0"></a>关于P0</h2><p>P0的主要任务时利用Logisim搭建有限状态机。当然也存在非有限状态机的任务，比如GRF，但是上机题目大多是有限状态机。关于Pre到P2的题目可以参考fysszlr的博客<a class="link"   href="https://www.fysszlr.top/categories/%E7%BB%8F%E9%AA%8C/" >\lrgg!&#x2F; <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。22级P0挂了也不影响进度，P1和P2同理，只要课下补交过了就行。</p>
 <h2 id="个人建议"><a href="#个人建议" class="headerlink" title="个人建议"></a>个人建议</h2><h3 id="关于有限状态机"><a href="#关于有限状态机" class="headerlink" title="关于有限状态机"></a>关于有限状态机</h3><p>教程中对用Logisim搭建有限状态机进行了详细的说明，在此不多赘述。如果不熟悉，请务必复习一下。</p>
 <p>个人认为Moore型机和Mealy型机的区别有俩：</p>
