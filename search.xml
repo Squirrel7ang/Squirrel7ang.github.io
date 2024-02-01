@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>About me</title>
-    <url>/2023/12/31/about/me/</url>
-    <content><![CDATA[<p>现在是2023年12月31号的晚上19:35。距离bilibili跨年晚会的开始还有25分钟，距离2024年还有五个小时不到。2023年是我迈入北航计算机学院的第一年。回顾过去的一学期，我感受过离散数学和量子力学的美丽，也体验了数理统计和随机过程的离奇和神秘；既在面向对象先导课的一次次debug中挣扎，也在计算机组成实验课上一次次死去。</p>
-<p>我从来没有想过自己也会有写博客的一天。或许是希望自己同样身为菜鸡能给后来者一点启发，或许是对自己一学期的回顾与复盘，又或许是单纯想找个地方说话，总之一学期下来，我想记录一下我经历的每次不可思议，记录我每一次崩溃和有一次的涅槃。</p>
-<p>正当我没处说话的时候，我想起了Roife学长、TobyShi学长和FlyingLandlord学长制作的博客，又正巧在群里刷到了Tan学长的博客。受学长们启发，有了做一篇自己的博客的想法。</p>
-<p>希望这篇博客能够坚持到大三，直到我走完北航6系的基本课程。期间可能会换主题和博客的排版，不过希望我能坚持到最后。</p>
-<p>感谢每一位身边的人。</p>
-<p>现在是2023年12月31号19:56:36，就把这个时间定为一切的开始吧</p>
-]]></content>
-      <categories>
-        <category>me</category>
-      </categories>
-      <tags>
-        <tag>me</tag>
-        <tag>talks</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>「BUAA CO」关于课下设计的说明</title>
     <url>/2023/12/30/CO/About/</url>
     <content><![CDATA[<h3 id="关于课程"><a href="#关于课程" class="headerlink" title="关于课程"></a>关于课程</h3><p>课下设计指北航2023-2024学年上学期的计算机组成课程的实验部分设计，包括Pre到P7的9次课下设计。22级计组取消P8，助教们辛苦了！</p>
@@ -117,7 +99,7 @@
 <p>将之前提到的所有文件都放在同一个文件目录下。</p>
 <p>调用指令</p>
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">touch</span> test.sh</span><br><span class="line">$ <span class="built_in">chmod</span> +x test.sh</span><br></pre></td></tr></table></figure></div>
-<p>这回新建一个叫<code>test.sh</code>的文件，然后将这个文件标记为可执行文件。</p>
+<p>这会新建一个叫<code>test.sh</code>的文件，然后将这个文件标记为可执行文件。</p>
 <p>然后打开test.sh文件，将上述代码写进去。</p>
 <p>我们运行一下：</p>
 <div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ ./test.sh</span><br><span class="line">test.asm 运行正确。</span><br><span class="line">$ <span class="built_in">ls</span></span><br><span class="line">ALU.v*     CTRL.v*  EXT.v*  header.v*  Mars.jar*   mips.v*    test.sh*</span><br><span class="line">code.txt*  DM.v*    GRF.v*  IFU.v*     mips_tb.v*  test.asm*</span><br></pre></td></tr></table></figure></div>
@@ -133,6 +115,42 @@
       <tags>
         <tag>CO</tag>
         <tag>Verilog</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>P0总结</title>
+    <url>/2023/12/30/CO/P0/</url>
+    <content><![CDATA[<h2 id="关于P0"><a href="#关于P0" class="headerlink" title="关于P0"></a>关于P0</h2><p>P0的主要任务时利用Logisim搭建有限状态机。当然也存在非有限状态机的任务，比如GRF，但是上机题目大多是有限状态机。关于Pre到P2的题目可以参考fysszlr的博客<a class="link"   href="https://www.fysszlr.top/categories/%E7%BB%8F%E9%AA%8C/" >\lrgg!&#x2F; <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。22级P0挂了也不影响进度，P1和P2同理，只要课下补交过了就行。</p>
+<h2 id="个人建议"><a href="#个人建议" class="headerlink" title="个人建议"></a>个人建议</h2><h3 id="关于有限状态机"><a href="#关于有限状态机" class="headerlink" title="关于有限状态机"></a>关于有限状态机</h3><p>教程中对用Logisim搭建有限状态机进行了详细的说明，在此不多赘述。如果不熟悉，请务必复习一下。</p>
+<p>个人认为Moore型机和Mealy型机的区别有俩：</p>
+<ol>
+<li>一般来说Moore机所需要的状态参数会比Mealy机要多。</li>
+<li>一般来说Moore机和Mealy机的输出时间会有差别，这是因为Moore机在输入信号发生改变时，需要等到时钟上升沿才能输出，但是Mealy级却可以在输入信号改变的沿改变输出。</li>
+</ol>
+<p>因此当题目明确说明了要搭建Moore机或者Mealy机的时候，一定要按照题目说的来做。</p>
+<h3 id="关于同步-异步复位"><a href="#关于同步-异步复位" class="headerlink" title="关于同步&#x2F;异步复位"></a>关于同步&#x2F;异步复位</h3><p>同步复位在时钟上升沿检测复位信号，如果有效则进行复位；异步复位在复位信号有效时均进行复位，不论时钟如何变化。复位信号一般将寄存器复位为0。</p>
+<p>在Logisim中异步复位是容易实现的，因为像诸如寄存器一类的时序逻辑部件往往提供异步复位的输入端口，只需要将复位信号接到对应端口即可。现实中也往往是这样，因为在物理层面，异步复位的设计更容易实现，而同步复位往往需要更复杂的架构或更多的晶体管。</p>
+<p>所以Logisim中的部件一般没有同步复位端口，使用Logisim实现同步复位需要在上升沿向寄存器写入0，因此在输入端口增加一个Multiplexer，当reset信号有效时选择0，否则选择输入数据。这样就可以实现同步复位了。</p>
+<h3 id="关于快捷键"><a href="#关于快捷键" class="headerlink" title="关于快捷键"></a>关于快捷键</h3><p>其实自己摸索一下大概也就出来了。</p>
+<ul>
+<li><code>Ctrl</code> + <code>1~8</code>: 选中菜单栏从左往右数的对应选项。</li>
+<li><code>数字</code>: 设置端口数，不同器件效果不同。逻辑门中表示输入端口数，选择器中表示选择信号位宽，<code>Splitter</code>中表示分支个数，<code>Bit Extander</code>中表示输入信号位宽，<code>Bit Selector</code>中表示输出信号位宽。想要输入两位数的时候就快速按两下数字。</li>
+<li><code>Alt</code> + <code>数字</code>: 设置输入信号位宽，不同器件效果不同。</li>
+<li><code>Ctrl</code> + <code>D</code>: 等价于<code>Ctrl</code> + <code>C</code> 并且 <code>Ctrl</code> + <code>V</code>。</li>
+<li><code>Ctrl</code> + <code>T</code>: Tick。时钟信号走一次。</li>
+<li><code>Ctrl</code> + <code>K</code>: 时钟信号持续变化，自己试一试就明白了。</li>
+<li><code>Ctrl</code> + <code>E</code>: 开启和关闭仿真。关闭时相当于给了一个全局暂停信号。</li>
+</ul>
+<p>还是可以快一点点的。</p>
+<p>待补充~</p>
+]]></content>
+      <categories>
+        <category>CO</category>
+      </categories>
+      <tags>
+        <tag>CO</tag>
+        <tag>FSM</tag>
+        <tag>Logisim</tag>
       </tags>
   </entry>
   <entry>
@@ -207,6 +225,7 @@
 </ul>
 <h4 id="阻塞条件"><a href="#阻塞条件" class="headerlink" title="阻塞条件"></a>阻塞条件</h4><p><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="11.297ex" height="1.889ex" role="img" focusable="false" viewBox="0 -677 4993.2 834.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="TeXAtom" transform="translate(617,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(600,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(1066,0)"><path data-c="1D464" d="M580 385Q580 406 599 424T641 443Q659 443 674 425T690 368Q690 339 671 253Q656 197 644 161T609 80T554 12T482 -11Q438 -11 404 5T355 48Q354 47 352 44Q311 -11 252 -11Q226 -11 202 -5T155 14T118 53T104 116Q104 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Q21 293 29 315T52 366T96 418T161 441Q204 441 227 416T250 358Q250 340 217 250T184 111Q184 65 205 46T258 26Q301 26 334 87L339 96V119Q339 122 339 128T340 136T341 143T342 152T345 165T348 182T354 206T362 238T373 281Q402 395 406 404Q419 431 449 431Q468 431 475 421T483 402Q483 389 454 274T422 142Q420 131 420 107V100Q420 85 423 71T442 42T487 26Q558 26 600 148Q609 171 620 213T632 273Q632 306 619 325T593 357T580 385Z"></path></g></g></g><g data-mml-node="mo" transform="translate(2204.8,0)"><path data-c="3E" d="M84 520Q84 528 88 533T96 539L99 540Q106 540 253 471T544 334L687 265Q694 260 694 250T687 235Q685 233 395 96L107 -40H101Q83 -38 83 -20Q83 -19 83 -17Q82 -10 98 -1Q117 9 248 71Q326 108 378 132L626 250L378 368Q90 504 86 509Q84 513 84 520Z"></path></g><g data-mml-node="msub" transform="translate(3260.6,0)"><g data-mml-node="mi"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="TeXAtom" transform="translate(617,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(572,0)"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g><g data-mml-node="mi" transform="translate(1041,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g></g></g></g></g></svg></mjx-container> 且 目标寄存器号相等 且 <strong>都不等于0</strong>。</p>
 <h4 id="关于空泡"><a href="#关于空泡" class="headerlink" title="关于空泡"></a>关于空泡</h4><p>空泡的PC建议保留为被阻塞指令的PC，比方说beq被阻塞在D级，那么E级产生的空泡的PC就保持和beq的PC相同。这在P7中会用到，不过也可以等到P7再改。</p>
+<h3 id="5-关于冲突"><a href="#5-关于冲突" class="headerlink" title="5. 关于冲突"></a>5. 关于冲突</h3><p>课上学习我们了解到，冲突有三种，其中结构冲突通过我们的哈佛结构CPU已经解决，控制冲突在MIPS中是通过延迟槽解决的，而数据冲突的三种类型(WAW, RAW, WAR)中，只有写后读(RAW)需要我们操心。WAW在我们的流水线中几乎不会产生影响，这是因为我们一个时钟周期只会对同一个存储设备的同一个位置进行一次写入；WAR也不会有什么问题，在我们的设计中，写操作并不会对读操作带来多大的干扰，如果非要说，就是内部转发解决了这个冲突。</p>
 <p><strong>祝P5一切顺利！</strong></p>
 ]]></content>
       <categories>
@@ -263,6 +282,73 @@
         <tag>CO</tag>
         <tag>Verilog</tag>
         <tag>流水线CPU</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>「BUAA CO」Verilog易错点</title>
+    <url>/2024/01/01/CO/verilog_error/</url>
+    <content><![CDATA[<p>在P4以及后续的设计过程中，Verilog的语法不过关可能会带来十分糟糕的体验，因此列出了本人犯的错误和舍友们犯的错误。内容仅供参考交流，如有错误，欢迎指正。</p>
+<p>Verilog可以在<a class="link"   href="https://hdlbits.01xz.net/wiki/Main_Page" >HDLbits <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>进行练习，也可以参考<a class="link"   href="https://www.runoob.com/w3cnote/verilog-tutorial.html" >菜鸟教程 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>，</p>
+<h3 id="1、关于-signed"><a href="#1、关于-signed" class="headerlink" title="1、关于$signed()"></a>1、关于$signed()</h3><p><code>Verilog</code>中默认一切未声明有符号的整型数均为无符号数，并默认有符号数与无符号数运算时，将有符号数自动转化为无符号数。比如：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (opCode == <span class="number">1&#x27;b1</span>) ? <span class="keyword">signed</span>(a) * <span class="keyword">signed</span>(b) : a * b;</span><br></pre></td></tr></table></figure></div>
+<p>上述代码中，<code>signed(a) * signed(b)</code>与<code>a*b</code>通过三目运算符进行运算，因此默认将第二位操作数（<code>signed(a) * signed(b)</code>）转换为无符号的乘法。解决方案在官方教程中有提及。</p>
+<p>上面这个例子很容易看出问题，但是当运用多重三目运算符进行嵌套的时候，结构复杂，很可能会遗漏有符号数和无符号数的问题。</p>
+<p>此外还有一点与C代码不同的是，在<code>Verilog</code>中，不能将“&#x3D;”视为一种运算符。也就是说如果我在某一语句块里这么写：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">  outcome = <span class="built_in">$signed</span>(a) * <span class="built_in">$signed</span>(b);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
+<p><code>outcome</code>仍然是两个有符号数做乘法的运算结果。<code>=</code>应当和<code>&lt;=</code>视为一种<strong>赋值符</strong>。</p>
+<h3 id="2、关于条件运算和浮空"><a href="#2、关于条件运算和浮空" class="headerlink" title="2、关于条件运算和浮空"></a>2、关于条件运算和浮空</h3><p>使用三目运算符时，<strong>当第一位操作数，即条件，为浮空值的时候，表达式返回值也是浮空值。</strong> 比方说:</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (<span class="number">1&#x27;bx</span>) ? <span class="number">1&#x27;b1</span> : <span class="number">1&#x27;b0</span>;</span><br></pre></td></tr></table></figure></div>
+<p>在上述代码中，<code>outcome</code>会得到1位的浮空值。<code>Verilog</code>不知道条件是真是假，因此无法给出结果。</p>
+<p>但是如果这样写：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> [<span class="number">1</span> : <span class="number">0</span>] outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (<span class="number">1&#x27;bx</span>) ? <span class="number">2&#x27;b01</span> : <span class="number">2&#x27;b00</span>;</span><br></pre></td></tr></table></figure></div>
+<p><code>outcome</code>就会得到<code>2&#39;b0x</code>的值，理由是尽管<code>Verilog</code>不知道结果是第二个操作数还是第三个操作数，但是不论是哪一个，其第1位一定是0，但是无法确定其第0位究竟是0还是1，因此第0位浮空。</p>
+<p>在<code>if-else</code>语句中则不一样。比如：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (a == <span class="number">1&#x27;b1</span>) </span><br><span class="line">  b &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">  b &lt;= <span class="number">1&#x27;b0</span>;</span><br></pre></td></tr></table></figure></div>
+<p>在上述代码中，如果<code>a</code>为一位浮空值，程序仍然会执行<code>else</code>语句块内的代码。<code>if-else</code>是安全的。</p>
+<p>在一些情况下，我们希望判断语句能够更加保险，即能够对浮空值也进行判断。这是可以使用<code>===</code>和<code>!===</code>，这双目两个运算符可以连同高阻态<code>z</code>和浮空值<code>x</code>一并进行判断。</p>
+<p>三目运算符在进行简单的<code>if-else</code>判断是非常好用的，主要是写起来和读起来都比较舒服。但是不建议用于多重<code>if-else</code>判断，尤其是当不论<code>if</code>还是<code>else</code>里面都有<code>if-else</code>语句的时候。</p>
+<h3 id="3、关于”-”和”-”以及“自动类型转换”"><a href="#3、关于”-”和”-”以及“自动类型转换”" class="headerlink" title="3、关于”~”和”!”以及“自动类型转换”"></a>3、关于”~”和”!”以及“自动类型转换”</h3><p>省流版就是：不要用位宽不同的两个数进行相互赋值，理由是<code>Verilog</code>在进行位扩展的时候会进行一些很诡异的操作。</p>
+<p>下面讲一个具体的例子。下例由室友LJC提出，愣是把我看傻了。</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> test(</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">1</span> : <span class="number">0</span>] a;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line">    <span class="keyword">reg</span> clk;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">            c = ~a;</span><br><span class="line">            <span class="built_in">$display</span>(<span class="string">&quot;when a = 1&#x27;b%b, c = ~ a = 4&#x27;b%b&quot;</span>, a, c);</span><br><span class="line">            c = !a;</span><br><span class="line">            <span class="built_in">$display</span>(<span class="string">&quot;when a = 1&#x27;b%b, c = ! a = 4&#x27;b%b&quot;</span>, a, c);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">        a = <span class="number">2&#x27;b00</span>;</span><br><span class="line">        c = <span class="number">4&#x27;b00</span>;</span><br><span class="line">        clk = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b01</span>;</span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b10</span>;</span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b11</span>;</span><br><span class="line">        #<span class="number">2</span> <span class="built_in">$finish</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> #<span class="number">1</span> clk &lt;= ~clk;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure></div>
+<p>使用<code>iverilog</code>进行编译和仿真会得到：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ iverilog -o a.out test.v</span><br><span class="line">$ vvp a.out</span><br><span class="line">when a = 1&#x27;b00, c = ~ a = 4&#x27;b1111</span><br><span class="line">when a = 1&#x27;b00, c = ! a = 4&#x27;b0001</span><br><span class="line">when a = 1&#x27;b01, c = ~ a = 4&#x27;b1110</span><br><span class="line">when a = 1&#x27;b01, c = ! a = 4&#x27;b0000</span><br><span class="line">when a = 1&#x27;b10, c = ~ a = 4&#x27;b1101</span><br><span class="line">when a = 1&#x27;b10, c = ! a = 4&#x27;b0000</span><br><span class="line">when a = 1&#x27;b11, c = ~ a = 4&#x27;b1100</span><br><span class="line">when a = 1&#x27;b11, c = ! a = 4&#x27;b0000</span><br><span class="line">test3.v:23: $finish called at 8 (1s)</span><br></pre></td></tr></table></figure></div>
+<p>可以看出，<code>~a</code>和<code>!a</code>在进行位扩展时十分抽象，编译时会先进行1扩展或者0扩展再进行赋值。因此当一个稍微复杂的表达式中出现了位宽的改变时，强烈建议用<code>vector</code>也就是花括号<code>&#123;,&#125;</code>手动进行扩展。</p>
+<p>P.S.样例中在时序逻辑中进行阻塞赋值是不合规范的，请勿模仿。</p>
+<h3 id="4、位宽"><a href="#4、位宽" class="headerlink" title="4、位宽"></a>4、位宽</h3><p>下例来自舍友ZHX，这种事情一旦发生，debug可就困难了。大家可以试着找找下图中的错误。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/CO/verilog_error/1.png"
+                      alt="位宽错误"
+                ></p>
+<details class="blue" data-header-exclude><summary><i class="fa-solid fa-chevron-right"></i>Answer </summary>
+              <div class='content'>
+              <p>不声明位宽时，默认1位。这与整数不同，后者默认32位。<br>Addr是32位的地址，但是声明成了1位。 </p>
+              </div>
+            </details>
+
+<h3 id="5、关于循环"><a href="#5、关于循环" class="headerlink" title="5、关于循环"></a>5、关于循环</h3><p>在P4以及后续的上机题中，可能会需要统计一个32位数中的1的个数，或者32位数中是否存在连续的4个1。这时需要使用循环写组合逻辑。比如前者可写为：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">integer</span> i;</span><br><span class="line"><span class="keyword">reg</span>  [<span class="number">31</span>: <span class="number">0</span>] sum;</span><br><span class="line"><span class="keyword">wire</span> [<span class="number">31</span>: <span class="number">0</span>] target;</span><br><span class="line"><span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">  sum = <span class="number">0</span></span><br><span class="line">  <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;<span class="number">32</span>; i=i+<span class="number">1</span>) <span class="keyword">begin</span></span><br><span class="line">    sum = sum + target[i];</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="6、关于切片"><a href="#6、关于切片" class="headerlink" title="6、关于切片"></a>6、关于切片</h3><p>对于<code>wire</code>类型或者<code>reg</code>类型变量，我们会经常用到<code>[:]</code>取出特定位宽，再利用<code>&#123;,&#125;</code>进行拼接。但是当我们想取出的位置随变量改变时，就会出现问题，比如：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> test(</span><br><span class="line">);</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">integer</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line"><span class="keyword">assign</span> c = c[(i + <span class="number">1</span>):i]</span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure></div>
+<p>用<code>iverilog</code>编译会报错。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">test.v:6: error: Part select expressions must be constant.</span><br></pre></td></tr></table></figure></div>
+<p>个人猜测Verilog要求返回值的位宽必须是恒定的，因此要求用常数选择位宽。</p>
+<p>解决方案有三。第一个是利用位移运算去挪它，再用常数选出来；第二个是用vector把每一位取出来并进行拼接，如<code>assign c = &#123;&#123;c[i+1]&#125;, &#123;c[i]&#125;&#125;;</code>。</p>
+<p>第三个方案更简洁，利用System Verilog中的切片完成。比如上述例子可写成：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>     <span class="keyword">module</span> test(</span><br><span class="line"><span class="number">2</span>     );</span><br><span class="line">...</span><br><span class="line"><span class="number">12</span>    <span class="keyword">integer</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="number">13</span>    <span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line"><span class="number">14</span>    <span class="keyword">assign</span> c = c[(i + <span class="number">1</span>) -: <span class="number">2</span>]</span><br><span class="line">...</span><br></pre></td></tr></table></figure></div>
+<p>不要用<code>[i+:2]</code>，这会返回<code>[i:i+1]</code>。</p>
+<h3 id="7、关于阻塞和非阻塞"><a href="#7、关于阻塞和非阻塞" class="headerlink" title="7、关于阻塞和非阻塞"></a>7、关于阻塞和非阻塞</h3><p>阻塞赋值和非阻塞赋值看似简单，但实际上在编译过程中又不是那么简单。个人建议将阻塞赋值和非阻塞赋值分开，即在<code>always @(*)</code>中进行阻塞赋值，在<code>always @(posedge clk)</code>中进行非阻塞赋值。请不要在阻塞赋值中掺杂非阻塞赋值。比如我的天才构思，实现了在时钟上升沿的瞬间利用上升沿后的数据对寄存器值进行更新：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    flag = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// process coming data...</span></span><br><span class="line">    flag = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> flag) <span class="keyword">begin</span></span><br><span class="line">    <span class="comment">// do sth...</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
+<p>我不知道第一个语句块中是否真的读到了上升沿后的数据，因为仿真得到的全是浮空值。</p>
+<p>非阻塞赋值是在利用上升沿之前的数据在上升沿对寄存器进行一次更新，所以请不要在同一个上升沿对同一个寄存器更新两次，即不要在同一次<code>always</code>中执行多次对同一个<code>reg</code>类型变量的非阻塞赋值操作。如果需要用上升沿之后的数据输出的话，可以写一个Mealy机。</p>
+<p>待补充~</p>
+]]></content>
+      <categories>
+        <category>CO</category>
+      </categories>
+      <tags>
+        <tag>Verilog</tag>
       </tags>
   </entry>
   <entry>
@@ -373,70 +459,21 @@
       </tags>
   </entry>
   <entry>
-    <title>「BUAA CO」Verilog易错点</title>
-    <url>/2024/01/01/CO/verilog_error/</url>
-    <content><![CDATA[<p>在P4以及后续的设计过程中，Verilog的语法不过关可能会带来十分糟糕的体验，因此列出了本人犯的错误和舍友们犯的错误。内容仅供参考交流，如有错误，欢迎指正。</p>
-<p>Verilog可以在<a class="link"   href="https://hdlbits.01xz.net/wiki/Main_Page" >HDLbits <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>进行练习，也可以参考<a class="link"   href="https://www.runoob.com/w3cnote/verilog-tutorial.html" >菜鸟教程 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>，</p>
-<h3 id="1、关于-signed"><a href="#1、关于-signed" class="headerlink" title="1、关于$signed()"></a>1、关于$signed()</h3><p><code>Verilog</code>中默认一切未声明有符号的整型数均为无符号数，并默认有符号数与无符号数运算时，将有符号数自动转化为无符号数。比如：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (opCode == <span class="number">1&#x27;b1</span>) ? <span class="keyword">signed</span>(a) * <span class="keyword">signed</span>(b) : a * b;</span><br></pre></td></tr></table></figure></div>
-<p>上述代码中，<code>signed(a) * signed(b)</code>与<code>a*b</code>通过三目运算符进行运算，因此默认将第二位操作数（<code>signed(a) * signed(b)</code>）转换为无符号的乘法。解决方案在官方教程中有提及。</p>
-<p>上面这个例子很容易看出问题，但是当运用多重三目运算符进行嵌套的时候，结构复杂，很可能会遗漏有符号数和无符号数的问题。</p>
-<p>此外还有一点与C代码不同的是，在<code>Verilog</code>中，不能将“&#x3D;”视为一种运算符。也就是说如果我在某一语句块里这么写：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">  outcome = <span class="built_in">$signed</span>(a) * <span class="built_in">$signed</span>(b);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
-<p><code>outcome</code>仍然是两个有符号数做乘法的运算结果。<code>=</code>应当和<code>&lt;=</code>视为一种<strong>赋值符</strong>。</p>
-<h3 id="2、关于条件运算和浮空"><a href="#2、关于条件运算和浮空" class="headerlink" title="2、关于条件运算和浮空"></a>2、关于条件运算和浮空</h3><p>使用三目运算符时，<strong>当第一位操作数，即条件，为浮空值的时候，表达式返回值也是浮空值。</strong> 比方说:</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (<span class="number">1&#x27;bx</span>) ? <span class="number">1&#x27;b1</span> : <span class="number">1&#x27;b0</span>;</span><br></pre></td></tr></table></figure></div>
-<p>在上述代码中，<code>outcome</code>会得到1位的浮空值。<code>Verilog</code>不知道条件是真是假，因此无法给出结果。</p>
-<p>但是如果这样写：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> [<span class="number">1</span> : <span class="number">0</span>] outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (<span class="number">1&#x27;bx</span>) ? <span class="number">2&#x27;b01</span> : <span class="number">2&#x27;b00</span>;</span><br></pre></td></tr></table></figure></div>
-<p><code>outcome</code>就会得到<code>2&#39;b0x</code>的值，理由是尽管<code>Verilog</code>不知道结果是第二个操作数还是第三个操作数，但是不论是哪一个，其第1位一定是0，但是无法确定其第0位究竟是0还是1，因此第0位浮空。</p>
-<p>在<code>if-else</code>语句中则不一样。比如：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (a == <span class="number">1&#x27;b1</span>) </span><br><span class="line">  b &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">  b &lt;= <span class="number">1&#x27;b0</span>;</span><br></pre></td></tr></table></figure></div>
-<p>在上述代码中，如果<code>a</code>为一位浮空值，程序仍然会执行<code>else</code>语句块内的代码。<code>if-else</code>是安全的。</p>
-<p>在一些情况下，我们希望判断语句能够更加保险，即能够对浮空值也进行判断。这是可以使用<code>===</code>和<code>!===</code>，这双目两个运算符可以连同高阻态<code>z</code>和浮空值<code>x</code>一并进行判断。</p>
-<p>三目运算符在进行简单的<code>if-else</code>判断是非常好用的，主要是写起来和读起来都比较舒服。但是不建议用于多重<code>if-else</code>判断，尤其是当不论<code>if</code>还是<code>else</code>里面都有<code>if-else</code>语句的时候。</p>
-<h3 id="3、关于”-”和”-”以及“自动类型转换”"><a href="#3、关于”-”和”-”以及“自动类型转换”" class="headerlink" title="3、关于”~”和”!”以及“自动类型转换”"></a>3、关于”~”和”!”以及“自动类型转换”</h3><p>省流版就是：不要用位宽不同的两个数进行相互赋值，理由是<code>Verilog</code>在进行位扩展的时候会进行一些很诡异的操作。</p>
-<p>下面讲一个具体的例子。下例由室友LJC提出，愣是把我看傻了。</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> test(</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">1</span> : <span class="number">0</span>] a;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line">    <span class="keyword">reg</span> clk;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">            c = ~a;</span><br><span class="line">            <span class="built_in">$display</span>(<span class="string">&quot;when a = 1&#x27;b%b, c = ~ a = 4&#x27;b%b&quot;</span>, a, c);</span><br><span class="line">            c = !a;</span><br><span class="line">            <span class="built_in">$display</span>(<span class="string">&quot;when a = 1&#x27;b%b, c = ! a = 4&#x27;b%b&quot;</span>, a, c);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">        a = <span class="number">2&#x27;b00</span>;</span><br><span class="line">        c = <span class="number">4&#x27;b00</span>;</span><br><span class="line">        clk = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b01</span>;</span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b10</span>;</span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b11</span>;</span><br><span class="line">        #<span class="number">2</span> <span class="built_in">$finish</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> #<span class="number">1</span> clk &lt;= ~clk;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure></div>
-<p>使用<code>iverilog</code>进行编译和仿真会得到：</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ iverilog -o a.out test.v</span><br><span class="line">$ vvp a.out</span><br><span class="line">when a = 1&#x27;b00, c = ~ a = 4&#x27;b1111</span><br><span class="line">when a = 1&#x27;b00, c = ! a = 4&#x27;b0001</span><br><span class="line">when a = 1&#x27;b01, c = ~ a = 4&#x27;b1110</span><br><span class="line">when a = 1&#x27;b01, c = ! a = 4&#x27;b0000</span><br><span class="line">when a = 1&#x27;b10, c = ~ a = 4&#x27;b1101</span><br><span class="line">when a = 1&#x27;b10, c = ! a = 4&#x27;b0000</span><br><span class="line">when a = 1&#x27;b11, c = ~ a = 4&#x27;b1100</span><br><span class="line">when a = 1&#x27;b11, c = ! a = 4&#x27;b0000</span><br><span class="line">test3.v:23: $finish called at 8 (1s)</span><br></pre></td></tr></table></figure></div>
-<p>可以看出，<code>~a</code>和<code>!a</code>在进行位扩展时十分抽象，编译时会先进行1扩展或者0扩展再进行赋值。因此当一个稍微复杂的表达式中出现了位宽的改变时，强烈建议用<code>vector</code>也就是花括号<code>&#123;,&#125;</code>手动进行扩展。</p>
-<p>P.S.样例中在时序逻辑中进行阻塞赋值是不合规范的，请勿模仿。</p>
-<h3 id="4、位宽"><a href="#4、位宽" class="headerlink" title="4、位宽"></a>4、位宽</h3><p>下例来自舍友ZHX，这种事情一旦发生，debug可就困难了。大家可以试着找找下图中的错误。<br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/CO/verilog_error/1.png"
-                      alt="位宽错误"
-                ></p>
-<details class="blue" data-header-exclude><summary><i class="fa-solid fa-chevron-right"></i>Answer </summary>
-              <div class='content'>
-              <p>不声明位宽时，默认1位。这与整数不同，后者默认32位。<br>Addr是32位的地址，但是声明成了1位。 </p>
-              </div>
-            </details>
-
-<h3 id="5、关于循环"><a href="#5、关于循环" class="headerlink" title="5、关于循环"></a>5、关于循环</h3><p>在P4以及后续的上机题中，可能会需要统计一个32位数中的1的个数，或者32位数中是否存在连续的4个1。这时需要使用循环写组合逻辑。比如前者可写为：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">integer</span> i;</span><br><span class="line"><span class="keyword">reg</span>  [<span class="number">31</span>: <span class="number">0</span>] sum;</span><br><span class="line"><span class="keyword">wire</span> [<span class="number">31</span>: <span class="number">0</span>] target;</span><br><span class="line"><span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">  sum = <span class="number">0</span></span><br><span class="line">  <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;<span class="number">32</span>; i=i+<span class="number">1</span>) <span class="keyword">begin</span></span><br><span class="line">    sum = sum + target[i];</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
-
-<h3 id="6、关于切片"><a href="#6、关于切片" class="headerlink" title="6、关于切片"></a>6、关于切片</h3><p>对于<code>wire</code>类型或者<code>reg</code>类型变量，我们会经常用到<code>[:]</code>取出特定位宽，再利用<code>&#123;,&#125;</code>进行拼接。但是当我们想取出的位置随变量改变时，就会出现问题，比如：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> test(</span><br><span class="line">);</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">integer</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line"><span class="keyword">assign</span> c = c[(i + <span class="number">1</span>):i]</span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure></div>
-<p>用<code>iverilog</code>编译会报错。</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">test.v:6: error: Part select expressions must be constant.</span><br></pre></td></tr></table></figure></div>
-<p>个人猜测Verilog要求返回值的位宽必须是恒定的，因此要求用常数选择位宽。</p>
-<p>解决方案有三。第一个是利用位移运算去挪它，再用常数选出来；第二个是用vector把每一位取出来并进行拼接，如<code>assign c = &#123;&#123;c[i+1]&#125;, &#123;c[i]&#125;&#125;;</code>。</p>
-<p>第三个方案更简洁，利用System Verilog中的切片完成。比如上述例子可写成：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>     <span class="keyword">module</span> test(</span><br><span class="line"><span class="number">2</span>     );</span><br><span class="line">...</span><br><span class="line"><span class="number">12</span>    <span class="keyword">integer</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="number">13</span>    <span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line"><span class="number">14</span>    <span class="keyword">assign</span> c = c[(i + <span class="number">1</span>) -: <span class="number">2</span>]</span><br><span class="line">...</span><br></pre></td></tr></table></figure></div>
-<p>不要用<code>[i+:2]</code>，这会返回<code>[i:i+1]</code>。</p>
-<h3 id="7、关于阻塞和非阻塞"><a href="#7、关于阻塞和非阻塞" class="headerlink" title="7、关于阻塞和非阻塞"></a>7、关于阻塞和非阻塞</h3><p>阻塞赋值和非阻塞赋值看似简单，但实际上在编译过程中又不是那么简单。个人建议将阻塞赋值和非阻塞赋值分开，即在<code>always @(*)</code>中进行阻塞赋值，在<code>always @(posedge clk)</code>中进行非阻塞赋值。请不要在阻塞赋值中掺杂非阻塞赋值。比如我的天才构思，实现了在时钟上升沿的瞬间利用上升沿后的数据对寄存器值进行更新：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    flag = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// process coming data...</span></span><br><span class="line">    flag = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> flag) <span class="keyword">begin</span></span><br><span class="line">    <span class="comment">// do sth...</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
-<p>我不知道第一个语句块中是否真的读到了上升沿后的数据，因为仿真得到的全是浮空值。</p>
-<p>非阻塞赋值是在利用上升沿之前的数据在上升沿对寄存器进行一次更新，所以请不要在同一个上升沿对同一个寄存器更新两次，即不要在同一次<code>always</code>中执行多次对同一个<code>reg</code>类型变量的非阻塞赋值操作。如果需要用上升沿之后的数据输出的话，可以写一个Mealy机。</p>
-<p>待补充~</p>
+    <title>About me</title>
+    <url>/2023/12/31/about/me/</url>
+    <content><![CDATA[<p>现在是2023年12月31号的晚上19:35。距离bilibili跨年晚会的开始还有25分钟，距离2024年还有五个小时不到。2023年是我迈入北航计算机学院的第一年。回顾过去的一学期，我感受过离散数学和量子力学的美丽，也体验了数理统计和随机过程的离奇和神秘；既在面向对象先导课的一次次debug中挣扎，也在计算机组成实验课上一次次死去。</p>
+<p>我从来没有想过自己也会有写博客的一天。或许是希望自己同样身为菜鸡能给后来者一点启发，或许是对自己一学期的回顾与复盘，又或许是单纯想找个地方说话，总之一学期下来，我想记录一下我经历的每次不可思议，记录我每一次崩溃和有一次的涅槃。</p>
+<p>正当我没处说话的时候，我想起了Roife学长、TobyShi学长和FlyingLandlord学长制作的博客，又正巧在群里刷到了Tan学长的博客。受学长们启发，有了做一篇自己的博客的想法。</p>
+<p>希望这篇博客能够坚持到大三，直到我走完北航6系的基本课程。期间可能会换主题和博客的排版，不过希望我能坚持到最后。</p>
+<p>感谢每一位身边的人。</p>
+<p>现在是2023年12月31号19:56:36，就把这个时间定为一切的开始吧</p>
 ]]></content>
       <categories>
-        <category>CO</category>
+        <category>me</category>
       </categories>
       <tags>
-        <tag>Verilog</tag>
+        <tag>me</tag>
+        <tag>talks</tag>
       </tags>
   </entry>
 </search>
