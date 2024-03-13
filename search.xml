@@ -1,6 +1,274 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>「BUAA OO」Unit-1 表达式计算</title>
+    <url>/2024/03/13/OO/Unit-1/</url>
+    <content><![CDATA[<h1 id="从-到简易科学计算器"><a href="#从-到简易科学计算器" class="headerlink" title="从 + - * ^ 到简易科学计算器"></a>从 + - * ^ 到简易科学计算器</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>给定一个只含有 <code>x</code> 的表达式，完成对该表达式的化简（展开）并输出。要求：</p>
+<ol>
+<li>输出最简无多余括号</li>
+<li>输出越短越好</li>
+</ol>
+<h2 id="第一次作业"><a href="#第一次作业" class="headerlink" title="第一次作业"></a>第一次作业</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入的表达式满足以下要求：</p>
+<ol>
+<li>只有关于<code>x</code>的非负整数幂</li>
+<li>指数永远是非负整数</li>
+<li>只有一层括号</li>
+<li>输出不能有括号</li>
+</ol>
+<h3 id="数据限制"><a href="#数据限制" class="headerlink" title="数据限制"></a>数据限制</h3><ul>
+<li>保证系数有可能爆 <code>int</code> </li>
+<li>由题目可知指数不会爆 <code>int</code></li>
+</ul>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>在叙述我的解决方案之前，我希望能通过解决七个关键问题描述我的思考。</p>
+<blockquote>
+<p>问题 0：我们需要做什么？总共有哪几个步骤？</p>
+</blockquote>
+<p>与C语言不同，java作为一款纯度极高的面向对象编程语言，对于抽象化、层次化、模块化的要求更高，相应地性能肯定不如C的高耦合度代码。在这次作业中，我们应该思考的是如何在题目中找到对象，找到方法，建立抽象层次。而这一切又是从功能和数据的角度出发的。所以我们先来分析一下题目的功能要求和可能需要的数据结构：</p>
+<p><code>功能要求：读入字符串、解析成表达式后计算表达式。</code></p>
+<p>然后我们将功能需求拆解成不同的步骤：</p>
+<ol>
+<li><code>读入</code>——建立读取读取字符串类—— Java 中已经提供了scanner类用于读取字符串。</li>
+<li><code>解析</code>——建立解析字符串类 —— 可以建立一个 Lexer 类。但是在第一次作业中似乎不需要？我们先把这个问题放一边，看看接下来要做什么？</li>
+<li><code>存储</code>——建立存储表达式类 —— 这当然是必要的，其本质就是用特定的数据结构将表达式存储起来，那为何不建立一个类来存储这种数据结构呢？</li>
+<li><code>计算表达式</code>——建立计算表达式类…吗？ —— 完全没问题，毕竟计算表达式还是挺折腾的。但是用其他类的方法来实现计算似乎也可行…而且似乎可以一边存储一遍计算…再看看还有什么功能先吧。</li>
+<li><code>输出</code>——输出字符串类…吗？ —— 似乎没必要。一个方法就行。</li>
+</ol>
+<p>上面没有回答到的问题我们会在后续看到答案。现在先看一下我们需要用到的数据结构</p>
+<ol>
+<li><code>存储表达式</code>——表达式类` —— 这似乎是最自然的想法，但是这并没有回答我们需要使用到什么数据结构。我们先把它放一边。</li>
+<li><code>存储多项式</code>——多项式类 —— 多项式和表达式有什么不同呢？多项式指输出结果前的数据结构，但是表达式指输入解析后的数据结构。两者当然可以使用同一个类，但接下来我们会看到，使用多项式类有它自己的好处。</li>
+</ol>
+<p>我们的分析已经基本完成了。接下来我们进一步关注实现的细节。比如说我们在上面的分析中提到的第一个问题——需不需要Lexer？</p>
+<blockquote>
+<p>问题 1：需不需要输入预处理？（Lexer）</p>
+</blockquote>
+<p>这似乎是不必要的。因为加减号、正负号、乘号(asterisk)、指数符号(caret)会在表达式读入中才能处理，而括号和自变量需要暂时保留直到表达式用到他们。所以我们能做的就是把常数因子稍微处理一下。</p>
+<p>但是从可扩展性的角度出发，进行预处理是好的。预处理能够将函数名称识别出来，将特定符号识别出来；我们可以用特定字符的符号属性来判断这个字符的类型，而不是用字符串比对的原始方法。而这一切都能使代码的结构更加清洗，使可读性更高，同时这也是更符合面向对象编程思想的方式。</p>
+<p>下一步。</p>
+<blockquote>
+<p>问题 2：如何分析表达式？如何存储表达式？</p>
+</blockquote>
+<p>结合这次作业的抽象语法树已经数据结构课上学的内容，我们现在学了三个方式来处理表达式：</p>
+<ol>
+<li>维护一个变量栈和一个符号栈，新符号的优先级不高于前面的符号时，就计算前面的式子。</li>
+<li>转化为后缀表达式，再利用后缀表达式构建表达式树</li>
+<li>抽象语法树 + 递归下降<br>第一种方式是我第一次接触到的计算表达式的方式。这固然好，但问题是不太方便从中分理处对象。第二种方式是我在数据结构课上接触到的方式，也是和抽象语法树非常相似的方式。问题是树太深了——毕竟是一个二叉树。理论上来说，同一优先级的不同操作数可以放在数的同一层。因此就有了我们的抽象语法树（AST）——其实可以把它理解成一种表达式树。</li>
+</ol>
+<p>有了AST，我们就需要有构建AST的方法，遍历AST的方法和计算AST的方法。这三个功能需求虽然目的各不相同，但是他们的本质都是遍历AST。因此</p>
+<blockquote>
+<p>问题 3：如何递归下降？如何保证递归的正确性？</p>
+</blockquote>
+<p>题目是按照AST的思路给出表达式的定义。</p>
+<ul>
+<li>表达式 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> 空白项 [加减 空白项] 项 空白项 | 表达式 加减 空白项 项 空白项</li>
+<li>项 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> [加减 空白项] 因子 | 项 空白项 '*’ 空白项 因子</li>
+<li>因子 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> 变量因子 | 常数因子 | 表达式因子</li>
+<li>变量因子 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> 幂函数</li>
+<li>常数因子 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> 带符号的整数</li>
+<li>表达式因子 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> ‘(‘ 表达式 ‘)’ [空白项 指数]</li>
+<li>幂函数 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> ‘x’ [空白项 指数]</li>
+<li>指数 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container>  ‘^’ 空白项 [‘+’] 允许前导零的整数  <strong>(注：指数一定不是负数)</strong></li>
+<li>带符号的整数 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> [加减] 允许前导零的整数</li>
+<li>允许前导零的整数 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> (‘0’|’1’|’2’|…|’9’){‘0’|’1’|’2’|…|’9’}</li>
+<li>空白项 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> {空白字符}</li>
+<li>空白字符 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> （空格） | <code>\t</code></li>
+<li>加减 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> ‘+’ | ‘-‘</li>
+</ul>
+<p>递归下降的对象是AST，而AST是一棵树，因此递归下降的本质其实就是利用递归的方法遍历一棵树。而根据输入顺序进行递归意味着对这棵树的遍历是一次深度优先搜索。而递归的结束标志就是没有更多的表达式因子。</p>
+<p>如何递归呢？很简单。表达式就是很多个项，遍历一个表达式就要先遍历全部的项；遍历全部的项就是遍历全部的因子；如果因子是表达式，那就遍历这个表达式。与之前我们接触到的递归不同的是，并不是一个递归函数并不是调用自己本身递归，而是几个函数相互调用递归。</p>
+<pre class="mermaid">graph TD
+A(表达式)--&gt; A1( - )
+A(表达式)--&gt; B1(项1)
+    B1 --&gt; C11[ -1 ]  
+A(表达式)--&gt; A2(+)
+A(表达式)--&gt; B2(项2)
+    B2 --&gt; C21(表达式^6)
+        C21 --&gt; D1(项4)
+            D1 --&gt; E1(x^+02)
+        C21 --&gt; C211( - )
+        C21 --&gt; D2(项5)
+            D2 --&gt; E2( -00128)
+A(表达式)--&gt; A3( - )
+A(表达式)--&gt; B3(项3)
+    B3 --&gt; C31[x^2]
+    B3 --&gt; C32[*]
+    B3 --&gt; C33[2]</pre>
+
+<blockquote>
+<p>问题 4：如何得到答案？</p>
+</blockquote>
+<p>我的实现方式是参考四则运算的方式来实现的。在只有四则运算的AST中，我们只需要递归调用getValue()方法，并且把每一个getValue()得到的数值在这一级进行运行然后将结果返回给上一级。</p>
+<p>比方说，表达式的值是什么呢？是每一个项的值按照项之间的加减号运算后的结果。而我们怎么知道每一个项的值是多少呢？在表达式层，我们假设每一个项都能调用一个getValue()方法，这个方法返回的值都是化简后的一个唯一的数。我们再将求出来的这个表达式的值返回给自己的getValue()方法。这样子表达式的值就是<code>int result = &lt;表达式对象&gt;.getValue()</code>。</p>
+<p>但是一个项的值是多少呢？我们也可以假设一个项是每一个因子的值相乘的结果。而每一个因子的值就是因子自身调用getValue()方法得到的。而因子的值是多少呢？在只有数字的四则运算中，因子只有可能是数字和表达式，如果是数字就直接返回数字，如果是表达式就返回表达式的getValue()方法进行递归就行。说白了，就是一个深度优先搜索，不过是通过递归的形式进行遍历的。这样子带来的好处就是编程难度被简化了——有时候如果不明说我们可能都意识不到自己用的是复杂的深度优先搜索算法。</p>
+<p>但是在多项式的计算中，并没有一个直观的getValue()方法——毕竟得到的答案并不是一个数字，而是一个多项式。这就引出了第五个问题。</p>
+<blockquote>
+<p>问题 5：如何存储结果（多项式）？如何输出结果？</p>
+</blockquote>
+<p>其实在第四个问题中，我们已经有思路了，递归调用getValue()方法就行。我们假设每次返回的不是一个最简的数，而是一个最简的多项式。接下来，我们写几个方法用来计算最简多项式返回最简多项式。然后剩下的就交给递归和可靠的JVM就行。似乎也没有想象的那么难？</p>
+<p>存储多项式更简单。每个多项式是由若干个单项式构成的。而单项式只有两个属性：系数和指数。这么简单的结构，写几个add, sub, mul, pow方法肯定也是轻轻松松信手拈来啦。</p>
+<p>需要注意的是，在多项式的计算中要注意合并同类项，而合并同类项意味着查找同类项，意味着查找，意味着搜索。因此可以用一个指数到系数的HashMap来存储单项式，加速查找过程。</p>
+<p>输出嘛…就输出呗。都写到这了还不会输出？</p>
+<blockquote>
+<p>问题 6：有无优化空间？结构能否再清晰？</p>
+</blockquote>
+<ul>
+<li><p>正的第一个输出可以不输出符号</p>
+</li>
+<li><p>快速幂？输入最高八次方，快速幂快不了多少…</p>
+</li>
+<li><p>一次方别输出，系数为1的正整数幂不用输出系数。</p>
+</li>
+<li><p>建立因子接口</p>
+</li>
+<li><p>建立多项式类和单项式类（可扩展性）</p>
+</li>
+</ul>
+<h3 id="最终设计"><a href="#最终设计" class="headerlink" title="最终设计"></a>最终设计</h3><h4 id="UML类图"><a href="#UML类图" class="headerlink" title="UML类图"></a>UML类图</h4><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U1/hw1_uml.png" alt="hw1_uml"></p>
+<h4 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><h3 id="互测经验"><a href="#互测经验" class="headerlink" title="互测经验"></a>互测经验</h3><p>hw1 还算比较轻松，由正好被分到了零房，所以几乎没有遇到什么bug。说一下舍友的bug。</p>
+<ol>
+<li><code>(2)^32</code> 错误在于把 <code>BigInteger</code> 转成了 <code>Integer</code> 再与零比较，如果是零就表明这个 <code>BigInteger</code> 是零。想必错误的人没有怎么看过 <code>BigInteger</code> 的库函数。错误输出为 <code>0</code> ，因为强转为 <code>Integer</code> 后确实等于0。</li>
+<li>第二个错误原因太呆了。简单来说就是 <code>HashMap</code> 的迭代器是不保证有序的，尽管它在很多时候看起来是有序的。错误的同学把它当成有序的了，导致在一些奇怪的样例上得到了错误的输出。</li>
+</ol>
+<h2 id="第二次作业"><a href="#第二次作业" class="headerlink" title="第二次作业"></a>第二次作业</h2><h3 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h3><p>题目进行了小改动，未改动的地方没有列出来。自定义函数也没有列出来。</p>
+<ul>
+<li>变量因子 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> 幂函数 | 指数函数 | 自定义函数<strong>调用</strong></li>
+<li>指数函数 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> ‘exp’ 空白项 ‘(‘ 空白项 因子 空白项 ‘)’ [空白项 指数]</li>
+<li>自定义函数调用 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> 自定义函数名 空白项 ‘(‘ 空白项 因子 空白项 [‘,’ 空白项 因子 空白项 [‘,’ 空白项 因子 空白项]] ‘)’<br>输出要求：exp函数内必须是项，但是必须无多余括号</li>
+</ul>
+<h3 id="数据限制-1"><a href="#数据限制-1" class="headerlink" title="数据限制"></a>数据限制</h3><ul>
+<li>指数不能超过8，但是可以不断嵌套。不保证指数不会爆 <code>int</code> （事实上它确实爆了）</li>
+<li>保证自定义函数的定义表达式中没有其他自定义函数在内。</li>
+</ul>
+<h3 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h3><blockquote>
+<p>问题 7：有哪些改动？</p>
+</blockquote>
+<p>进行迭代的第一步设计就是考虑项目的哪些地方需要进行改动。按照我的实现，在第二次作业中需要大改的地方大概有：</p>
+<ol>
+<li>变更单项式的数据结构，因此需要变更多项式的数据结构，<strong>重构多项式</strong>属性方法，引入单项式类使设计模块化层次化。</li>
+<li><strong>引入自定义函数类</strong>，可能由多个类共同实现自定义函数功能需求。</li>
+<li>引入读取自定义函数的相关模块代码。<br>小改的地方有：</li>
+<li>扩展<code>Token</code> 和 <code>Token.Type</code> 。</li>
+<li>扩展<code>Lexer</code> 。</li>
+<li>扩展<code>Parser</code> 使之能够解析自定义函数和指数函数。</li>
+</ol>
+<p>我在实现第二次作业的要求的过程中进行了一次小迭代开发——先处理对 <code>exp</code> 函数的表达式的计算化简，再进行了自定义函数的读入。这样做有两个好处：</p>
+<ol>
+<li>可以通过对第一个部分debug保证一部分已经正确，再处理第二部分。而不需要在全部内容写完后对着庞大的项目debug</li>
+<li>第一次作业和第二次作业的输入格式不同。先处理 <code>exp</code> 还可以小改一下第一次作业的评测机接着用，而不用新写一个评测机。<br>先看引入 <code>exp</code> 后的单项式和多项式怎么存储。</li>
+</ol>
+<blockquote>
+<p>问题 8：如何存储单项式和多项式？需要注意什么？</p>
+</blockquote>
+<p>多项式的实现是简单的——多项式就是很多的单项式。如果需要的话，还可以往多项式中引入单项式之间的运算关系。我个人觉得不必要，因此省略。</p>
+<p>单项式的实现也是简单的，单项式只有三个属性：系数，指数和 <code>exp</code> 函数中的多项式。</p>
+<p>注意，这里面有一个小问题：循环定义。</p>
+<blockquote>
+<p>问题 9：多项式属性包括单项式，单项式属性有多项式，这种循环定义如何结束？</p>
+</blockquote>
+<p>我们之所以这样定义，是因为我们有需要这样定义的需求。因此得到循环定义的边界，就要回到这种看似无法停止循环的奇怪需求中。我们之所以这样定义，是因为 <code>exp</code> 中确实有多项式，但是这个多项式中并不一定有 <code>exp</code> 的因子。所以解决循环定义实际上很简单：让没有 <code>exp</code> 项的单项式中的多项式属性为空就行——这个空不一定是 <code>null</code> ，也可以是一个没有单项式的多项式对象。</p>
+<p>定义解决了，下面分析多项式和单项式的计算。计算方法和第一次作业没有太大区别，但是需要着重注意的是判断同类项变复杂了。简单来说，需要递归判断同类项。</p>
+<blockquote>
+<p>问题 9：判断同类项？判断多项式相等？</p>
+</blockquote>
+<p>判断同类项是多项式和单项式运算的关键——指数由乘法实现，乘法由加法实现，而加法除了拷贝以外就是合并同类项了。可见判断同类项是多项式运算的基础。</p>
+<p>解决方法不难。我们需要给单项式类定义两个方法：<code>similarTo()</code> 和 <code>equalTo()</code> ，在给多项式定义一个 <code>equalTo()</code> 方法。然后把它们全部写完就好。基本上只要自己写一遍就知道怎么办了。</p>
+<p>此外， <code>Z boy</code> 等同学还提出了一个方法用来检查多项式和单项式是否相等，即判断相减之后是否为零。这在后续评测过程中有大作用。</p>
+<p>此外多项式和单项式还需要注意的一点是需要及时把系数为零的单项式剔除掉——不剔除掉也可以，但是特判的地方会更多，冗余的数据也更多。</p>
+<blockquote>
+<p>问题 10：自定义函数处理？</p>
+</blockquote>
+<p>自定义函数处理是第二次作业的关键所在。调用自定义函数就是用实际参数（arguments）替换形式参数（parameters）。但是究竟如何实现替换？一般来说有两种实现方法：</p>
+<ol>
+<li>字符串替换</li>
+<li>对象替换</li>
+</ol>
+<p>前者视函数为字符串，认为形式参数就是字符，调用只需要用实参的字符串取代形参的字符就行；后者视函数为表达式对象，认为形参是一个变量因子，调用只需要用解析好的实参因子取代变量因子就行。</p>
+<p>虽然没有调查，但是我相信多数人使用的是字符串替换。我个人没有采用字符串替换，但是个人认为字符串替换需要注意两点：</p>
+<ol>
+<li>先换 <code>x</code> ，或者一次把多个参数替换掉。</li>
+<li>函数嵌套需要循环以下步骤：<ol>
+<li>parse</li>
+<li>获取实参的String</li>
+<li>替换</li>
+<li>检查实参有没有嵌套函数。有则重复以上步骤。<br>我没有使用字符串替换，主要原因是觉得这个方法太奇怪了。试想如果别人问你你的项目中是怎么存储函数的，回答居然是用字符串存储？！我接受不了，我也不认为这是写一个多项式展开的项目应该有的思想。因此我使用了第二种方法，将实参作为因子对象替换函数表达式中的变量因子。</li>
+</ol>
+</li>
+</ol>
+<p>对象替换有几点需要注意：</p>
+<ol>
+<li>替换时需要深拷贝一遍函数定义表达式，不然函数定义的表达式就被污染了。</li>
+<li>如果后续处理的时候会对实际参数进行修改，那么实际参数也需要深拷贝。</li>
+</ol>
+<p>从复杂度上来说，两种方法应该是差不多的。前者循环遍历建立表达式，后者递归深拷贝建立表达式。都把函数表达式遍历了一遍。</p>
+<blockquote>
+<p>问题 11：浅拷贝？深拷贝？</p>
+</blockquote>
+<p>深拷贝和浅拷贝是一个让我很头疼的问题，我也并没有实现的非常完美。但是经过第二次作业后，在多项式和单项式中，我对深拷贝和浅拷贝有一点思考。</p>
+<p>我的多项式和单项式参照了 <code>BigInteger</code> 类的相关方法，但是由于我的单项式对象在创建后可以被修改，我放弃了。我认为在单项式和多项式对象中，一经构造，就不应当修改对象的值。每一次调用 <code>add</code> 等方法应当构造一个新的对象返回。</p>
+<p>一切都解决了，剩下就看优化了。</p>
+<blockquote>
+<p>问题 12：输出优化？</p>
+</blockquote>
+<p>我为单项式类写了一个 <code>optimize()</code> 方法，返回一个新的输出更短的单项式。之所以这么写，有几种原因：</p>
+<ol>
+<li>我只需要将所有出现过单项式的 <code>mono.toString()</code> 方法改成 <code>mono.optimize().toString()</code> 就可以正确完成优化后的输出了，而在我的设计里 <code>mono.toString()</code> 只出现过一次。因此改动起来比较简单。</li>
+<li>如果时间真的来不及，我可以不调用 <code>optimize()</code> 方法，相当于把优化前和优化后的输出分离开了。</li>
+</ol>
+<p>关于能否得到最优输出这件事上，原本以为还是像第一次作业一样可以轻松拿满。但是看到了 <code>J boy</code> 在群里的发言，发现事情似乎不简单。经过与舍友的讨论，个人认为将长度为n的表达式输出成最短多项式是一个NP问题。得到最短输出并不困难，但是当系数增大时验证最短输出，我认为是一件非常困难的事情。</p>
+<p>举例：<br>$$<br>\begin{aligned}<br>&amp; exp((2<em>x</em>exp(x^2) + 2<em>exp(x) + 2</em>x^2 + 2<em>exp(x</em>exp(x)) + 3<em>x)) \<br>&amp; = exp((x</em>exp(x^2) + exp(x) + x^2 + exp(x*exp(x)) + x))^2 * exp(x)<br>\end{aligned}<br>$$<br>当系数增大的时候，不难想象还有更离谱的。系数分解的可能数太多了。</p>
+<p>据说 <code>L Boy</code> 完成了最离谱的优化并据说拿了满分。</p>
+<p>具体来说，我做的优化大概有这么几点：</p>
+<ol>
+<li>如果 <code>exp</code> 只有一个单项式且这个单项式不是一个常数，那么提出常数的绝对值这个因子到外边一定不会更糟糕。</li>
+<li>如果有多个单项式并且这些单项式系数（的绝对值）的最大公因数（记为 <code>gcd</code> ）还不小，我们可以遍历 <code>gcd</code> 的所有因数来验证提出公因数后的新的输出会不会更优。</li>
+<li>实际上，第二步只需要遍历 <code>(gcd/1), (gcd/2), (gcd/3)...(gcd/9)</code> 这最多九个因数就行。因为第二步一定会有不止一个单项式，除以 <code>10</code> 或者更大的数就亏了。<br>此外还加上了第一次作业的优化，即正数要放在最前面不加正号。</li>
+</ol>
+<blockquote>
+<p>问题 13：反思？更好的设计？</p>
+</blockquote>
+<ol>
+<li>单项式类和多项式类高度耦合，这样做并不好，只是我想不到更好的方法了。</li>
+<li>优化时方法写得太乱了，没有贯彻 java 的模块化层次化的思想。</li>
+<li>深拷贝用的太多了。正确的方式是让多项式和单项式一经实例化就不可更改。这导致运算速率大大降低，目测在第一次作业性能的 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.816ex;" xmlns="http://www.w3.org/2000/svg" width="2.595ex" height="2.773ex" role="img" focusable="false" viewBox="0 -864.9 1147.1 1225.5"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mfrac"><g data-mml-node="mn" transform="translate(396.8,394) scale(0.707)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mn" transform="translate(220,-345) scale(0.707)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g><rect width="907.1" height="60" x="120" y="220"></rect></g></g></g></svg></mjx-container> 到 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.816ex;" xmlns="http://www.w3.org/2000/svg" width="1.795ex" height="2.773ex" role="img" focusable="false" viewBox="0 -864.9 793.6 1225.5"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mfrac"><g data-mml-node="mn" transform="translate(220,394) scale(0.707)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mn" transform="translate(220,-345) scale(0.707)"><path data-c="38" d="M70 417T70 494T124 618T248 666Q319 666 374 624T429 515Q429 485 418 459T392 417T361 389T335 371T324 363L338 354Q352 344 366 334T382 323Q457 264 457 174Q457 95 399 37T249 -22Q159 -22 101 29T43 155Q43 263 172 335L154 348Q133 361 127 368Q70 417 70 494ZM286 386L292 390Q298 394 301 396T311 403T323 413T334 425T345 438T355 454T364 471T369 491T371 513Q371 556 342 586T275 624Q268 625 242 625Q201 625 165 599T128 534Q128 511 141 492T167 463T217 431Q224 426 228 424L286 386ZM250 21Q308 21 350 55T392 137Q392 154 387 169T375 194T353 216T330 234T301 253T274 270Q260 279 244 289T218 306L210 311Q204 311 181 294T133 239T107 157Q107 98 150 60T250 21Z"></path></g><rect width="553.6" height="60" x="120" y="220"></rect></g></g></g></svg></mjx-container> 。这是一件很糟糕的事情。之后绝对不应该轻易改变一个类的属性。</li>
+</ol>
+<h3 id="最终设计-1"><a href="#最终设计-1" class="headerlink" title="最终设计"></a>最终设计</h3><h4 id="UML类图-1"><a href="#UML类图-1" class="headerlink" title="UML类图"></a>UML类图</h4><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U1/hw2_uml.png" alt="hw2_uml"></p>
+<h4 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><h3 id="互测经验-1"><a href="#互测经验-1" class="headerlink" title="互测经验"></a>互测经验</h3><p>目测有这么几种错误：</p>
+<ol>
+<li><code>0; exp(4294967297)</code> 用 <code>Integer.parseInt()</code> 读入再转 <code>BigInteger</code> 。估计也是没怎么了解 <code>BigInteger</code> 库。</li>
+<li><code>0; 1-1</code> 第一次作业弱测第三个点，应当输出 <code>0</code> ，实际输出空串 <code> </code> ，第二次作业弱测没有这种简单的点了。错得有点呆。</li>
+<li><code>exp((-x))</code> 错误输出为 <code>exp(-x)</code> ，估计是当系数绝对值为1并且后面只有一个 <code>x</code> 或者一个 <code>exp</code> 时默认不输出括号。</li>
+<li><code>exp(1)^2 * exp(2)</code> 非常非常奇怪的错误。他会先把单项式加入一个 <code>HashMap</code> ，然后再遍历 <code>HashMap</code> 相乘。错在 <code>exp(1)^2</code> 和 <code>exp(2)</code> 在单项式上是相等的，标准库默认 <code>HashMap</code> 已经有一个项之后就不会再放一个相同的项了。所以错误输出成了 <code>exp(2)</code> </li>
+<li><code>exp(2000000014*x + 5000000035)</code> 出错的人找出了最大公因数 <code>1000000007</code> ，然后线性遍历了它的所有的因子找出所有的因数用来验证提出来后是否会更短。线性遍历了所有因子……这是一个十位数的质数啊……出错原因 TLE</li>
+</ol>
+<h2 id="第三次作业"><a href="#第三次作业" class="headerlink" title="第三次作业"></a>第三次作业</h2><h3 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h3><ul>
+<li>加入求导因子。现在可以导了！</li>
+<li>自定义函数可以由已定义的自定义函数定义。</li>
+</ul>
+<h3 id="数据限制-2"><a href="#数据限制-2" class="headerlink" title="数据限制"></a>数据限制</h3><ul>
+<li>保证自定义函数中不会出现求导因子。</li>
+</ul>
+<blockquote>
+<p>问题 14：有哪些改动？</p>
+</blockquote>
+<p>准确来说，这次作业几乎没有改动。</p>
+<ul>
+<li>求导方面，我为单项式类和多项式类各添加了一个 <code>diff</code> 方法，返回自身求导之后的结果就行。</li>
+<li>自定义函数方面，由于我在读入函数的过程中就对函数进行了解析，而解析的过程中会顺带着把已经定义的函数一块解析了，所以自定义函数几乎没有任何改动。</li>
+</ul>
+<blockquote>
+<p>问题 15：有无优化？</p>
+</blockquote>
+<p>其实第二次作业 <code>J boy</code> 就已经想出逆天优化了。他们真的把 <code>exp</code> 中的数拆开提公因子了，导致强测第13个数据点长了一个字符。经过个人分析，我认为他们并没有遍历所有拆解过程，毕竟我认为这几乎不可能在短时间内完成，特别是当数据大了的时候。我认为最有可能的情况是判断是不是只有一个数字与其他数字不相等，然后判定优化。</p>
+<h3 id="最终设计-2"><a href="#最终设计-2" class="headerlink" title="最终设计"></a>最终设计</h3><h4 id="UML类图-2"><a href="#UML类图-2" class="headerlink" title="UML类图"></a>UML类图</h4><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U1/hw3_uml.png" alt="hw3_uml"></p>
+<h4 id="复杂度分析-2"><a href="#复杂度分析-2" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><h3 id="互测经验-2"><a href="#互测经验-2" class="headerlink" title="互测经验"></a>互测经验</h3>]]></content>
+      <categories>
+        <category>OO</category>
+      </categories>
+      <tags>
+        <tag>OO</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>「BUAA CO」关于课下设计的说明</title>
     <url>/2023/12/30/CO/About/</url>
     <content><![CDATA[<h3 id="关于课程"><a href="#关于课程" class="headerlink" title="关于课程"></a>关于课程</h3><p>课下设计指北航2023-2024学年上学期的计算机组成课程的实验部分设计，包括Pre到P7的9次课下设计。22级计组取消P8，助教们辛苦了！</p>
@@ -158,7 +426,7 @@
     <url>/2024/01/02/CO/P3&amp;P4/</url>
     <content><![CDATA[<p>22级从<code>P3</code>开始闯关，但是<code>P3</code> <code>P4</code>总体开发量较小，稍微划划水写写<code>OO-Pre</code>也不是不行。建议基础不牢的同学留一次挂的机会给<code>P5</code>，不要在<code>P3</code>和<code>P4</code>挂太多次</p>
 <p>P3和P4的上机内容大致相当，因此我就放在一块进行说明了。</p>
-<h2 id="P3"><a href="#P3" class="headerlink" title="P3"></a>P3</h2><p><code>Logisim</code>搭建<code>单周期CPU</code>。实现的指令不多，整体工作量也并不大。设计文档和电路在<a class="link"   href="https://github.com/Squirrel7ang/BUAA-CO-2023-Aut" >这里 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。个人遇到的位移一个坑是P1的GRF搭建错了，而且P1居然没有测出来。搭建前建议先弄清楚单周期CPU是个啥东西再搭建，弄清楚了之后就比较简单了。</p>
+<h2 id="P3"><a href="#P3" class="headerlink" title="P3"></a>P3</h2><p><code>Logisim</code>搭建<code>单周期CPU</code>。实现的指令不多，整体工作量也并不大。设计文档和电路在<a class="link" href="https://github.com/Squirrel7ang/BUAA-CO-2023-Aut">这里 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。个人遇到的位移一个坑是P1的GRF搭建错了，而且P1居然没有测出来。搭建前建议先弄清楚单周期CPU是个啥东西再搭建，弄清楚了之后就比较简单了。</p>
 <h3 id="个人建议"><a href="#个人建议" class="headerlink" title="个人建议"></a>个人建议</h3><ol>
 <li>善用<code>tunnel</code>。<code>tunnel</code>类似<code>verilog</code>中<code>wire</code>类型的变量，将导线赋予名称有了意义之后，可读性会强一点。但是不建议全部<code>tunnel</code>以至于没有一根完整的线，那样子结构可能会怪怪的（虽然<code>P4</code>命名就舒服很多了）。</li>
 <li>第一次上机如果挂了不要灰心！逆风翻盘的机会大把大把地。可以先稍微准备一下<code>P4</code>。</li>
@@ -285,73 +553,6 @@
       </tags>
   </entry>
   <entry>
-    <title>「BUAA CO」Verilog易错点</title>
-    <url>/2024/01/01/CO/verilog_error/</url>
-    <content><![CDATA[<p>在P4以及后续的设计过程中，Verilog的语法不过关可能会带来十分糟糕的体验，因此列出了本人犯的错误和舍友们犯的错误。内容仅供参考交流，如有错误，欢迎指正。</p>
-<p>Verilog可以在<a class="link"   href="https://hdlbits.01xz.net/wiki/Main_Page" >HDLbits <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>进行练习，也可以参考<a class="link"   href="https://www.runoob.com/w3cnote/verilog-tutorial.html" >菜鸟教程 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>，</p>
-<h3 id="1、关于-signed"><a href="#1、关于-signed" class="headerlink" title="1、关于$signed()"></a>1、关于$signed()</h3><p><code>Verilog</code>中默认一切未声明有符号的整型数均为无符号数，并默认有符号数与无符号数运算时，将有符号数自动转化为无符号数。比如：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (opCode == <span class="number">1&#x27;b1</span>) ? <span class="keyword">signed</span>(a) * <span class="keyword">signed</span>(b) : a * b;</span><br></pre></td></tr></table></figure></div>
-<p>上述代码中，<code>signed(a) * signed(b)</code>与<code>a*b</code>通过三目运算符进行运算，因此默认将第二位操作数（<code>signed(a) * signed(b)</code>）转换为无符号的乘法。解决方案在官方教程中有提及。</p>
-<p>上面这个例子很容易看出问题，但是当运用多重三目运算符进行嵌套的时候，结构复杂，很可能会遗漏有符号数和无符号数的问题。</p>
-<p>此外还有一点与C代码不同的是，在<code>Verilog</code>中，不能将“&#x3D;”视为一种运算符。也就是说如果我在某一语句块里这么写：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">  outcome = <span class="built_in">$signed</span>(a) * <span class="built_in">$signed</span>(b);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
-<p><code>outcome</code>仍然是两个有符号数做乘法的运算结果。<code>=</code>应当和<code>&lt;=</code>视为一种<strong>赋值符</strong>。</p>
-<h3 id="2、关于条件运算和浮空"><a href="#2、关于条件运算和浮空" class="headerlink" title="2、关于条件运算和浮空"></a>2、关于条件运算和浮空</h3><p>使用三目运算符时，<strong>当第一位操作数，即条件，为浮空值的时候，表达式返回值也是浮空值。</strong> 比方说:</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (<span class="number">1&#x27;bx</span>) ? <span class="number">1&#x27;b1</span> : <span class="number">1&#x27;b0</span>;</span><br></pre></td></tr></table></figure></div>
-<p>在上述代码中，<code>outcome</code>会得到1位的浮空值。<code>Verilog</code>不知道条件是真是假，因此无法给出结果。</p>
-<p>但是如果这样写：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> [<span class="number">1</span> : <span class="number">0</span>] outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (<span class="number">1&#x27;bx</span>) ? <span class="number">2&#x27;b01</span> : <span class="number">2&#x27;b00</span>;</span><br></pre></td></tr></table></figure></div>
-<p><code>outcome</code>就会得到<code>2&#39;b0x</code>的值，理由是尽管<code>Verilog</code>不知道结果是第二个操作数还是第三个操作数，但是不论是哪一个，其第1位一定是0，但是无法确定其第0位究竟是0还是1，因此第0位浮空。</p>
-<p>在<code>if-else</code>语句中则不一样。比如：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (a == <span class="number">1&#x27;b1</span>) </span><br><span class="line">  b &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">  b &lt;= <span class="number">1&#x27;b0</span>;</span><br></pre></td></tr></table></figure></div>
-<p>在上述代码中，如果<code>a</code>为一位浮空值，程序仍然会执行<code>else</code>语句块内的代码。<code>if-else</code>是安全的。</p>
-<p>在一些情况下，我们希望判断语句能够更加保险，即能够对浮空值也进行判断。这是可以使用<code>===</code>和<code>!===</code>，这双目两个运算符可以连同高阻态<code>z</code>和浮空值<code>x</code>一并进行判断。</p>
-<p>三目运算符在进行简单的<code>if-else</code>判断是非常好用的，主要是写起来和读起来都比较舒服。但是不建议用于多重<code>if-else</code>判断，尤其是当不论<code>if</code>还是<code>else</code>里面都有<code>if-else</code>语句的时候。</p>
-<h3 id="3、关于”-”和”-”以及“自动类型转换”"><a href="#3、关于”-”和”-”以及“自动类型转换”" class="headerlink" title="3、关于”~”和”!”以及“自动类型转换”"></a>3、关于”~”和”!”以及“自动类型转换”</h3><p>省流版就是：不要用位宽不同的两个数进行相互赋值，理由是<code>Verilog</code>在进行位扩展的时候会进行一些很诡异的操作。</p>
-<p>下面讲一个具体的例子。下例由室友LJC提出，愣是把我看傻了。</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> test(</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">1</span> : <span class="number">0</span>] a;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line">    <span class="keyword">reg</span> clk;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">            c = ~a;</span><br><span class="line">            <span class="built_in">$display</span>(<span class="string">&quot;when a = 1&#x27;b%b, c = ~ a = 4&#x27;b%b&quot;</span>, a, c);</span><br><span class="line">            c = !a;</span><br><span class="line">            <span class="built_in">$display</span>(<span class="string">&quot;when a = 1&#x27;b%b, c = ! a = 4&#x27;b%b&quot;</span>, a, c);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">        a = <span class="number">2&#x27;b00</span>;</span><br><span class="line">        c = <span class="number">4&#x27;b00</span>;</span><br><span class="line">        clk = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b01</span>;</span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b10</span>;</span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b11</span>;</span><br><span class="line">        #<span class="number">2</span> <span class="built_in">$finish</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> #<span class="number">1</span> clk &lt;= ~clk;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure></div>
-<p>使用<code>iverilog</code>进行编译和仿真会得到：</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ iverilog -o a.out test.v</span><br><span class="line">$ vvp a.out</span><br><span class="line">when a = 1&#x27;b00, c = ~ a = 4&#x27;b1111</span><br><span class="line">when a = 1&#x27;b00, c = ! a = 4&#x27;b0001</span><br><span class="line">when a = 1&#x27;b01, c = ~ a = 4&#x27;b1110</span><br><span class="line">when a = 1&#x27;b01, c = ! a = 4&#x27;b0000</span><br><span class="line">when a = 1&#x27;b10, c = ~ a = 4&#x27;b1101</span><br><span class="line">when a = 1&#x27;b10, c = ! a = 4&#x27;b0000</span><br><span class="line">when a = 1&#x27;b11, c = ~ a = 4&#x27;b1100</span><br><span class="line">when a = 1&#x27;b11, c = ! a = 4&#x27;b0000</span><br><span class="line">test3.v:23: $finish called at 8 (1s)</span><br></pre></td></tr></table></figure></div>
-<p>可以看出，<code>~a</code>和<code>!a</code>在进行位扩展时十分抽象，编译时会先进行1扩展或者0扩展再进行赋值。因此当一个稍微复杂的表达式中出现了位宽的改变时，强烈建议用<code>vector</code>也就是花括号<code>&#123;,&#125;</code>手动进行扩展。</p>
-<p>P.S.样例中在时序逻辑中进行阻塞赋值是不合规范的，请勿模仿。</p>
-<h3 id="4、位宽"><a href="#4、位宽" class="headerlink" title="4、位宽"></a>4、位宽</h3><p>下例来自舍友ZHX，这种事情一旦发生，debug可就困难了。大家可以试着找找下图中的错误。<br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/CO/verilog_error/1.png"
-                      alt="位宽错误"
-                ></p>
-<details class="blue" data-header-exclude><summary><i class="fa-solid fa-chevron-right"></i>Answer </summary>
-              <div class='content'>
-              <p>不声明位宽时，默认1位。这与整数不同，后者默认32位。<br>Addr是32位的地址，但是声明成了1位。 </p>
-              </div>
-            </details>
-
-<h3 id="5、关于循环"><a href="#5、关于循环" class="headerlink" title="5、关于循环"></a>5、关于循环</h3><p>在P4以及后续的上机题中，可能会需要统计一个32位数中的1的个数，或者32位数中是否存在连续的4个1。这时需要使用循环写组合逻辑。比如前者可写为：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">integer</span> i;</span><br><span class="line"><span class="keyword">reg</span>  [<span class="number">31</span>: <span class="number">0</span>] sum;</span><br><span class="line"><span class="keyword">wire</span> [<span class="number">31</span>: <span class="number">0</span>] target;</span><br><span class="line"><span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">  sum = <span class="number">0</span></span><br><span class="line">  <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;<span class="number">32</span>; i=i+<span class="number">1</span>) <span class="keyword">begin</span></span><br><span class="line">    sum = sum + target[i];</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
-
-<h3 id="6、关于切片"><a href="#6、关于切片" class="headerlink" title="6、关于切片"></a>6、关于切片</h3><p>对于<code>wire</code>类型或者<code>reg</code>类型变量，我们会经常用到<code>[:]</code>取出特定位宽，再利用<code>&#123;,&#125;</code>进行拼接。但是当我们想取出的位置随变量改变时，就会出现问题，比如：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> test(</span><br><span class="line">);</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">integer</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line"><span class="keyword">assign</span> c = c[(i + <span class="number">1</span>):i]</span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure></div>
-<p>用<code>iverilog</code>编译会报错。</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">test.v:6: error: Part select expressions must be constant.</span><br></pre></td></tr></table></figure></div>
-<p>个人猜测Verilog要求返回值的位宽必须是恒定的，因此要求用常数选择位宽。</p>
-<p>解决方案有三。第一个是利用位移运算去挪它，再用常数选出来；第二个是用vector把每一位取出来并进行拼接，如<code>assign c = &#123;&#123;c[i+1]&#125;, &#123;c[i]&#125;&#125;;</code>。</p>
-<p>第三个方案更简洁，利用System Verilog中的切片完成。比如上述例子可写成：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>     <span class="keyword">module</span> test(</span><br><span class="line"><span class="number">2</span>     );</span><br><span class="line">...</span><br><span class="line"><span class="number">12</span>    <span class="keyword">integer</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="number">13</span>    <span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line"><span class="number">14</span>    <span class="keyword">assign</span> c = c[(i + <span class="number">1</span>) -: <span class="number">2</span>]</span><br><span class="line">...</span><br></pre></td></tr></table></figure></div>
-<p>不要用<code>[i+:2]</code>，这会返回<code>[i:i+1]</code>。</p>
-<h3 id="7、关于阻塞和非阻塞"><a href="#7、关于阻塞和非阻塞" class="headerlink" title="7、关于阻塞和非阻塞"></a>7、关于阻塞和非阻塞</h3><p>阻塞赋值和非阻塞赋值看似简单，但实际上在编译过程中又不是那么简单。个人建议将阻塞赋值和非阻塞赋值分开，即在<code>always @(*)</code>中进行阻塞赋值，在<code>always @(posedge clk)</code>中进行非阻塞赋值。请不要在阻塞赋值中掺杂非阻塞赋值。比如我的天才构思，实现了在时钟上升沿的瞬间利用上升沿后的数据对寄存器值进行更新：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    flag = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// process coming data...</span></span><br><span class="line">    flag = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> flag) <span class="keyword">begin</span></span><br><span class="line">    <span class="comment">// do sth...</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
-<p>我不知道第一个语句块中是否真的读到了上升沿后的数据，因为仿真得到的全是浮空值。</p>
-<p>非阻塞赋值是在利用上升沿之前的数据在上升沿对寄存器进行一次更新，所以请不要在同一个上升沿对同一个寄存器更新两次，即不要在同一次<code>always</code>中执行多次对同一个<code>reg</code>类型变量的非阻塞赋值操作。如果需要用上升沿之后的数据输出的话，可以写一个Mealy机。</p>
-<p>待补充~</p>
-]]></content>
-      <categories>
-        <category>CO</category>
-      </categories>
-      <tags>
-        <tag>Verilog</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>「BUAA CO」P7总结</title>
     <url>/2024/01/02/CO/P7/</url>
     <content><![CDATA[<h2 id="主要任务"><a href="#主要任务" class="headerlink" title="主要任务"></a>主要任务</h2><ul>
@@ -456,6 +657,129 @@
         <tag>CO</tag>
         <tag>Verilog</tag>
         <tag>流水线CPU</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>「BUAA CO」Verilog易错点</title>
+    <url>/2024/01/01/CO/verilog_error/</url>
+    <content><![CDATA[<p>在P4以及后续的设计过程中，Verilog的语法不过关可能会带来十分糟糕的体验，因此列出了本人犯的错误和舍友们犯的错误。内容仅供参考交流，如有错误，欢迎指正。</p>
+<p>Verilog可以在<a class="link"   href="https://hdlbits.01xz.net/wiki/Main_Page" >HDLbits <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>进行练习，也可以参考<a class="link"   href="https://www.runoob.com/w3cnote/verilog-tutorial.html" >菜鸟教程 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>，</p>
+<h3 id="1、关于-signed"><a href="#1、关于-signed" class="headerlink" title="1、关于$signed()"></a>1、关于$signed()</h3><p><code>Verilog</code>中默认一切未声明有符号的整型数均为无符号数，并默认有符号数与无符号数运算时，将有符号数自动转化为无符号数。比如：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (opCode == <span class="number">1&#x27;b1</span>) ? <span class="keyword">signed</span>(a) * <span class="keyword">signed</span>(b) : a * b;</span><br></pre></td></tr></table></figure></div>
+<p>上述代码中，<code>signed(a) * signed(b)</code>与<code>a*b</code>通过三目运算符进行运算，因此默认将第二位操作数（<code>signed(a) * signed(b)</code>）转换为无符号的乘法。解决方案在官方教程中有提及。</p>
+<p>上面这个例子很容易看出问题，但是当运用多重三目运算符进行嵌套的时候，结构复杂，很可能会遗漏有符号数和无符号数的问题。</p>
+<p>此外还有一点与C代码不同的是，在<code>Verilog</code>中，不能将“&#x3D;”视为一种运算符。也就是说如果我在某一语句块里这么写：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">  outcome = <span class="built_in">$signed</span>(a) * <span class="built_in">$signed</span>(b);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
+<p><code>outcome</code>仍然是两个有符号数做乘法的运算结果。<code>=</code>应当和<code>&lt;=</code>视为一种<strong>赋值符</strong>。</p>
+<h3 id="2、关于条件运算和浮空"><a href="#2、关于条件运算和浮空" class="headerlink" title="2、关于条件运算和浮空"></a>2、关于条件运算和浮空</h3><p>使用三目运算符时，<strong>当第一位操作数，即条件，为浮空值的时候，表达式返回值也是浮空值。</strong> 比方说:</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (<span class="number">1&#x27;bx</span>) ? <span class="number">1&#x27;b1</span> : <span class="number">1&#x27;b0</span>;</span><br></pre></td></tr></table></figure></div>
+<p>在上述代码中，<code>outcome</code>会得到1位的浮空值。<code>Verilog</code>不知道条件是真是假，因此无法给出结果。</p>
+<p>但是如果这样写：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> [<span class="number">1</span> : <span class="number">0</span>] outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (<span class="number">1&#x27;bx</span>) ? <span class="number">2&#x27;b01</span> : <span class="number">2&#x27;b00</span>;</span><br></pre></td></tr></table></figure></div>
+<p><code>outcome</code>就会得到<code>2&#39;b0x</code>的值，理由是尽管<code>Verilog</code>不知道结果是第二个操作数还是第三个操作数，但是不论是哪一个，其第1位一定是0，但是无法确定其第0位究竟是0还是1，因此第0位浮空。</p>
+<p>在<code>if-else</code>语句中则不一样。比如：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (a == <span class="number">1&#x27;b1</span>) </span><br><span class="line">  b &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">  b &lt;= <span class="number">1&#x27;b0</span>;</span><br></pre></td></tr></table></figure></div>
+<p>在上述代码中，如果<code>a</code>为一位浮空值，程序仍然会执行<code>else</code>语句块内的代码。<code>if-else</code>是安全的。</p>
+<p>在一些情况下，我们希望判断语句能够更加保险，即能够对浮空值也进行判断。这是可以使用<code>===</code>和<code>!===</code>，这双目两个运算符可以连同高阻态<code>z</code>和浮空值<code>x</code>一并进行判断。</p>
+<p>三目运算符在进行简单的<code>if-else</code>判断是非常好用的，主要是写起来和读起来都比较舒服。但是不建议用于多重<code>if-else</code>判断，尤其是当不论<code>if</code>还是<code>else</code>里面都有<code>if-else</code>语句的时候。</p>
+<h3 id="3、关于”-”和”-”以及“自动类型转换”"><a href="#3、关于”-”和”-”以及“自动类型转换”" class="headerlink" title="3、关于”~”和”!”以及“自动类型转换”"></a>3、关于”~”和”!”以及“自动类型转换”</h3><p>省流版就是：不要用位宽不同的两个数进行相互赋值，理由是<code>Verilog</code>在进行位扩展的时候会进行一些很诡异的操作。</p>
+<p>下面讲一个具体的例子。下例由室友LJC提出，愣是把我看傻了。</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> test(</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">1</span> : <span class="number">0</span>] a;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line">    <span class="keyword">reg</span> clk;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">            c = ~a;</span><br><span class="line">            <span class="built_in">$display</span>(<span class="string">&quot;when a = 1&#x27;b%b, c = ~ a = 4&#x27;b%b&quot;</span>, a, c);</span><br><span class="line">            c = !a;</span><br><span class="line">            <span class="built_in">$display</span>(<span class="string">&quot;when a = 1&#x27;b%b, c = ! a = 4&#x27;b%b&quot;</span>, a, c);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">        a = <span class="number">2&#x27;b00</span>;</span><br><span class="line">        c = <span class="number">4&#x27;b00</span>;</span><br><span class="line">        clk = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b01</span>;</span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b10</span>;</span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b11</span>;</span><br><span class="line">        #<span class="number">2</span> <span class="built_in">$finish</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> #<span class="number">1</span> clk &lt;= ~clk;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure></div>
+<p>使用<code>iverilog</code>进行编译和仿真会得到：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ iverilog -o a.out test.v</span><br><span class="line">$ vvp a.out</span><br><span class="line">when a = 1&#x27;b00, c = ~ a = 4&#x27;b1111</span><br><span class="line">when a = 1&#x27;b00, c = ! a = 4&#x27;b0001</span><br><span class="line">when a = 1&#x27;b01, c = ~ a = 4&#x27;b1110</span><br><span class="line">when a = 1&#x27;b01, c = ! a = 4&#x27;b0000</span><br><span class="line">when a = 1&#x27;b10, c = ~ a = 4&#x27;b1101</span><br><span class="line">when a = 1&#x27;b10, c = ! a = 4&#x27;b0000</span><br><span class="line">when a = 1&#x27;b11, c = ~ a = 4&#x27;b1100</span><br><span class="line">when a = 1&#x27;b11, c = ! a = 4&#x27;b0000</span><br><span class="line">test3.v:23: $finish called at 8 (1s)</span><br></pre></td></tr></table></figure></div>
+<p>可以看出，<code>~a</code>和<code>!a</code>在进行位扩展时十分抽象，编译时会先进行1扩展或者0扩展再进行赋值。因此当一个稍微复杂的表达式中出现了位宽的改变时，强烈建议用<code>vector</code>也就是花括号<code>&#123;,&#125;</code>手动进行扩展。</p>
+<p>P.S.样例中在时序逻辑中进行阻塞赋值是不合规范的，请勿模仿。</p>
+<h3 id="4、位宽"><a href="#4、位宽" class="headerlink" title="4、位宽"></a>4、位宽</h3><p>下例来自舍友ZHX，这种事情一旦发生，debug可就困难了。大家可以试着找找下图中的错误。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/CO/verilog_error/1.png"
+                      alt="位宽错误"
+                ></p>
+<details class="blue" data-header-exclude><summary><i class="fa-solid fa-chevron-right"></i>Answer </summary>
+              <div class='content'>
+              <p>不声明位宽时，默认1位。这与整数不同，后者默认32位。<br>Addr是32位的地址，但是声明成了1位。 </p>
+              </div>
+            </details>
+
+<h3 id="5、关于循环"><a href="#5、关于循环" class="headerlink" title="5、关于循环"></a>5、关于循环</h3><p>在P4以及后续的上机题中，可能会需要统计一个32位数中的1的个数，或者32位数中是否存在连续的4个1。这时需要使用循环写组合逻辑。比如前者可写为：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">integer</span> i;</span><br><span class="line"><span class="keyword">reg</span>  [<span class="number">31</span>: <span class="number">0</span>] sum;</span><br><span class="line"><span class="keyword">wire</span> [<span class="number">31</span>: <span class="number">0</span>] target;</span><br><span class="line"><span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">  sum = <span class="number">0</span></span><br><span class="line">  <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;<span class="number">32</span>; i=i+<span class="number">1</span>) <span class="keyword">begin</span></span><br><span class="line">    sum = sum + target[i];</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="6、关于切片"><a href="#6、关于切片" class="headerlink" title="6、关于切片"></a>6、关于切片</h3><p>对于<code>wire</code>类型或者<code>reg</code>类型变量，我们会经常用到<code>[:]</code>取出特定位宽，再利用<code>&#123;,&#125;</code>进行拼接。但是当我们想取出的位置随变量改变时，就会出现问题，比如：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> test(</span><br><span class="line">);</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">integer</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line"><span class="keyword">assign</span> c = c[(i + <span class="number">1</span>):i]</span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure></div>
+<p>用<code>iverilog</code>编译会报错。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">test.v:6: error: Part select expressions must be constant.</span><br></pre></td></tr></table></figure></div>
+<p>个人猜测Verilog要求返回值的位宽必须是恒定的，因此要求用常数选择位宽。</p>
+<p>解决方案有三。第一个是利用位移运算去挪它，再用常数选出来；第二个是用vector把每一位取出来并进行拼接，如<code>assign c = &#123;&#123;c[i+1]&#125;, &#123;c[i]&#125;&#125;;</code>。</p>
+<p>第三个方案更简洁，利用System Verilog中的切片完成。比如上述例子可写成：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>     <span class="keyword">module</span> test(</span><br><span class="line"><span class="number">2</span>     );</span><br><span class="line">...</span><br><span class="line"><span class="number">12</span>    <span class="keyword">integer</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="number">13</span>    <span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line"><span class="number">14</span>    <span class="keyword">assign</span> c = c[(i + <span class="number">1</span>) -: <span class="number">2</span>]</span><br><span class="line">...</span><br></pre></td></tr></table></figure></div>
+<p>不要用<code>[i+:2]</code>，这会返回<code>[i:i+1]</code>。</p>
+<h3 id="7、关于阻塞和非阻塞"><a href="#7、关于阻塞和非阻塞" class="headerlink" title="7、关于阻塞和非阻塞"></a>7、关于阻塞和非阻塞</h3><p>阻塞赋值和非阻塞赋值看似简单，但实际上在编译过程中又不是那么简单。个人建议将阻塞赋值和非阻塞赋值分开，即在<code>always @(*)</code>中进行阻塞赋值，在<code>always @(posedge clk)</code>中进行非阻塞赋值。请不要在阻塞赋值中掺杂非阻塞赋值。比如我的天才构思，实现了在时钟上升沿的瞬间利用上升沿后的数据对寄存器值进行更新：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    flag = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// process coming data...</span></span><br><span class="line">    flag = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> flag) <span class="keyword">begin</span></span><br><span class="line">    <span class="comment">// do sth...</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
+<p>我不知道第一个语句块中是否真的读到了上升沿后的数据，因为仿真得到的全是浮空值。</p>
+<p>非阻塞赋值是在利用上升沿之前的数据在上升沿对寄存器进行一次更新，所以请不要在同一个上升沿对同一个寄存器更新两次，即不要在同一次<code>always</code>中执行多次对同一个<code>reg</code>类型变量的非阻塞赋值操作。如果需要用上升沿之后的数据输出的话，可以写一个Mealy机。</p>
+<p>待补充~</p>
+]]></content>
+      <categories>
+        <category>CO</category>
+      </categories>
+      <tags>
+        <tag>Verilog</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>「BUAA OS」操作系统假期预习</title>
+    <url>/2024/03/03/OS/Pre/</url>
+    <content><![CDATA[<h2 id="预习内容"><a href="#预习内容" class="headerlink" title="预习内容"></a>预习内容</h2><p>OS的假期预习发布时间远晚于 CO 的假期预习，将近开学才开放预习内容，正确的。</p>
+<p>按照个人理解，假期预习大概就是理解这么几件事：</p>
+<ol>
+<li>学习使用<code>linux</code>和 linux 中基本的<code>GNU工具</code>，如<code>ls</code> <code>make</code> <code>vim</code>等等</li>
+<li>学习一个标准一点的、系统一点的 MIPS 程序长什么样子</li>
+<li>学习 C 语言是怎么被翻译成 MIPS 汇编，再翻译成二进制可执行文件，再跑起来的</li>
+<li>学习使用 <code>GDB</code> 和 <code>QEMU</code></li>
+</ol>
+<p>一步步来。</p>
+<h3 id="安装Linux"><a href="#安装Linux" class="headerlink" title="安装Linux"></a>安装Linux</h3><p>我安装的是<code>Ubuntu22.04</code>，使用<code>vmware workstation</code>运行。理由是配置比较白痴。同时我也在WSL上安装了<code>Ubuntu</code>。虽然还没弄明白wsl的图形化界面要怎么安装，但即便没有图形化界面，个人感觉使用体验要远好于<code>vmware</code>。</p>
+<h4 id="本地代理"><a href="#本地代理" class="headerlink" title="本地代理"></a>本地代理</h4><p>wsl的开本地代理可以在本地的”C:\Users%USERNAME%.wslconfig”文件中进行配置完成。一般来说该文件不存在，需要自行创建。创建后向其中写入以下内容:</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">[experimental]</span><br><span class="line">autoMemoryReclaim=gradual</span><br><span class="line">networkingMode=mirrored</span><br><span class="line">dnsTunneling=true</span><br><span class="line">firewall=true</span><br><span class="line">autoProxy=true</span><br></pre></td></tr></table></figure></div>
+<p>然后在命令行将wsl关掉：</p>
+<div class="highlight-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">&gt; wsl --shutdown</span><br><span class="line">&gt; wsl</span><br></pre></td></tr></table></figure></div>
+<p>如果打开wsl没有出现“NAT模式下不支持localhost”之类的文字就算成功了</p>
+<p>在vmware的Ubuntu中进行本地代理则稍微有一点麻烦。我使用的是clash for windows进行联网，在Ubuntu中也可以启动本地代理通过windows的clash访问指定网站。</p>
+<ol>
+<li>先在windows下打开命令行，输入<code>ipconfig</code>，找到<code>无线局域网适配器 WLAN</code>下的<code>IPv4 地址</code></li>
+<li>将clash中的<code>Allow LAN</code>打开，记录<code>Port</code>号。</li>
+<li>在ubuntu的网络设置中选择<code>本地代理-手动</code>，将<code>https代理</code>、<code>http代理</code>、<code>Socks主机</code>三个选项的每一个都分别写入<code>IPv4 地址</code>以及<code>Port</code>号。随后就可以正常上网了</li>
+</ol>
+<h4 id="安装相关GNU工具"><a href="#安装相关GNU工具" class="headerlink" title="安装相关GNU工具"></a>安装相关GNU工具</h4><p>基本gcc工具</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">sudo apt install build-essential</span><br></pre></td></tr></table></figure></div>
+
+<p>mips相关模拟开发工具</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">sudo apt install gcc-mips-linux-gnu qemu-system-mips gdb-multiarch</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h3><p>我们直接看Makefile，这里参考了绿导师的makefile查看技巧。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ make -nB # 查看make命令都会执行哪些命令，并输出到标准输出（但是不执行这些命令）</span><br><span class="line">$ make run -nB # 查看make run命令都会执行哪些命令，并输出到标准输出（但是不执行这些命令）</span><br></pre></td></tr></table></figure></div>
+
+<p><code>-n</code>和<code>-B</code>选项可以用<code>man make | vim -</code>来查看</p>
+<p>对于make中眼花缭乱的指令，可以在vim中输入<code>:%s/ /\n  /g</code>命令来完成一种简单的formatting。</p>
+<p>拿mips-exercise的makefile来说，</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># make</span></span><br><span class="line">mips-linux-gnu-gcc --std=gnu99 -EL -G 0 -mno-abicalls -fno-pic -ffreestanding -fno-stack-protector -fno-builtin -Wa,-xgot -Wall -mxgot -mno-fix-r4000 -march=4kc -g -ggdb -I./include/ -c -o hello.o hello.c</span><br><span class="line">mips-linux-gnu-gcc --std=gnu99 -EL -G 0 -mno-abicalls -fno-pic -ffreestanding -fno-stack-protector -fno-builtin -Wa,-xgot -Wall -mxgot -mno-fix-r4000 -march=4kc -g -ggdb -I./include/ -c -o output.o output.c</span><br><span class="line">mips-linux-gnu-gcc --std=gnu99 -EL -G 0 -mno-abicalls -fno-pic -ffreestanding -fno-stack-protector -fno-builtin -Wa,-xgot -Wall -mxgot -mno-fix-r4000 -march=4kc -g -ggdb -I./include/ -c -o start.o start.S</span><br><span class="line">mips-linux-gnu-ld -EL -G 0 -static -n -nostdlib --fatal-warnings -o hello -N -T linker.lds hello.o output.o start.o</span><br><span class="line"></span><br><span class="line"><span class="comment"># make run</span></span><br><span class="line">qemu-system-mipsel -cpu 4Kc -m 64 -nographic -M malta -no-reboot  -kernel hello</span><br><span class="line"></span><br><span class="line"><span class="comment"># make dbg</span></span><br><span class="line">make dbg_run &gt;/dev/null 2&gt;&amp;1 &amp; gdb-multiarch hello -ex <span class="string">"target remote localhost:1234"</span></span><br><span class="line">killall qemu-system-mipsel</span><br><span class="line"></span><br><span class="line"><span class="comment"># make clean</span></span><br><span class="line"><span class="built_in">rm</span> -rf *~ *.o hello *.objdump</span><br><span class="line"></span><br><span class="line"><span class="comment"># make dbg_run</span></span><br><span class="line">qemu-system-mipsel -cpu 4Kc -m 64 -nographic -M malta -no-reboot -s -S  -kernel hello</span><br></pre></td></tr></table></figure></div>
+<p>可以发现：</p>
+<ol>
+<li>make就是简单的生成了一个hello的可执行文件。它忽略了标准库，使用静态链接，禁用内联函数和栈保护器，禁用对mips-r4000的修复。简单来说，这些编译操作都是为了保证我们写的程序能够在裸机上运行</li>
+<li>使用<code>qemu-system-mipsel</code> 在4Kc, MIPS Malta Core运行了hello。在Debug的时候使用了-S选项让CPU在开始运行的时候停下来，使用-s指令在localhost:1234开启了一个gdbserver用于远程调试。</li>
+<li>使用<code>gdb-multiarch</code>进行remote dbg，完成之后再干碎qemu进程。</li>
+</ol>
+<h3 id="观察运行情况"><a href="#观察运行情况" class="headerlink" title="观察运行情况"></a>观察运行情况</h3><p>gdb自带tui，能够方便地查看运行结果</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">(gdb) layout asm</span><br><span class="line">(gdb) layout src</span><br></pre></td></tr></table></figure></div>
+<p>asm这可以将CPU从启动时的0xBFC00000开始执行的所有指令都显示出来，能够很好地观察到每一条指令的运行</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mips-linux-gnu-objdump -d hello | vim -</span><br></pre></td></tr></table></figure></div>
+<p>将可执行文件hello反汇编来看到hello是怎么运行的。在asm的tui下也可以显示相同的内容。</p>
+]]></content>
+      <categories>
+        <category>OO</category>
+      </categories>
+      <tags>
+        <tag>OO</tag>
       </tags>
   </entry>
   <entry>

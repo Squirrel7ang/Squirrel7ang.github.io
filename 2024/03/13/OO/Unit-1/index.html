@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Squirrel7ang">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://squirrel7ang.github.io/2024/03/13/oo/unit-1/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="从 + - * ^ 到简易科学计算器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「BUAA OO」Unit-1 表达式计算">
+<meta property="og:url" content="https://squirrel7ang.github.io/2024/03/13/OO/Unit-1/index.html">
+<meta property="og:site_name" content="Squirrel7ang Blog">
+<meta property="og:description" content="从 + - * ^ 到简易科学计算器">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U1/hw1_uml.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U1/hw2_uml.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U1/hw3_uml.png">
+<meta property="article:published_time" content="2024-03-13T09:06:00.000Z">
+<meta property="article:modified_time" content="2024-03-13T09:38:52.062Z">
+<meta property="article:author" content="Squirrel7ang">
+<meta property="article:tag" content="OO">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://squirrel7ang.github.io/images/OO/U1/hw1_uml.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            「BUAA OO」Unit-1 表达式计算 -
+        
+        Squirrel7ang&#39;s Blog
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    
+<script src="/js/libs/anime.min.js"></script>
+
+    <h1 class="ml13">
+        Squirrel7ang&#39;s Blog
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    window.config = {"hostname":"squirrel7ang.github.io","root":"/","language":"zh-CN","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left"},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Squirrel7ang's Blog","subtitle":{"text":["BUAA-CO-2023-Aut","And More~"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":true,"version":"9.3.0"}},"version":"2.6.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"More":{"icon":"fa-regular fa-ellipsis-stroke","submenus":{"categories":"/categories","tags":"/tags"}},"CO":{"path":"/categories/CO","icon":"fa-solid fa-microchip"},"OO":{"path":"/categries/OO","icon":"fa-brands fa-java"},"Github":{"icon":"fa-brands fa-github","submenus":{"CO":"https://github.com/Squirrel7ang/BUAA-CO-2023-Aut"}},"About":{"icon":"fa-regular fa-user","submenus":{"Me":"https://squirrel7ang.github.io/2023/12/31/about/me/","Github":"https://github.com/Squirrel7ang"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"cloud"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":{"archives":{"path":"/archives","icon":"fa-regular fa-archive"},"tags":{"path":"/tags","icon":"fa-regular fa-tags"},"categories":{"path":"/categories","icon":"fa-regular fa-folder"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":4}},"footerStart":"2023/12/31 19:56:36"};
+    window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+
+    <div class="navbar-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/avatar.jpg">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                Squirrel7ang&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    首页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-ellipsis-stroke fa-fw"></i>
+                                    更多
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/categories">
+                                                    分类
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/tags">
+                                                    标签
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories/CO"
+                                        >
+                                    <i class="fa-solid fa-microchip fa-fw"></i>
+                                    CO
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categries/OO"
+                                        >
+                                    <i class="fa-brands fa-java fa-fw"></i>
+                                    OO
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-brands fa-github fa-fw"></i>
+                                    GITHUB
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/Squirrel7ang/BUAA-CO-2023-Aut">
+                                                    CO
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-user fa-fw"></i>
+                                    关于
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="https://squirrel7ang.github.io/2023/12/31/about/me/">
+                                                    ME
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/Squirrel7ang">
+                                                    GITHUB
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                首页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-More"
+                        >
+                            <span>
+                                更多
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-More">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/categories">分类</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/tags">标签</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories/CO"
+                        >
+                            <span>
+                                CO
+                            </span>
+                            
+                                <i class="fa-solid fa-microchip fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categries/OO"
+                        >
+                            <span>
+                                OO
+                            </span>
+                            
+                                <i class="fa-brands fa-java fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-Github"
+                        >
+                            <span>
+                                GITHUB
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-Github">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/Squirrel7ang/BUAA-CO-2023-Aut">CO</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-About"
+                        >
+                            <span>
+                                关于
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-About">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="https://squirrel7ang.github.io/2023/12/31/about/me/">ME</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/Squirrel7ang">GITHUB</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">9</div>
+        <div class="label text-third-text-color text-sm">标签</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">3</div>
+        <div class="label text-third-text-color text-sm">分类</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">11</div>
+        <div class="label text-third-text-color text-sm">文章</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://squirrel7ang.github.io/images/cover/cover_13.png" alt="「BUAA OO」Unit-1 表达式计算" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">「BUAA OO」Unit-1 表达式计算</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Squirrel7ang</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-03-13 17:06</span>
+        <span class="mobile">2024-03-13 17:06</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-03-13 17:38:52</span>
+            <span class="mobile">2024-03-13 17:38:52</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/OO/">OO</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/OO/">OO</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="从-到简易科学计算器"><a href="#从-到简易科学计算器" class="headerlink" title="从 + - * ^ 到简易科学计算器"></a>从 + - * ^ 到简易科学计算器</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>给定一个只含有 <code>x</code> 的表达式，完成对该表达式的化简（展开）并输出。要求：</p>
+<ol>
+<li>输出最简无多余括号</li>
+<li>输出越短越好</li>
+</ol>
+<h2 id="第一次作业"><a href="#第一次作业" class="headerlink" title="第一次作业"></a>第一次作业</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入的表达式满足以下要求：</p>
+<ol>
+<li>只有关于<code>x</code>的非负整数幂</li>
+<li>指数永远是非负整数</li>
+<li>只有一层括号</li>
+<li>输出不能有括号</li>
+</ol>
+<h3 id="数据限制"><a href="#数据限制" class="headerlink" title="数据限制"></a>数据限制</h3><ul>
+<li>保证系数有可能爆 <code>int</code> </li>
+<li>由题目可知指数不会爆 <code>int</code></li>
+</ul>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>在叙述我的解决方案之前，我希望能通过解决七个关键问题描述我的思考。</p>
+<blockquote>
+<p>问题 0：我们需要做什么？总共有哪几个步骤？</p>
+</blockquote>
+<p>与C语言不同，java作为一款纯度极高的面向对象编程语言，对于抽象化、层次化、模块化的要求更高，相应地性能肯定不如C的高耦合度代码。在这次作业中，我们应该思考的是如何在题目中找到对象，找到方法，建立抽象层次。而这一切又是从功能和数据的角度出发的。所以我们先来分析一下题目的功能要求和可能需要的数据结构：</p>
+<p><code>功能要求：读入字符串、解析成表达式后计算表达式。</code></p>
+<p>然后我们将功能需求拆解成不同的步骤：</p>
+<ol>
+<li><code>读入</code>——建立读取读取字符串类—— Java 中已经提供了scanner类用于读取字符串。</li>
+<li><code>解析</code>——建立解析字符串类 —— 可以建立一个 Lexer 类。但是在第一次作业中似乎不需要？我们先把这个问题放一边，看看接下来要做什么？</li>
+<li><code>存储</code>——建立存储表达式类 —— 这当然是必要的，其本质就是用特定的数据结构将表达式存储起来，那为何不建立一个类来存储这种数据结构呢？</li>
+<li><code>计算表达式</code>——建立计算表达式类…吗？ —— 完全没问题，毕竟计算表达式还是挺折腾的。但是用其他类的方法来实现计算似乎也可行…而且似乎可以一边存储一遍计算…再看看还有什么功能先吧。</li>
+<li><code>输出</code>——输出字符串类…吗？ —— 似乎没必要。一个方法就行。</li>
+</ol>
+<p>上面没有回答到的问题我们会在后续看到答案。现在先看一下我们需要用到的数据结构</p>
+<ol>
+<li><code>存储表达式</code>——表达式类` —— 这似乎是最自然的想法，但是这并没有回答我们需要使用到什么数据结构。我们先把它放一边。</li>
+<li><code>存储多项式</code>——多项式类 —— 多项式和表达式有什么不同呢？多项式指输出结果前的数据结构，但是表达式指输入解析后的数据结构。两者当然可以使用同一个类，但接下来我们会看到，使用多项式类有它自己的好处。</li>
+</ol>
+<p>我们的分析已经基本完成了。接下来我们进一步关注实现的细节。比如说我们在上面的分析中提到的第一个问题——需不需要Lexer？</p>
+<blockquote>
+<p>问题 1：需不需要输入预处理？（Lexer）</p>
+</blockquote>
+<p>这似乎是不必要的。因为加减号、正负号、乘号(asterisk)、指数符号(caret)会在表达式读入中才能处理，而括号和自变量需要暂时保留直到表达式用到他们。所以我们能做的就是把常数因子稍微处理一下。</p>
+<p>但是从可扩展性的角度出发，进行预处理是好的。预处理能够将函数名称识别出来，将特定符号识别出来；我们可以用特定字符的符号属性来判断这个字符的类型，而不是用字符串比对的原始方法。而这一切都能使代码的结构更加清洗，使可读性更高，同时这也是更符合面向对象编程思想的方式。</p>
+<p>下一步。</p>
+<blockquote>
+<p>问题 2：如何分析表达式？如何存储表达式？</p>
+</blockquote>
+<p>结合这次作业的抽象语法树已经数据结构课上学的内容，我们现在学了三个方式来处理表达式：</p>
+<ol>
+<li>维护一个变量栈和一个符号栈，新符号的优先级不高于前面的符号时，就计算前面的式子。</li>
+<li>转化为后缀表达式，再利用后缀表达式构建表达式树</li>
+<li>抽象语法树 + 递归下降<br>第一种方式是我第一次接触到的计算表达式的方式。这固然好，但问题是不太方便从中分理处对象。第二种方式是我在数据结构课上接触到的方式，也是和抽象语法树非常相似的方式。问题是树太深了——毕竟是一个二叉树。理论上来说，同一优先级的不同操作数可以放在数的同一层。因此就有了我们的抽象语法树（AST）——其实可以把它理解成一种表达式树。</li>
+</ol>
+<p>有了AST，我们就需要有构建AST的方法，遍历AST的方法和计算AST的方法。这三个功能需求虽然目的各不相同，但是他们的本质都是遍历AST。因此</p>
+<blockquote>
+<p>问题 3：如何递归下降？如何保证递归的正确性？</p>
+</blockquote>
+<p>题目是按照AST的思路给出表达式的定义。</p>
+<ul>
+<li>表达式 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> 空白项 [加减 空白项] 项 空白项 | 表达式 加减 空白项 项 空白项</li>
+<li>项 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> [加减 空白项] 因子 | 项 空白项 '*’ 空白项 因子</li>
+<li>因子 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> 变量因子 | 常数因子 | 表达式因子</li>
+<li>变量因子 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> 幂函数</li>
+<li>常数因子 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> 带符号的整数</li>
+<li>表达式因子 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> ‘(‘ 表达式 ‘)’ [空白项 指数]</li>
+<li>幂函数 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> ‘x’ [空白项 指数]</li>
+<li>指数 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container>  ‘^’ 空白项 [‘+’] 允许前导零的整数  <strong>(注：指数一定不是负数)</strong></li>
+<li>带符号的整数 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> [加减] 允许前导零的整数</li>
+<li>允许前导零的整数 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> (‘0’|’1’|’2’|…|’9’){‘0’|’1’|’2’|…|’9’}</li>
+<li>空白项 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> {空白字符}</li>
+<li>空白字符 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> （空格） | <code>\t</code></li>
+<li>加减 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> ‘+’ | ‘-‘</li>
+</ul>
+<p>递归下降的对象是AST，而AST是一棵树，因此递归下降的本质其实就是利用递归的方法遍历一棵树。而根据输入顺序进行递归意味着对这棵树的遍历是一次深度优先搜索。而递归的结束标志就是没有更多的表达式因子。</p>
+<p>如何递归呢？很简单。表达式就是很多个项，遍历一个表达式就要先遍历全部的项；遍历全部的项就是遍历全部的因子；如果因子是表达式，那就遍历这个表达式。与之前我们接触到的递归不同的是，并不是一个递归函数并不是调用自己本身递归，而是几个函数相互调用递归。</p>
+<pre class="mermaid">graph TD
+A(表达式)--&gt; A1( - )
+A(表达式)--&gt; B1(项1)
+    B1 --&gt; C11[ -1 ]  
+A(表达式)--&gt; A2(+)
+A(表达式)--&gt; B2(项2)
+    B2 --&gt; C21(表达式^6)
+        C21 --&gt; D1(项4)
+            D1 --&gt; E1(x^+02)
+        C21 --&gt; C211( - )
+        C21 --&gt; D2(项5)
+            D2 --&gt; E2( -00128)
+A(表达式)--&gt; A3( - )
+A(表达式)--&gt; B3(项3)
+    B3 --&gt; C31[x^2]
+    B3 --&gt; C32[*]
+    B3 --&gt; C33[2]</pre>
+
+<blockquote>
+<p>问题 4：如何得到答案？</p>
+</blockquote>
+<p>我的实现方式是参考四则运算的方式来实现的。在只有四则运算的AST中，我们只需要递归调用getValue()方法，并且把每一个getValue()得到的数值在这一级进行运行然后将结果返回给上一级。</p>
+<p>比方说，表达式的值是什么呢？是每一个项的值按照项之间的加减号运算后的结果。而我们怎么知道每一个项的值是多少呢？在表达式层，我们假设每一个项都能调用一个getValue()方法，这个方法返回的值都是化简后的一个唯一的数。我们再将求出来的这个表达式的值返回给自己的getValue()方法。这样子表达式的值就是<code>int result = &lt;表达式对象&gt;.getValue()</code>。</p>
+<p>但是一个项的值是多少呢？我们也可以假设一个项是每一个因子的值相乘的结果。而每一个因子的值就是因子自身调用getValue()方法得到的。而因子的值是多少呢？在只有数字的四则运算中，因子只有可能是数字和表达式，如果是数字就直接返回数字，如果是表达式就返回表达式的getValue()方法进行递归就行。说白了，就是一个深度优先搜索，不过是通过递归的形式进行遍历的。这样子带来的好处就是编程难度被简化了——有时候如果不明说我们可能都意识不到自己用的是复杂的深度优先搜索算法。</p>
+<p>但是在多项式的计算中，并没有一个直观的getValue()方法——毕竟得到的答案并不是一个数字，而是一个多项式。这就引出了第五个问题。</p>
+<blockquote>
+<p>问题 5：如何存储结果（多项式）？如何输出结果？</p>
+</blockquote>
+<p>其实在第四个问题中，我们已经有思路了，递归调用getValue()方法就行。我们假设每次返回的不是一个最简的数，而是一个最简的多项式。接下来，我们写几个方法用来计算最简多项式返回最简多项式。然后剩下的就交给递归和可靠的JVM就行。似乎也没有想象的那么难？</p>
+<p>存储多项式更简单。每个多项式是由若干个单项式构成的。而单项式只有两个属性：系数和指数。这么简单的结构，写几个add, sub, mul, pow方法肯定也是轻轻松松信手拈来啦。</p>
+<p>需要注意的是，在多项式的计算中要注意合并同类项，而合并同类项意味着查找同类项，意味着查找，意味着搜索。因此可以用一个指数到系数的HashMap来存储单项式，加速查找过程。</p>
+<p>输出嘛…就输出呗。都写到这了还不会输出？</p>
+<blockquote>
+<p>问题 6：有无优化空间？结构能否再清晰？</p>
+</blockquote>
+<ul>
+<li><p>正的第一个输出可以不输出符号</p>
+</li>
+<li><p>快速幂？输入最高八次方，快速幂快不了多少…</p>
+</li>
+<li><p>一次方别输出，系数为1的正整数幂不用输出系数。</p>
+</li>
+<li><p>建立因子接口</p>
+</li>
+<li><p>建立多项式类和单项式类（可扩展性）</p>
+</li>
+</ul>
+<h3 id="最终设计"><a href="#最终设计" class="headerlink" title="最终设计"></a>最终设计</h3><h4 id="UML类图"><a href="#UML类图" class="headerlink" title="UML类图"></a>UML类图</h4><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U1/hw1_uml.png" alt="hw1_uml"></p>
+<h4 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><h3 id="互测经验"><a href="#互测经验" class="headerlink" title="互测经验"></a>互测经验</h3><p>hw1 还算比较轻松，由正好被分到了零房，所以几乎没有遇到什么bug。说一下舍友的bug。</p>
+<ol>
+<li><code>(2)^32</code> 错误在于把 <code>BigInteger</code> 转成了 <code>Integer</code> 再与零比较，如果是零就表明这个 <code>BigInteger</code> 是零。想必错误的人没有怎么看过 <code>BigInteger</code> 的库函数。错误输出为 <code>0</code> ，因为强转为 <code>Integer</code> 后确实等于0。</li>
+<li>第二个错误原因太呆了。简单来说就是 <code>HashMap</code> 的迭代器是不保证有序的，尽管它在很多时候看起来是有序的。错误的同学把它当成有序的了，导致在一些奇怪的样例上得到了错误的输出。</li>
+</ol>
+<h2 id="第二次作业"><a href="#第二次作业" class="headerlink" title="第二次作业"></a>第二次作业</h2><h3 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h3><p>题目进行了小改动，未改动的地方没有列出来。自定义函数也没有列出来。</p>
+<ul>
+<li>变量因子 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> 幂函数 | 指数函数 | 自定义函数<strong>调用</strong></li>
+<li>指数函数 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> ‘exp’ 空白项 ‘(‘ 空白项 因子 空白项 ‘)’ [空白项 指数]</li>
+<li>自定义函数调用 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> 自定义函数名 空白项 ‘(‘ 空白项 因子 空白项 [‘,’ 空白项 因子 空白项 [‘,’ 空白项 因子 空白项]] ‘)’<br>输出要求：exp函数内必须是项，但是必须无多余括号</li>
+</ul>
+<h3 id="数据限制-1"><a href="#数据限制-1" class="headerlink" title="数据限制"></a>数据限制</h3><ul>
+<li>指数不能超过8，但是可以不断嵌套。不保证指数不会爆 <code>int</code> （事实上它确实爆了）</li>
+<li>保证自定义函数的定义表达式中没有其他自定义函数在内。</li>
+</ul>
+<h3 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h3><blockquote>
+<p>问题 7：有哪些改动？</p>
+</blockquote>
+<p>进行迭代的第一步设计就是考虑项目的哪些地方需要进行改动。按照我的实现，在第二次作业中需要大改的地方大概有：</p>
+<ol>
+<li>变更单项式的数据结构，因此需要变更多项式的数据结构，<strong>重构多项式</strong>属性方法，引入单项式类使设计模块化层次化。</li>
+<li><strong>引入自定义函数类</strong>，可能由多个类共同实现自定义函数功能需求。</li>
+<li>引入读取自定义函数的相关模块代码。<br>小改的地方有：</li>
+<li>扩展<code>Token</code> 和 <code>Token.Type</code> 。</li>
+<li>扩展<code>Lexer</code> 。</li>
+<li>扩展<code>Parser</code> 使之能够解析自定义函数和指数函数。</li>
+</ol>
+<p>我在实现第二次作业的要求的过程中进行了一次小迭代开发——先处理对 <code>exp</code> 函数的表达式的计算化简，再进行了自定义函数的读入。这样做有两个好处：</p>
+<ol>
+<li>可以通过对第一个部分debug保证一部分已经正确，再处理第二部分。而不需要在全部内容写完后对着庞大的项目debug</li>
+<li>第一次作业和第二次作业的输入格式不同。先处理 <code>exp</code> 还可以小改一下第一次作业的评测机接着用，而不用新写一个评测机。<br>先看引入 <code>exp</code> 后的单项式和多项式怎么存储。</li>
+</ol>
+<blockquote>
+<p>问题 8：如何存储单项式和多项式？需要注意什么？</p>
+</blockquote>
+<p>多项式的实现是简单的——多项式就是很多的单项式。如果需要的话，还可以往多项式中引入单项式之间的运算关系。我个人觉得不必要，因此省略。</p>
+<p>单项式的实现也是简单的，单项式只有三个属性：系数，指数和 <code>exp</code> 函数中的多项式。</p>
+<p>注意，这里面有一个小问题：循环定义。</p>
+<blockquote>
+<p>问题 9：多项式属性包括单项式，单项式属性有多项式，这种循环定义如何结束？</p>
+</blockquote>
+<p>我们之所以这样定义，是因为我们有需要这样定义的需求。因此得到循环定义的边界，就要回到这种看似无法停止循环的奇怪需求中。我们之所以这样定义，是因为 <code>exp</code> 中确实有多项式，但是这个多项式中并不一定有 <code>exp</code> 的因子。所以解决循环定义实际上很简单：让没有 <code>exp</code> 项的单项式中的多项式属性为空就行——这个空不一定是 <code>null</code> ，也可以是一个没有单项式的多项式对象。</p>
+<p>定义解决了，下面分析多项式和单项式的计算。计算方法和第一次作业没有太大区别，但是需要着重注意的是判断同类项变复杂了。简单来说，需要递归判断同类项。</p>
+<blockquote>
+<p>问题 9：判断同类项？判断多项式相等？</p>
+</blockquote>
+<p>判断同类项是多项式和单项式运算的关键——指数由乘法实现，乘法由加法实现，而加法除了拷贝以外就是合并同类项了。可见判断同类项是多项式运算的基础。</p>
+<p>解决方法不难。我们需要给单项式类定义两个方法：<code>similarTo()</code> 和 <code>equalTo()</code> ，在给多项式定义一个 <code>equalTo()</code> 方法。然后把它们全部写完就好。基本上只要自己写一遍就知道怎么办了。</p>
+<p>此外， <code>Z boy</code> 等同学还提出了一个方法用来检查多项式和单项式是否相等，即判断相减之后是否为零。这在后续评测过程中有大作用。</p>
+<p>此外多项式和单项式还需要注意的一点是需要及时把系数为零的单项式剔除掉——不剔除掉也可以，但是特判的地方会更多，冗余的数据也更多。</p>
+<blockquote>
+<p>问题 10：自定义函数处理？</p>
+</blockquote>
+<p>自定义函数处理是第二次作业的关键所在。调用自定义函数就是用实际参数（arguments）替换形式参数（parameters）。但是究竟如何实现替换？一般来说有两种实现方法：</p>
+<ol>
+<li>字符串替换</li>
+<li>对象替换</li>
+</ol>
+<p>前者视函数为字符串，认为形式参数就是字符，调用只需要用实参的字符串取代形参的字符就行；后者视函数为表达式对象，认为形参是一个变量因子，调用只需要用解析好的实参因子取代变量因子就行。</p>
+<p>虽然没有调查，但是我相信多数人使用的是字符串替换。我个人没有采用字符串替换，但是个人认为字符串替换需要注意两点：</p>
+<ol>
+<li>先换 <code>x</code> ，或者一次把多个参数替换掉。</li>
+<li>函数嵌套需要循环以下步骤：<ol>
+<li>parse</li>
+<li>获取实参的String</li>
+<li>替换</li>
+<li>检查实参有没有嵌套函数。有则重复以上步骤。<br>我没有使用字符串替换，主要原因是觉得这个方法太奇怪了。试想如果别人问你你的项目中是怎么存储函数的，回答居然是用字符串存储？！我接受不了，我也不认为这是写一个多项式展开的项目应该有的思想。因此我使用了第二种方法，将实参作为因子对象替换函数表达式中的变量因子。</li>
+</ol>
+</li>
+</ol>
+<p>对象替换有几点需要注意：</p>
+<ol>
+<li>替换时需要深拷贝一遍函数定义表达式，不然函数定义的表达式就被污染了。</li>
+<li>如果后续处理的时候会对实际参数进行修改，那么实际参数也需要深拷贝。</li>
+</ol>
+<p>从复杂度上来说，两种方法应该是差不多的。前者循环遍历建立表达式，后者递归深拷贝建立表达式。都把函数表达式遍历了一遍。</p>
+<blockquote>
+<p>问题 11：浅拷贝？深拷贝？</p>
+</blockquote>
+<p>深拷贝和浅拷贝是一个让我很头疼的问题，我也并没有实现的非常完美。但是经过第二次作业后，在多项式和单项式中，我对深拷贝和浅拷贝有一点思考。</p>
+<p>我的多项式和单项式参照了 <code>BigInteger</code> 类的相关方法，但是由于我的单项式对象在创建后可以被修改，我放弃了。我认为在单项式和多项式对象中，一经构造，就不应当修改对象的值。每一次调用 <code>add</code> 等方法应当构造一个新的对象返回。</p>
+<p>一切都解决了，剩下就看优化了。</p>
+<blockquote>
+<p>问题 12：输出优化？</p>
+</blockquote>
+<p>我为单项式类写了一个 <code>optimize()</code> 方法，返回一个新的输出更短的单项式。之所以这么写，有几种原因：</p>
+<ol>
+<li>我只需要将所有出现过单项式的 <code>mono.toString()</code> 方法改成 <code>mono.optimize().toString()</code> 就可以正确完成优化后的输出了，而在我的设计里 <code>mono.toString()</code> 只出现过一次。因此改动起来比较简单。</li>
+<li>如果时间真的来不及，我可以不调用 <code>optimize()</code> 方法，相当于把优化前和优化后的输出分离开了。</li>
+</ol>
+<p>关于能否得到最优输出这件事上，原本以为还是像第一次作业一样可以轻松拿满。但是看到了 <code>J boy</code> 在群里的发言，发现事情似乎不简单。经过与舍友的讨论，个人认为将长度为n的表达式输出成最短多项式是一个NP问题。得到最短输出并不困难，但是当系数增大时验证最短输出，我认为是一件非常困难的事情。</p>
+<p>举例：<br>$$<br>\begin{aligned}<br>&amp; exp((2<em>x</em>exp(x^2) + 2<em>exp(x) + 2</em>x^2 + 2<em>exp(x</em>exp(x)) + 3<em>x)) \<br>&amp; = exp((x</em>exp(x^2) + exp(x) + x^2 + exp(x*exp(x)) + x))^2 * exp(x)<br>\end{aligned}<br>$$<br>当系数增大的时候，不难想象还有更离谱的。系数分解的可能数太多了。</p>
+<p>据说 <code>L Boy</code> 完成了最离谱的优化并据说拿了满分。</p>
+<p>具体来说，我做的优化大概有这么几点：</p>
+<ol>
+<li>如果 <code>exp</code> 只有一个单项式且这个单项式不是一个常数，那么提出常数的绝对值这个因子到外边一定不会更糟糕。</li>
+<li>如果有多个单项式并且这些单项式系数（的绝对值）的最大公因数（记为 <code>gcd</code> ）还不小，我们可以遍历 <code>gcd</code> 的所有因数来验证提出公因数后的新的输出会不会更优。</li>
+<li>实际上，第二步只需要遍历 <code>(gcd/1), (gcd/2), (gcd/3)...(gcd/9)</code> 这最多九个因数就行。因为第二步一定会有不止一个单项式，除以 <code>10</code> 或者更大的数就亏了。<br>此外还加上了第一次作业的优化，即正数要放在最前面不加正号。</li>
+</ol>
+<blockquote>
+<p>问题 13：反思？更好的设计？</p>
+</blockquote>
+<ol>
+<li>单项式类和多项式类高度耦合，这样做并不好，只是我想不到更好的方法了。</li>
+<li>优化时方法写得太乱了，没有贯彻 java 的模块化层次化的思想。</li>
+<li>深拷贝用的太多了。正确的方式是让多项式和单项式一经实例化就不可更改。这导致运算速率大大降低，目测在第一次作业性能的 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.816ex;" xmlns="http://www.w3.org/2000/svg" width="2.595ex" height="2.773ex" role="img" focusable="false" viewBox="0 -864.9 1147.1 1225.5"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mfrac"><g data-mml-node="mn" transform="translate(396.8,394) scale(0.707)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mn" transform="translate(220,-345) scale(0.707)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g><rect width="907.1" height="60" x="120" y="220"></rect></g></g></g></svg></mjx-container> 到 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.816ex;" xmlns="http://www.w3.org/2000/svg" width="1.795ex" height="2.773ex" role="img" focusable="false" viewBox="0 -864.9 793.6 1225.5"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mfrac"><g data-mml-node="mn" transform="translate(220,394) scale(0.707)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mn" transform="translate(220,-345) scale(0.707)"><path data-c="38" d="M70 417T70 494T124 618T248 666Q319 666 374 624T429 515Q429 485 418 459T392 417T361 389T335 371T324 363L338 354Q352 344 366 334T382 323Q457 264 457 174Q457 95 399 37T249 -22Q159 -22 101 29T43 155Q43 263 172 335L154 348Q133 361 127 368Q70 417 70 494ZM286 386L292 390Q298 394 301 396T311 403T323 413T334 425T345 438T355 454T364 471T369 491T371 513Q371 556 342 586T275 624Q268 625 242 625Q201 625 165 599T128 534Q128 511 141 492T167 463T217 431Q224 426 228 424L286 386ZM250 21Q308 21 350 55T392 137Q392 154 387 169T375 194T353 216T330 234T301 253T274 270Q260 279 244 289T218 306L210 311Q204 311 181 294T133 239T107 157Q107 98 150 60T250 21Z"></path></g><rect width="553.6" height="60" x="120" y="220"></rect></g></g></g></svg></mjx-container> 。这是一件很糟糕的事情。之后绝对不应该轻易改变一个类的属性。</li>
+</ol>
+<h3 id="最终设计-1"><a href="#最终设计-1" class="headerlink" title="最终设计"></a>最终设计</h3><h4 id="UML类图-1"><a href="#UML类图-1" class="headerlink" title="UML类图"></a>UML类图</h4><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U1/hw2_uml.png" alt="hw2_uml"></p>
+<h4 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><h3 id="互测经验-1"><a href="#互测经验-1" class="headerlink" title="互测经验"></a>互测经验</h3><p>目测有这么几种错误：</p>
+<ol>
+<li><code>0; exp(4294967297)</code> 用 <code>Integer.parseInt()</code> 读入再转 <code>BigInteger</code> 。估计也是没怎么了解 <code>BigInteger</code> 库。</li>
+<li><code>0; 1-1</code> 第一次作业弱测第三个点，应当输出 <code>0</code> ，实际输出空串 <code> </code> ，第二次作业弱测没有这种简单的点了。错得有点呆。</li>
+<li><code>exp((-x))</code> 错误输出为 <code>exp(-x)</code> ，估计是当系数绝对值为1并且后面只有一个 <code>x</code> 或者一个 <code>exp</code> 时默认不输出括号。</li>
+<li><code>exp(1)^2 * exp(2)</code> 非常非常奇怪的错误。他会先把单项式加入一个 <code>HashMap</code> ，然后再遍历 <code>HashMap</code> 相乘。错在 <code>exp(1)^2</code> 和 <code>exp(2)</code> 在单项式上是相等的，标准库默认 <code>HashMap</code> 已经有一个项之后就不会再放一个相同的项了。所以错误输出成了 <code>exp(2)</code> </li>
+<li><code>exp(2000000014*x + 5000000035)</code> 出错的人找出了最大公因数 <code>1000000007</code> ，然后线性遍历了它的所有的因子找出所有的因数用来验证提出来后是否会更短。线性遍历了所有因子……这是一个十位数的质数啊……出错原因 TLE</li>
+</ol>
+<h2 id="第三次作业"><a href="#第三次作业" class="headerlink" title="第三次作业"></a>第三次作业</h2><h3 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h3><ul>
+<li>加入求导因子。现在可以导了！</li>
+<li>自定义函数可以由已定义的自定义函数定义。</li>
+</ul>
+<h3 id="数据限制-2"><a href="#数据限制-2" class="headerlink" title="数据限制"></a>数据限制</h3><ul>
+<li>保证自定义函数中不会出现求导因子。</li>
+</ul>
+<blockquote>
+<p>问题 14：有哪些改动？</p>
+</blockquote>
+<p>准确来说，这次作业几乎没有改动。</p>
+<ul>
+<li>求导方面，我为单项式类和多项式类各添加了一个 <code>diff</code> 方法，返回自身求导之后的结果就行。</li>
+<li>自定义函数方面，由于我在读入函数的过程中就对函数进行了解析，而解析的过程中会顺带着把已经定义的函数一块解析了，所以自定义函数几乎没有任何改动。</li>
+</ul>
+<blockquote>
+<p>问题 15：有无优化？</p>
+</blockquote>
+<p>其实第二次作业 <code>J boy</code> 就已经想出逆天优化了。他们真的把 <code>exp</code> 中的数拆开提公因子了，导致强测第13个数据点长了一个字符。经过个人分析，我认为他们并没有遍历所有拆解过程，毕竟我认为这几乎不可能在短时间内完成，特别是当数据大了的时候。我认为最有可能的情况是判断是不是只有一个数字与其他数字不相等，然后判定优化。</p>
+<h3 id="最终设计-2"><a href="#最终设计-2" class="headerlink" title="最终设计"></a>最终设计</h3><h4 id="UML类图-2"><a href="#UML类图-2" class="headerlink" title="UML类图"></a>UML类图</h4><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U1/hw3_uml.png" alt="hw3_uml"></p>
+<h4 id="复杂度分析-2"><a href="#复杂度分析-2" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><h3 id="互测经验-2"><a href="#互测经验-2" class="headerlink" title="互测经验"></a>互测经验</h3>
+        </div>
+
+        
+            <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> 「BUAA OO」Unit-1 表达式计算</li>
+        <li><strong>作者:</strong> Squirrel7ang</li>
+        <li><strong>创建于
+                :</strong> 2024-03-13 17:06:00</li>
+        
+            <li>
+                <strong>更新于
+                    :</strong> 2024-03-13 17:38:52
+            </li>
+        
+        <li>
+            <strong>链接:</strong> https://redefine.ohevan.com/2024/03/13/OO/Unit-1/
+        </li>
+        <li>
+            <strong>
+                版权声明:
+            </strong>
+            
+
+            
+                本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a> 进行许可。
+            
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/OO/">#OO</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/03/03/OS/Pre/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">「BUAA OS」操作系统假期预习</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        评论
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">此页目录</div>
+        <div class="page-title">「BUAA OO」Unit-1 表达式计算</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8E-%E5%88%B0%E7%AE%80%E6%98%93%E7%A7%91%E5%AD%A6%E8%AE%A1%E7%AE%97%E5%99%A8"><span class="nav-text">从 + - * ^ 到简易科学计算器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="nav-text">第一次作业</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%99%90%E5%88%B6"><span class="nav-text">数据限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E8%AE%BE%E8%AE%A1"><span class="nav-text">最终设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%92%E6%B5%8B%E7%BB%8F%E9%AA%8C"><span class="nav-text">互测经验</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="nav-text">第二次作业</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-1"><span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%99%90%E5%88%B6-1"><span class="nav-text">数据限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-1"><span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E8%AE%BE%E8%AE%A1-1"><span class="nav-text">最终设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%92%E6%B5%8B%E7%BB%8F%E9%AA%8C-1"><span class="nav-text">互测经验</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="nav-text">第三次作业</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-2"><span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%99%90%E5%88%B6-2"><span class="nav-text">数据限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E8%AE%BE%E8%AE%A1-2"><span class="nav-text">最终设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%92%E6%B5%8B%E7%BB%8F%E9%AA%8C-2"><span class="nav-text">互测经验</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2023</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Squirrel7ang</a>
+        </div>
+        
+            <script data-swup-reload-script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">访问人数</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">总访问量</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a> 驱动</span>
+            <span class="text-sm lg:block">主题&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.6.0</a></span>
+        </div>
+        
+        
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/libs/mermaid.min.js"></script>
+
+    
+<script src="/js/plugins/mermaid.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        
+<script src="/js/tools/tocToggle.js" type="module"></script>
+
+<script src="/js/layouts/toc.js" type="module"></script>
+
+<script src="/js/plugins/tabs.js" type="module"></script>
+
+    
+</div>
+
+
+</body>
+</html>
