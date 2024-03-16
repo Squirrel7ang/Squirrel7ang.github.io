@@ -756,6 +756,7 @@ A(表达式)--&gt; B3(项3)
 <p>mips相关模拟开发工具</p>
 <div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">sudo apt install gcc-mips-linux-gnu qemu-system-mips gdb-multiarch</span><br></pre></td></tr></table></figure></div>
 
+<p>之后的作业如果遇到奇怪的报错可能还有一下其他的库没有装。这个到时候再说吧。</p>
 <h3 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h3><p>我们直接看Makefile，这里参考了绿导师的makefile查看技巧。</p>
 <div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ make -nB # 查看make命令都会执行哪些命令，并输出到标准输出（但是不执行这些命令）</span><br><span class="line">$ make run -nB # 查看make run命令都会执行哪些命令，并输出到标准输出（但是不执行这些命令）</span><br></pre></td></tr></table></figure></div>
 
@@ -776,10 +777,10 @@ A(表达式)--&gt; B3(项3)
 <p>将可执行文件hello反汇编来看到hello是怎么运行的。在asm的tui下也可以显示相同的内容。</p>
 ]]></content>
       <categories>
-        <category>OO</category>
+        <category>OS</category>
       </categories>
       <tags>
-        <tag>OO</tag>
+        <tag>OS</tag>
       </tags>
   </entry>
   <entry>
