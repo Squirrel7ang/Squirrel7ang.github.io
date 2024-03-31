@@ -154,33 +154,6 @@
       </tags>
   </entry>
   <entry>
-    <title>「BUAA CO」P3 &amp; P4总结</title>
-    <url>/2024/01/02/CO/P3&amp;P4/</url>
-    <content><![CDATA[<p>22级从<code>P3</code>开始闯关，但是<code>P3</code> <code>P4</code>总体开发量较小，稍微划划水写写<code>OO-Pre</code>也不是不行。建议基础不牢的同学留一次挂的机会给<code>P5</code>，不要在<code>P3</code>和<code>P4</code>挂太多次</p>
-<p>P3和P4的上机内容大致相当，因此我就放在一块进行说明了。</p>
-<h2 id="P3"><a href="#P3" class="headerlink" title="P3"></a>P3</h2><p><code>Logisim</code>搭建<code>单周期CPU</code>。实现的指令不多，整体工作量也并不大。设计文档和电路在<a class="link" href="https://github.com/Squirrel7ang/BUAA-CO-2023-Aut">这里 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。个人遇到的位移一个坑是P1的GRF搭建错了，而且P1居然没有测出来。搭建前建议先弄清楚单周期CPU是个啥东西再搭建，弄清楚了之后就比较简单了。</p>
-<h3 id="个人建议"><a href="#个人建议" class="headerlink" title="个人建议"></a>个人建议</h3><ol>
-<li>善用<code>tunnel</code>。<code>tunnel</code>类似<code>verilog</code>中<code>wire</code>类型的变量，将导线赋予名称有了意义之后，可读性会强一点。但是不建议全部<code>tunnel</code>以至于没有一根完整的线，那样子结构可能会怪怪的（虽然<code>P4</code>命名就舒服很多了）。</li>
-<li>第一次上机如果挂了不要灰心！逆风翻盘的机会大把大把地。可以先稍微准备一下<code>P4</code>。</li>
-</ol>
-<h2 id="P4"><a href="#P4" class="headerlink" title="P4"></a>P4</h2><p><code>P4</code>相当于在<code>P3</code>的基础上加了几条指令，并将<code>Logisim</code>语言翻译成<code>Verilog</code>语言。设计本身难度较低，个人认为难度全在<code>verilog</code>语法和特性上。我第一次搭建的时候de不出bug，被迫重构，一晚上重构完真的是舒服多了。</p>
-<h3 id="个人建议-1"><a href="#个人建议-1" class="headerlink" title="个人建议"></a>个人建议</h3><ol>
-<li>熟悉一下<code>Verilog</code>的语法再上。别像我一样整的连怎么实例化一个模块都不知道就上了。</li>
-<li>上机前看一下往年的上机题。一些上机题需要用到一些<code>Verilog</code>的语法，比如说循环（而显然我不会）。我在<a href="https://squirrel7ang.github.io/2024/01/01/CO/verilog_error/">这一篇文章</a>里面有写一些建议。</li>
-<li>挂了不要灰心！可以先稍微准备一下<code>P5</code>，毕竟<code>P5</code>的开发量相比来说还是蛮大的</li>
-</ol>
-]]></content>
-      <categories>
-        <category>CO</category>
-      </categories>
-      <tags>
-        <tag>CO</tag>
-        <tag>Verilog</tag>
-        <tag>Logisim</tag>
-        <tag>单周期CPU</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>「BUAA CO」P5总结</title>
     <url>/2024/01/02/CO/P5/</url>
     <content><![CDATA[<h2 id="主要任务"><a href="#主要任务" class="headerlink" title="主要任务"></a>主要任务</h2><h2 id="顶层设计"><a href="#顶层设计" class="headerlink" title="顶层设计"></a>顶层设计</h2><p><img lazyload="" src="/images/loading.svg" data-src="/images/CO/P5/CIRC.png" alt="P5_CIRC"></p>
@@ -285,102 +258,21 @@
       </tags>
   </entry>
   <entry>
-    <title>「BUAA CO」P7总结</title>
-    <url>/2024/01/02/CO/P7/</url>
-    <content><![CDATA[<h2 id="主要任务"><a href="#主要任务" class="headerlink" title="主要任务"></a>主要任务</h2><ul>
-<li>新增指令：<code>nop</code>, <code>mfc0</code>, <code>mtc0</code>, <code>eret</code>, <code>syscall</code></li>
-<li>新增模块：<code>总线Bridge</code>, <code>CP0协处理器</code>, <code>Timer0</code>, <code>Timer1</code></li>
-<li>新增功能：完成对五类异常和中断的响应</li>
-</ul>
-<h2 id="顶层设计"><a href="#顶层设计" class="headerlink" title="顶层设计"></a>顶层设计</h2><p><img lazyload="" src="/images/loading.svg" data-src="/images/CO/P7/CIRC.png" alt="P7_CIRC"></p>
-<p>其中红色为转发有关设计，绿色为阻塞有关设计，蓝色为乘除有关设计，黄色为CP0有关设计或外设，浅绿色虚线内为CPU，粉色为Bridge。</p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>P7忘写设计文档Gap了一周…</p>
-<p><strong>一定要写设计文档！！！</strong></p>
-<h3 id="1-关于CP0及其实现"><a href="#1-关于CP0及其实现" class="headerlink" title="1. 关于CP0及其实现"></a>1. 关于CP0及其实现</h3><p>P7添加了协处理器CP0，实现了其中的<code>sr(state register)</code>, <code>cause</code>和<code>EPC</code>三个寄存器的一些位。<strong>未实现位需要保持0</strong>。<br>功能定义如下：</p>
-<table>
-<thead>
-<tr>
-<th align="center">Reg</th>
-<th align="center">Byte</th>
-<th align="center">Name</th>
-<th align="center">Function</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">cause</td>
-<td align="center">31</td>
-<td align="center"><code>BD</code></td>
-<td align="center">如果<code>CP0</code>所在级指令为延迟槽<br>指令就接入1，否则接0</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center">15:10</td>
-<td align="center"><code>IP/HWInt[5:0]</code></td>
-<td align="center"><code>HWInt[5:3]</code>永远保持0；<br><code>Interrupt</code>信号接入<code>HWInt[2]</code><br><code>Timer1</code>的<code>IRQ</code>信号接入<code>HWInt[1]</code><br><code>Timer0</code>的<code>IRQ</code>信号接入<code>HWInt[0]</code></td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center">6:2</td>
-<td align="center"><code>Exc_code</code></td>
-<td align="center">如果发生异常或者中断，<br>则将对应的异常码写入</td>
-</tr>
-<tr>
-<td align="center">sr</td>
-<td align="center">15:10</td>
-<td align="center"><code>IM</code></td>
-<td align="center"><code>sr[i]</code>置1表示不对<code>HWInt[i]</code><br>的中断信号进行响应</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center">1</td>
-<td align="center"><code>EXL</code></td>
-<td align="center">进入核心态时置1，<br>退出核心态时置0<br>置1时不响应异常中断</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center">0</td>
-<td align="center"><code>IE</code></td>
-<td align="center">置1响应中断信号</td>
-</tr>
-<tr>
-<td align="center">EPC</td>
-<td align="center">31:0</td>
-<td align="center"><code>epc</code></td>
-<td align="center">写入<code>VPC</code>。需要注意延迟槽</td>
-</tr>
-</tbody></table>
-<p>此外需要说明的是<code>cause</code>寄存器是不可写的。这意味着用户没发通过执行<code>mtc0</code>指令来修改<code>cause</code>指令。<code>cause</code>寄存器的写入是由硬件完成的。每个周期都需要对<code>cause</code>寄存器的[15:10]进行写入。</p>
-<h3 id="2-关于新增指令"><a href="#2-关于新增指令" class="headerlink" title="2. 关于新增指令"></a>2. 关于新增指令</h3><p>新增指令会引入新的冒险。这主要发生在：</p>
-<ol>
-<li><code>eret</code>无延迟槽，D级跳转会产生控制冒险，需要清空延迟槽；或者F级跳转。</li>
-<li><code>mtc0</code>和<code>eret</code>产生供需模型形成数据冒险，需要转发或者阻塞解决冒险。</li>
-<li><code>mtc0</code>和<code>mfc0</code>与其他指令的冲突…</li>
+    <title>「BUAA CO」P3 &amp; P4总结</title>
+    <url>/2024/01/02/CO/P3&amp;P4/</url>
+    <content><![CDATA[<p>22级从<code>P3</code>开始闯关，但是<code>P3</code> <code>P4</code>总体开发量较小，稍微划划水写写<code>OO-Pre</code>也不是不行。建议基础不牢的同学留一次挂的机会给<code>P5</code>，不要在<code>P3</code>和<code>P4</code>挂太多次</p>
+<p>P3和P4的上机内容大致相当，因此我就放在一块进行说明了。</p>
+<h2 id="P3"><a href="#P3" class="headerlink" title="P3"></a>P3</h2><p><code>Logisim</code>搭建<code>单周期CPU</code>。实现的指令不多，整体工作量也并不大。设计文档和电路在<a class="link" href="https://github.com/Squirrel7ang/BUAA-CO-2023-Aut">这里 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。个人遇到的位移一个坑是P1的GRF搭建错了，而且P1居然没有测出来。搭建前建议先弄清楚单周期CPU是个啥东西再搭建，弄清楚了之后就比较简单了。</p>
+<h3 id="个人建议"><a href="#个人建议" class="headerlink" title="个人建议"></a>个人建议</h3><ol>
+<li>善用<code>tunnel</code>。<code>tunnel</code>类似<code>verilog</code>中<code>wire</code>类型的变量，将导线赋予名称有了意义之后，可读性会强一点。但是不建议全部<code>tunnel</code>以至于没有一根完整的线，那样子结构可能会怪怪的（虽然<code>P4</code>命名就舒服很多了）。</li>
+<li>第一次上机如果挂了不要灰心！逆风翻盘的机会大把大把地。可以先稍微准备一下<code>P4</code>。</li>
 </ol>
-<h3 id="3-关于CPU和操作系统的界限"><a href="#3-关于CPU和操作系统的界限" class="headerlink" title="3. 关于CPU和操作系统的界限"></a>3. 关于CPU和操作系统的界限</h3><p>P7要实现的事情只有：</p>
-<ol>
-<li>翻译指令。</li>
-<li>在需要响应中断或者发生异常的时候要能够正确跳转到<code>0x4180</code>的入口。</li>
-<li>周期性写入<code>cause[15:10]</code>。</li>
+<h2 id="P4"><a href="#P4" class="headerlink" title="P4"></a>P4</h2><p><code>P4</code>相当于在<code>P3</code>的基础上加了几条指令，并将<code>Logisim</code>语言翻译成<code>Verilog</code>语言。设计本身难度较低，个人认为难度全在<code>verilog</code>语法和特性上。我第一次搭建的时候de不出bug，被迫重构，一晚上重构完真的是舒服多了。</p>
+<h3 id="个人建议-1"><a href="#个人建议-1" class="headerlink" title="个人建议"></a>个人建议</h3><ol>
+<li>熟悉一下<code>Verilog</code>的语法再上。别像我一样整的连怎么实例化一个模块都不知道就上了。</li>
+<li>上机前看一下往年的上机题。一些上机题需要用到一些<code>Verilog</code>的语法，比如说循环（而显然我不会）。我在<a href="https://squirrel7ang.github.io/2024/01/01/CO/verilog_error/">这一篇文章</a>里面有写一些建议。</li>
+<li>挂了不要灰心！可以先稍微准备一下<code>P5</code>，毕竟<code>P5</code>的开发量相比来说还是蛮大的</li>
 </ol>
-<p>比如，在异常或者中断的时候，我们只需要向<code>CP0</code>中写入对应的<code>VPC</code>和性质（比如是否是延迟槽）。至于要保存哪些寄存器值，根据指令性质不同执行差异化的异常中断响应代码，这些都不是我们需要考虑的，而是编写异常处理程序的程序员需要操心的事。</p>
-<h3 id="4-关于中断及其对拍"><a href="#4-关于中断及其对拍" class="headerlink" title="4. 关于中断及其对拍"></a>4. 关于中断及其对拍</h3><h4 id="关于中断响应"><a href="#关于中断响应" class="headerlink" title="关于中断响应"></a>关于中断响应</h4><p>程序对中断的响应是通过许许多多的开关实现的。在上机中可能也会遇到添加许多开关，根据这些开关的状态决定是否执行对应程序的情况。<br>（待补充~）</p>
-<h4 id="关于中断的对拍"><a href="#关于中断的对拍" class="headerlink" title="关于中断的对拍"></a>关于中断的对拍</h4><p>很不幸中断无法和<code>Mars</code>对拍。流水线CPU中时钟周期与指令周期是不相等的，而<code>Timer</code>的中断是根据时钟周期来定的；<code>Interrupt</code>信号是根据宏观<code>PC</code>和定，因此也无法得知<code>CPU</code>内部的阻塞情况。也就是说中断信号可以在任意一个时钟周期而非指令周期产生。<code>Mars</code>模拟的是<code>单周期CPU</code>的运行，与<code>流水线CPU</code>不同。此外哪怕是在不会产生冒险的汇编代码下用和<code>Mars</code>进行对拍，个人也观测到过官方<code>Mars</code>的鬼畜行为。</p>
-<p>如果对自己的中断响应不放心的话，建议找一个设计相当的小伙伴进行对拍，以避免时钟周期不同。</p>
-<h4 id="关于Timer"><a href="#关于Timer" class="headerlink" title="关于Timer"></a>关于Timer</h4><p>官方教程中对<code>Timer</code>有专门的文件进行规范，在2023秋的计算机组成课程中又提供了官方的Timer源代码，读懂以后实例化两个Timer即可。需要注意的是只有每个Timer中的三个寄存器只有俩可写，另一个只可读。另外就是<code>Timer</code>访问的字对齐问题。</p>
-<h3 id="5-关于异常和异常优先级"><a href="#5-关于异常和异常优先级" class="headerlink" title="5.关于异常和异常优先级"></a>5.关于异常和异常优先级</h3><h4 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h4><p>P7需要实现的异常有5种：<code>Adel</code> <code>Ades</code> <code>Overflow</code> <code>RI</code> <code>Syscall</code>。每一种异常在教程中已经写的十分详细了。</p>
-<h4 id="跳转指令异常"><a href="#跳转指令异常" class="headerlink" title="跳转指令异常"></a>跳转指令异常</h4><ul>
-<li>跳转指令不会因为PC不对齐或越界而成为受害指令，异常只会发生在跳转到的那条指令上。</li>
-<li><code>beq``bne``jal</code>不会发生未字对齐的情况，只可能越界。</li>
-<li><code>jr</code>可能未字对齐，也可能越界。</li>
-</ul>
-<h4 id="异常优先级"><a href="#异常优先级" class="headerlink" title="异常优先级"></a>异常优先级</h4><p>简单来说，就是先发生的异常产生的会顶替掉后发生的异常。比方说当指令取址异常和未知指令异常同时发生时，我们肯定会先考虑取址异常而非未知指令异常。除了从直观感觉来判断以外，可以通过流水线级来判断异常优先级，即在<strong>F级发生的异常 &gt; D级发生的异常 &gt; E级发生的异常 &gt; M级发生的异常</strong>。F级取址，D级译码，因此指令取址异常优先于未知指令异常。</p>
-<h3 id="6-关于延迟槽"><a href="#6-关于延迟槽" class="headerlink" title="6.关于延迟槽"></a>6.关于延迟槽</h3><p>指令是否是延迟槽需要在F级进行判断，并进行流水。特例如下：</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">div $t0, $t1</span><br><span class="line">beq $t0, $t1, TARGET</span><br><span class="line">mfhi $t0</span><br></pre></td></tr></table></figure></div>
-<p><code>mfhi</code>会被阻塞在D级，因此等于或晚于D级进行判断都会使得延迟槽判断不准确。</p>
-<p>指令是否是延迟槽是由上一条执行的指令决定的，也就是说这条指令的存储空间上的前一条指令是不是跳转指令，以及这条指令的下一级流水级是不是跳转指令都不能决定这条指令是不是延迟槽。</p>
-<h3 id="7-关于空泡和宏观PC"><a href="#7-关于空泡和宏观PC" class="headerlink" title="7.关于空泡和宏观PC"></a>7.关于空泡和宏观PC</h3><p>流水线<code>CPU</code>应当保持宏观PC的连续性，因此空泡的<code>PC</code>不能随便选。一般来说，空泡的<code>PC</code>应当永远保持与下一条指令的<code>PC</code>一致：阻塞产生空泡的话就保持与被阻塞指令一致，<code>eret</code>清空延迟槽的空泡应当与EPC一致（如果是用清空延迟槽实现<code>eret</code>的话）。</p>
-<p>将空泡的PC永远置成<code>32'h0000_3000</code>也是不行的。尽管程序在第一次运行<code>32'h0000_3000</code>处的指令时会因为没有将<code>EXL</code>置1而不对中断做出响应，但是之后可就不好说了。这样就会导致程序在某一个位置因为阻塞了一下使得<code>EPC</code>置<code>3000</code>。这可就坏事了。此外，空泡的<code>BD</code>也应当与下一条指令保持一致。</p>
-<p>至于为什么空泡的<code>PC</code>不能和上一条指令一致呢？这是因为当上一条指令进入<code>CP0</code>所在级的下一级时，我们应当认为这条指令已经执行完了，这个时候异常中断的<code>VPC</code>就不应当发生在这条已经执行完的指令上（除非延迟槽指令<code>VPC-4</code>）——都执行完了怎么受害？</p>
 ]]></content>
       <categories>
         <category>CO</category>
@@ -388,7 +280,8 @@
       <tags>
         <tag>CO</tag>
         <tag>Verilog</tag>
-        <tag>流水线CPU</tag>
+        <tag>Logisim</tag>
+        <tag>单周期CPU</tag>
       </tags>
   </entry>
   <entry>
@@ -456,63 +349,6 @@
       </categories>
       <tags>
         <tag>Verilog</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>「BUAA OS」操作系统假期预习</title>
-    <url>/2024/03/03/OS/Pre/</url>
-    <content><![CDATA[<h2 id="预习内容"><a href="#预习内容" class="headerlink" title="预习内容"></a>预习内容</h2><p>OS的假期预习发布时间远晚于 CO 的假期预习，将近开学才开放预习内容，正确的。</p>
-<p>按照个人理解，假期预习大概就是理解这么几件事：</p>
-<ol>
-<li>学习使用<code>linux</code>和 linux 中基本的<code>GNU工具</code>，如<code>ls</code> <code>make</code> <code>vim</code>等等</li>
-<li>学习一个标准一点的、系统一点的 MIPS 程序长什么样子</li>
-<li>学习 C 语言是怎么被翻译成 MIPS 汇编，再翻译成二进制可执行文件，再跑起来的</li>
-<li>学习使用 <code>GDB</code> 和 <code>QEMU</code></li>
-</ol>
-<p>一步步来。</p>
-<h3 id="安装Linux"><a href="#安装Linux" class="headerlink" title="安装Linux"></a>安装Linux</h3><p>我安装的是<code>Ubuntu22.04</code>，使用<code>vmware workstation</code>运行。理由是配置比较白痴。同时我也在WSL上安装了<code>Ubuntu</code>。虽然还没弄明白wsl的图形化界面要怎么安装，但即便没有图形化界面，个人感觉使用体验要远好于<code>vmware</code>。</p>
-<h4 id="本地代理"><a href="#本地代理" class="headerlink" title="本地代理"></a>本地代理</h4><p>wsl的开本地代理可以在本地的”C:\Users%USERNAME%.wslconfig”文件中进行配置完成。一般来说该文件不存在，需要自行创建。创建后向其中写入以下内容:</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">[experimental]</span><br><span class="line">autoMemoryReclaim=gradual</span><br><span class="line">networkingMode=mirrored</span><br><span class="line">dnsTunneling=true</span><br><span class="line">firewall=true</span><br><span class="line">autoProxy=true</span><br></pre></td></tr></table></figure></div>
-<p>然后在命令行将wsl关掉：</p>
-<div class="highlight-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">&gt; wsl --shutdown</span><br><span class="line">&gt; wsl</span><br></pre></td></tr></table></figure></div>
-<p>如果打开wsl没有出现“NAT模式下不支持localhost”之类的文字就算成功了</p>
-<p>在vmware的Ubuntu中进行本地代理则稍微有一点麻烦。我使用的是clash for windows进行联网，在Ubuntu中也可以启动本地代理通过windows的clash访问指定网站。</p>
-<ol>
-<li>先在windows下打开命令行，输入<code>ipconfig</code>，找到<code>无线局域网适配器 WLAN</code>下的<code>IPv4 地址</code></li>
-<li>将clash中的<code>Allow LAN</code>打开，记录<code>Port</code>号。</li>
-<li>在ubuntu的网络设置中选择<code>本地代理-手动</code>，将<code>https代理</code>、<code>http代理</code>、<code>Socks主机</code>三个选项的每一个都分别写入<code>IPv4 地址</code>以及<code>Port</code>号。随后就可以正常上网了</li>
-</ol>
-<h4 id="安装相关GNU工具"><a href="#安装相关GNU工具" class="headerlink" title="安装相关GNU工具"></a>安装相关GNU工具</h4><p>基本gcc工具</p>
-<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">sudo apt install build-essential</span><br></pre></td></tr></table></figure></div>
-
-<p>mips相关模拟开发工具</p>
-<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">sudo apt install gcc-mips-linux-gnu qemu-system-mips gdb-multiarch</span><br></pre></td></tr></table></figure></div>
-
-<p>之后的作业如果遇到奇怪的报错可能还有一下其他的库没有装。这个到时候再说吧。</p>
-<h3 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h3><p>我们直接看Makefile，这里参考了绿导师的makefile查看技巧。</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ make -nB # 查看make命令都会执行哪些命令，并输出到标准输出（但是不执行这些命令）</span><br><span class="line">$ make run -nB # 查看make run命令都会执行哪些命令，并输出到标准输出（但是不执行这些命令）</span><br></pre></td></tr></table></figure></div>
-
-<p><code>-n</code>和<code>-B</code>选项可以用<code>man make | vim -</code>来查看</p>
-<p>对于make中眼花缭乱的指令，可以在vim中输入<code>:%s/ /\n  /g</code>命令来完成一种简单的formatting。</p>
-<p>拿mips-exercise的makefile来说，</p>
-<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># make</span></span><br><span class="line">mips-linux-gnu-gcc --std=gnu99 -EL -G 0 -mno-abicalls -fno-pic -ffreestanding -fno-stack-protector -fno-builtin -Wa,-xgot -Wall -mxgot -mno-fix-r4000 -march=4kc -g -ggdb -I./include/ -c -o hello.o hello.c</span><br><span class="line">mips-linux-gnu-gcc --std=gnu99 -EL -G 0 -mno-abicalls -fno-pic -ffreestanding -fno-stack-protector -fno-builtin -Wa,-xgot -Wall -mxgot -mno-fix-r4000 -march=4kc -g -ggdb -I./include/ -c -o output.o output.c</span><br><span class="line">mips-linux-gnu-gcc --std=gnu99 -EL -G 0 -mno-abicalls -fno-pic -ffreestanding -fno-stack-protector -fno-builtin -Wa,-xgot -Wall -mxgot -mno-fix-r4000 -march=4kc -g -ggdb -I./include/ -c -o start.o start.S</span><br><span class="line">mips-linux-gnu-ld -EL -G 0 -static -n -nostdlib --fatal-warnings -o hello -N -T linker.lds hello.o output.o start.o</span><br><span class="line"></span><br><span class="line"><span class="comment"># make run</span></span><br><span class="line">qemu-system-mipsel -cpu 4Kc -m 64 -nographic -M malta -no-reboot  -kernel hello</span><br><span class="line"></span><br><span class="line"><span class="comment"># make dbg</span></span><br><span class="line">make dbg_run &gt;/dev/null 2&gt;&amp;1 &amp; gdb-multiarch hello -ex <span class="string">"target remote localhost:1234"</span></span><br><span class="line">killall qemu-system-mipsel</span><br><span class="line"></span><br><span class="line"><span class="comment"># make clean</span></span><br><span class="line"><span class="built_in">rm</span> -rf *~ *.o hello *.objdump</span><br><span class="line"></span><br><span class="line"><span class="comment"># make dbg_run</span></span><br><span class="line">qemu-system-mipsel -cpu 4Kc -m 64 -nographic -M malta -no-reboot -s -S  -kernel hello</span><br></pre></td></tr></table></figure></div>
-<p>可以发现：</p>
-<ol>
-<li>make就是简单的生成了一个hello的可执行文件。它忽略了标准库，使用静态链接，禁用内联函数和栈保护器，禁用对mips-r4000的修复。简单来说，这些编译操作都是为了保证我们写的程序能够在裸机上运行</li>
-<li>使用<code>qemu-system-mipsel</code> 在4Kc, MIPS Malta Core运行了hello。在Debug的时候使用了-S选项让CPU在开始运行的时候停下来，使用-s指令在localhost:1234开启了一个gdbserver用于远程调试。</li>
-<li>使用<code>gdb-multiarch</code>进行remote dbg，完成之后再干碎qemu进程。</li>
-</ol>
-<h3 id="观察运行情况"><a href="#观察运行情况" class="headerlink" title="观察运行情况"></a>观察运行情况</h3><p>gdb自带tui，能够方便地查看运行结果</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">(gdb) layout asm</span><br><span class="line">(gdb) layout src</span><br></pre></td></tr></table></figure></div>
-<p>asm这可以将CPU从启动时的0xBFC00000开始执行的所有指令都显示出来，能够很好地观察到每一条指令的运行</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mips-linux-gnu-objdump -d hello | vim -</span><br></pre></td></tr></table></figure></div>
-<p>将可执行文件hello反汇编来看到hello是怎么运行的。在asm的tui下也可以显示相同的内容。</p>
-]]></content>
-      <categories>
-        <category>OS</category>
-      </categories>
-      <tags>
-        <tag>OS</tag>
       </tags>
   </entry>
   <entry>
@@ -1083,6 +919,81 @@ A(表达式)--&gt; B3( 项3 )
       </tags>
   </entry>
   <entry>
+    <title>About me</title>
+    <url>/2023/12/31/about/me/</url>
+    <content><![CDATA[<p>现在是2023年12月31号的晚上19:35。距离bilibili跨年晚会的开始还有25分钟，距离2024年还有五个小时不到。2023年是我迈入北航计算机学院的第一年。回顾过去的一学期，我感受过离散数学和量子力学的美丽，也体验了数理统计和随机过程的离奇和神秘；既在面向对象先导课的一次次debug中挣扎，也在计算机组成实验课上一次次死去。</p>
+<p>我从来没有想过自己也会有写博客的一天。或许是希望自己同样身为菜鸡能给后来者一点启发，或许是对自己一学期的回顾与复盘，又或许是单纯想找个地方说话，总之一学期下来，我想记录一下我经历的每次不可思议，记录我每一次崩溃和有一次的涅槃。</p>
+<p>正当我没处说话的时候，我想起了Roife学长、TobyShi学长和FlyingLandlord学长制作的博客，又正巧在群里刷到了Tan学长的博客。受学长们启发，有了做一篇自己的博客的想法。</p>
+<p>希望这篇博客能够坚持到大三，直到我走完北航6系的基本课程。期间可能会换主题和博客的排版，不过希望我能坚持到最后。</p>
+<p>感谢每一位身边的人。</p>
+<p>现在是2023年12月31号19:56:36，就把这个时间定为一切的开始吧</p>
+]]></content>
+      <categories>
+        <category>me</category>
+      </categories>
+      <tags>
+        <tag>me</tag>
+        <tag>talks</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>「BUAA OS」操作系统假期预习</title>
+    <url>/2024/03/03/OS/Pre/</url>
+    <content><![CDATA[<h2 id="预习内容"><a href="#预习内容" class="headerlink" title="预习内容"></a>预习内容</h2><p>OS的假期预习发布时间远晚于 CO 的假期预习，将近开学才开放预习内容，正确的。</p>
+<p>按照个人理解，假期预习大概就是理解这么几件事：</p>
+<ol>
+<li>学习使用<code>linux</code>和 linux 中基本的<code>GNU工具</code>，如<code>ls</code> <code>make</code> <code>vim</code>等等</li>
+<li>学习一个标准一点的、系统一点的 MIPS 程序长什么样子</li>
+<li>学习 C 语言是怎么被翻译成 MIPS 汇编，再翻译成二进制可执行文件，再跑起来的</li>
+<li>学习使用 <code>GDB</code> 和 <code>QEMU</code></li>
+</ol>
+<p>一步步来。</p>
+<h3 id="安装Linux"><a href="#安装Linux" class="headerlink" title="安装Linux"></a>安装Linux</h3><p>我安装的是<code>Ubuntu22.04</code>，使用<code>vmware workstation</code>运行。理由是配置比较白痴。同时我也在WSL上安装了<code>Ubuntu</code>。虽然还没弄明白wsl的图形化界面要怎么安装，但即便没有图形化界面，个人感觉使用体验要远好于<code>vmware</code>。</p>
+<h4 id="本地代理"><a href="#本地代理" class="headerlink" title="本地代理"></a>本地代理</h4><p>wsl的开本地代理可以在本地的”C:\Users%USERNAME%.wslconfig”文件中进行配置完成。一般来说该文件不存在，需要自行创建。创建后向其中写入以下内容:</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">[experimental]</span><br><span class="line">autoMemoryReclaim=gradual</span><br><span class="line">networkingMode=mirrored</span><br><span class="line">dnsTunneling=true</span><br><span class="line">firewall=true</span><br><span class="line">autoProxy=true</span><br></pre></td></tr></table></figure></div>
+<p>然后在命令行将wsl关掉：</p>
+<div class="highlight-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">&gt; wsl --shutdown</span><br><span class="line">&gt; wsl</span><br></pre></td></tr></table></figure></div>
+<p>如果打开wsl没有出现“NAT模式下不支持localhost”之类的文字就算成功了</p>
+<p>在vmware的Ubuntu中进行本地代理则稍微有一点麻烦。我使用的是clash for windows进行联网，在Ubuntu中也可以启动本地代理通过windows的clash访问指定网站。</p>
+<ol>
+<li>先在windows下打开命令行，输入<code>ipconfig</code>，找到<code>无线局域网适配器 WLAN</code>下的<code>IPv4 地址</code></li>
+<li>将clash中的<code>Allow LAN</code>打开，记录<code>Port</code>号。</li>
+<li>在ubuntu的网络设置中选择<code>本地代理-手动</code>，将<code>https代理</code>、<code>http代理</code>、<code>Socks主机</code>三个选项的每一个都分别写入<code>IPv4 地址</code>以及<code>Port</code>号。随后就可以正常上网了</li>
+</ol>
+<h4 id="安装相关GNU工具"><a href="#安装相关GNU工具" class="headerlink" title="安装相关GNU工具"></a>安装相关GNU工具</h4><p>基本gcc工具</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">sudo apt install build-essential</span><br></pre></td></tr></table></figure></div>
+
+<p>mips相关模拟开发工具</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">sudo apt install gcc-mips-linux-gnu qemu-system-mips gdb-multiarch</span><br></pre></td></tr></table></figure></div>
+
+<p>之后的作业如果遇到奇怪的报错可能还有一下其他的库没有装。这个到时候再说吧。</p>
+<h3 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h3><p>我们直接看Makefile，这里参考了绿导师的makefile查看技巧。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ make -nB # 查看make命令都会执行哪些命令，并输出到标准输出（但是不执行这些命令）</span><br><span class="line">$ make run -nB # 查看make run命令都会执行哪些命令，并输出到标准输出（但是不执行这些命令）</span><br></pre></td></tr></table></figure></div>
+
+<p><code>-n</code>和<code>-B</code>选项可以用<code>man make | vim -</code>来查看</p>
+<p>对于make中眼花缭乱的指令，可以在vim中输入<code>:%s/ /\n  /g</code>命令来完成一种简单的formatting。</p>
+<p>拿mips-exercise的makefile来说，</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># make</span></span><br><span class="line">mips-linux-gnu-gcc --std=gnu99 -EL -G 0 -mno-abicalls -fno-pic -ffreestanding -fno-stack-protector -fno-builtin -Wa,-xgot -Wall -mxgot -mno-fix-r4000 -march=4kc -g -ggdb -I./include/ -c -o hello.o hello.c</span><br><span class="line">mips-linux-gnu-gcc --std=gnu99 -EL -G 0 -mno-abicalls -fno-pic -ffreestanding -fno-stack-protector -fno-builtin -Wa,-xgot -Wall -mxgot -mno-fix-r4000 -march=4kc -g -ggdb -I./include/ -c -o output.o output.c</span><br><span class="line">mips-linux-gnu-gcc --std=gnu99 -EL -G 0 -mno-abicalls -fno-pic -ffreestanding -fno-stack-protector -fno-builtin -Wa,-xgot -Wall -mxgot -mno-fix-r4000 -march=4kc -g -ggdb -I./include/ -c -o start.o start.S</span><br><span class="line">mips-linux-gnu-ld -EL -G 0 -static -n -nostdlib --fatal-warnings -o hello -N -T linker.lds hello.o output.o start.o</span><br><span class="line"></span><br><span class="line"><span class="comment"># make run</span></span><br><span class="line">qemu-system-mipsel -cpu 4Kc -m 64 -nographic -M malta -no-reboot  -kernel hello</span><br><span class="line"></span><br><span class="line"><span class="comment"># make dbg</span></span><br><span class="line">make dbg_run &gt;/dev/null 2&gt;&amp;1 &amp; gdb-multiarch hello -ex <span class="string">"target remote localhost:1234"</span></span><br><span class="line">killall qemu-system-mipsel</span><br><span class="line"></span><br><span class="line"><span class="comment"># make clean</span></span><br><span class="line"><span class="built_in">rm</span> -rf *~ *.o hello *.objdump</span><br><span class="line"></span><br><span class="line"><span class="comment"># make dbg_run</span></span><br><span class="line">qemu-system-mipsel -cpu 4Kc -m 64 -nographic -M malta -no-reboot -s -S  -kernel hello</span><br></pre></td></tr></table></figure></div>
+<p>可以发现：</p>
+<ol>
+<li>make就是简单的生成了一个hello的可执行文件。它忽略了标准库，使用静态链接，禁用内联函数和栈保护器，禁用对mips-r4000的修复。简单来说，这些编译操作都是为了保证我们写的程序能够在裸机上运行</li>
+<li>使用<code>qemu-system-mipsel</code> 在4Kc, MIPS Malta Core运行了hello。在Debug的时候使用了-S选项让CPU在开始运行的时候停下来，使用-s指令在localhost:1234开启了一个gdbserver用于远程调试。</li>
+<li>使用<code>gdb-multiarch</code>进行remote dbg，完成之后再干碎qemu进程。</li>
+</ol>
+<h3 id="观察运行情况"><a href="#观察运行情况" class="headerlink" title="观察运行情况"></a>观察运行情况</h3><p>gdb自带tui，能够方便地查看运行结果</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">(gdb) layout asm</span><br><span class="line">(gdb) layout src</span><br></pre></td></tr></table></figure></div>
+<p>asm这可以将CPU从启动时的0xBFC00000开始执行的所有指令都显示出来，能够很好地观察到每一条指令的运行</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mips-linux-gnu-objdump -d hello | vim -</span><br></pre></td></tr></table></figure></div>
+<p>将可执行文件hello反汇编来看到hello是怎么运行的。在asm的tui下也可以显示相同的内容。</p>
+]]></content>
+      <categories>
+        <category>OS</category>
+      </categories>
+      <tags>
+        <tag>OS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>「BUAA OO」Unit-2 电梯调度</title>
     <url>/2024/03/31/OO/Unit-2/</url>
     <content><![CDATA[<h1 id="电梯"><a href="#电梯" class="headerlink" title="电梯"></a>电梯</h1><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>考虑到第一次博客写的实在是太复杂，第二次作业的博客我希望能够按照更加清晰的结构来叙述我的设计。在这次博客中，我将解题思路单独叙述，再进一步叙述我的设计架构。</p>
@@ -1205,21 +1116,110 @@ A(表达式)--&gt; B3( 项3 )
       </tags>
   </entry>
   <entry>
-    <title>About me</title>
-    <url>/2023/12/31/about/me/</url>
-    <content><![CDATA[<p>现在是2023年12月31号的晚上19:35。距离bilibili跨年晚会的开始还有25分钟，距离2024年还有五个小时不到。2023年是我迈入北航计算机学院的第一年。回顾过去的一学期，我感受过离散数学和量子力学的美丽，也体验了数理统计和随机过程的离奇和神秘；既在面向对象先导课的一次次debug中挣扎，也在计算机组成实验课上一次次死去。</p>
-<p>我从来没有想过自己也会有写博客的一天。或许是希望自己同样身为菜鸡能给后来者一点启发，或许是对自己一学期的回顾与复盘，又或许是单纯想找个地方说话，总之一学期下来，我想记录一下我经历的每次不可思议，记录我每一次崩溃和有一次的涅槃。</p>
-<p>正当我没处说话的时候，我想起了Roife学长、TobyShi学长和FlyingLandlord学长制作的博客，又正巧在群里刷到了Tan学长的博客。受学长们启发，有了做一篇自己的博客的想法。</p>
-<p>希望这篇博客能够坚持到大三，直到我走完北航6系的基本课程。期间可能会换主题和博客的排版，不过希望我能坚持到最后。</p>
-<p>感谢每一位身边的人。</p>
-<p>现在是2023年12月31号19:56:36，就把这个时间定为一切的开始吧</p>
+    <title>「BUAA CO」P7总结</title>
+    <url>/2024/01/02/CO/P7/</url>
+    <content><![CDATA[<h2 id="主要任务"><a href="#主要任务" class="headerlink" title="主要任务"></a>主要任务</h2><ul>
+<li>新增指令：<code>nop</code>, <code>mfc0</code>, <code>mtc0</code>, <code>eret</code>, <code>syscall</code></li>
+<li>新增模块：<code>总线Bridge</code>, <code>CP0协处理器</code>, <code>Timer0</code>, <code>Timer1</code></li>
+<li>新增功能：完成对五类异常和中断的响应</li>
+</ul>
+<h2 id="顶层设计"><a href="#顶层设计" class="headerlink" title="顶层设计"></a>顶层设计</h2><p><img lazyload="" src="/images/loading.svg" data-src="/images/CO/P7/CIRC.png" alt="P7_CIRC"></p>
+<p>其中红色为转发有关设计，绿色为阻塞有关设计，蓝色为乘除有关设计，黄色为CP0有关设计或外设，浅绿色虚线内为CPU，粉色为Bridge。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>P7忘写设计文档Gap了一周…</p>
+<p><strong>一定要写设计文档！！！</strong></p>
+<h3 id="1-关于CP0及其实现"><a href="#1-关于CP0及其实现" class="headerlink" title="1. 关于CP0及其实现"></a>1. 关于CP0及其实现</h3><p>P7添加了协处理器CP0，实现了其中的<code>sr(state register)</code>, <code>cause</code>和<code>EPC</code>三个寄存器的一些位。<strong>未实现位需要保持0</strong>。<br>功能定义如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">Reg</th>
+<th align="center">Byte</th>
+<th align="center">Name</th>
+<th align="center">Function</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">cause</td>
+<td align="center">31</td>
+<td align="center"><code>BD</code></td>
+<td align="center">如果<code>CP0</code>所在级指令为延迟槽<br>指令就接入1，否则接0</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">15:10</td>
+<td align="center"><code>IP/HWInt[5:0]</code></td>
+<td align="center"><code>HWInt[5:3]</code>永远保持0；<br><code>Interrupt</code>信号接入<code>HWInt[2]</code><br><code>Timer1</code>的<code>IRQ</code>信号接入<code>HWInt[1]</code><br><code>Timer0</code>的<code>IRQ</code>信号接入<code>HWInt[0]</code></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">6:2</td>
+<td align="center"><code>Exc_code</code></td>
+<td align="center">如果发生异常或者中断，<br>则将对应的异常码写入</td>
+</tr>
+<tr>
+<td align="center">sr</td>
+<td align="center">15:10</td>
+<td align="center"><code>IM</code></td>
+<td align="center"><code>sr[i]</code>置1表示不对<code>HWInt[i]</code><br>的中断信号进行响应</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">1</td>
+<td align="center"><code>EXL</code></td>
+<td align="center">进入核心态时置1，<br>退出核心态时置0<br>置1时不响应异常中断</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">0</td>
+<td align="center"><code>IE</code></td>
+<td align="center">置1响应中断信号</td>
+</tr>
+<tr>
+<td align="center">EPC</td>
+<td align="center">31:0</td>
+<td align="center"><code>epc</code></td>
+<td align="center">写入<code>VPC</code>。需要注意延迟槽</td>
+</tr>
+</tbody></table>
+<p>此外需要说明的是<code>cause</code>寄存器是不可写的。这意味着用户没发通过执行<code>mtc0</code>指令来修改<code>cause</code>指令。<code>cause</code>寄存器的写入是由硬件完成的。每个周期都需要对<code>cause</code>寄存器的[15:10]进行写入。</p>
+<h3 id="2-关于新增指令"><a href="#2-关于新增指令" class="headerlink" title="2. 关于新增指令"></a>2. 关于新增指令</h3><p>新增指令会引入新的冒险。这主要发生在：</p>
+<ol>
+<li><code>eret</code>无延迟槽，D级跳转会产生控制冒险，需要清空延迟槽；或者F级跳转。</li>
+<li><code>mtc0</code>和<code>eret</code>产生供需模型形成数据冒险，需要转发或者阻塞解决冒险。</li>
+<li><code>mtc0</code>和<code>mfc0</code>与其他指令的冲突…</li>
+</ol>
+<h3 id="3-关于CPU和操作系统的界限"><a href="#3-关于CPU和操作系统的界限" class="headerlink" title="3. 关于CPU和操作系统的界限"></a>3. 关于CPU和操作系统的界限</h3><p>P7要实现的事情只有：</p>
+<ol>
+<li>翻译指令。</li>
+<li>在需要响应中断或者发生异常的时候要能够正确跳转到<code>0x4180</code>的入口。</li>
+<li>周期性写入<code>cause[15:10]</code>。</li>
+</ol>
+<p>比如，在异常或者中断的时候，我们只需要向<code>CP0</code>中写入对应的<code>VPC</code>和性质（比如是否是延迟槽）。至于要保存哪些寄存器值，根据指令性质不同执行差异化的异常中断响应代码，这些都不是我们需要考虑的，而是编写异常处理程序的程序员需要操心的事。</p>
+<h3 id="4-关于中断及其对拍"><a href="#4-关于中断及其对拍" class="headerlink" title="4. 关于中断及其对拍"></a>4. 关于中断及其对拍</h3><h4 id="关于中断响应"><a href="#关于中断响应" class="headerlink" title="关于中断响应"></a>关于中断响应</h4><p>程序对中断的响应是通过许许多多的开关实现的。在上机中可能也会遇到添加许多开关，根据这些开关的状态决定是否执行对应程序的情况。<br>（待补充~）</p>
+<h4 id="关于中断的对拍"><a href="#关于中断的对拍" class="headerlink" title="关于中断的对拍"></a>关于中断的对拍</h4><p>很不幸中断无法和<code>Mars</code>对拍。流水线CPU中时钟周期与指令周期是不相等的，而<code>Timer</code>的中断是根据时钟周期来定的；<code>Interrupt</code>信号是根据宏观<code>PC</code>和定，因此也无法得知<code>CPU</code>内部的阻塞情况。也就是说中断信号可以在任意一个时钟周期而非指令周期产生。<code>Mars</code>模拟的是<code>单周期CPU</code>的运行，与<code>流水线CPU</code>不同。此外哪怕是在不会产生冒险的汇编代码下用和<code>Mars</code>进行对拍，个人也观测到过官方<code>Mars</code>的鬼畜行为。</p>
+<p>如果对自己的中断响应不放心的话，建议找一个设计相当的小伙伴进行对拍，以避免时钟周期不同。</p>
+<h4 id="关于Timer"><a href="#关于Timer" class="headerlink" title="关于Timer"></a>关于Timer</h4><p>官方教程中对<code>Timer</code>有专门的文件进行规范，在2023秋的计算机组成课程中又提供了官方的Timer源代码，读懂以后实例化两个Timer即可。需要注意的是只有每个Timer中的三个寄存器只有俩可写，另一个只可读。另外就是<code>Timer</code>访问的字对齐问题。</p>
+<h3 id="5-关于异常和异常优先级"><a href="#5-关于异常和异常优先级" class="headerlink" title="5.关于异常和异常优先级"></a>5.关于异常和异常优先级</h3><h4 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h4><p>P7需要实现的异常有5种：<code>Adel</code> <code>Ades</code> <code>Overflow</code> <code>RI</code> <code>Syscall</code>。每一种异常在教程中已经写的十分详细了。</p>
+<h4 id="跳转指令异常"><a href="#跳转指令异常" class="headerlink" title="跳转指令异常"></a>跳转指令异常</h4><ul>
+<li>跳转指令不会因为PC不对齐或越界而成为受害指令，异常只会发生在跳转到的那条指令上。</li>
+<li><code>beq``bne``jal</code>不会发生未字对齐的情况，只可能越界。</li>
+<li><code>jr</code>可能未字对齐，也可能越界。</li>
+</ul>
+<h4 id="异常优先级"><a href="#异常优先级" class="headerlink" title="异常优先级"></a>异常优先级</h4><p>简单来说，就是先发生的异常产生的会顶替掉后发生的异常。比方说当指令取址异常和未知指令异常同时发生时，我们肯定会先考虑取址异常而非未知指令异常。除了从直观感觉来判断以外，可以通过流水线级来判断异常优先级，即在<strong>F级发生的异常 &gt; D级发生的异常 &gt; E级发生的异常 &gt; M级发生的异常</strong>。F级取址，D级译码，因此指令取址异常优先于未知指令异常。</p>
+<h3 id="6-关于延迟槽"><a href="#6-关于延迟槽" class="headerlink" title="6.关于延迟槽"></a>6.关于延迟槽</h3><p>指令是否是延迟槽需要在F级进行判断，并进行流水。特例如下：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">div $t0, $t1</span><br><span class="line">beq $t0, $t1, TARGET</span><br><span class="line">mfhi $t0</span><br></pre></td></tr></table></figure></div>
+<p><code>mfhi</code>会被阻塞在D级，因此等于或晚于D级进行判断都会使得延迟槽判断不准确。</p>
+<p>指令是否是延迟槽是由上一条执行的指令决定的，也就是说这条指令的存储空间上的前一条指令是不是跳转指令，以及这条指令的下一级流水级是不是跳转指令都不能决定这条指令是不是延迟槽。</p>
+<h3 id="7-关于空泡和宏观PC"><a href="#7-关于空泡和宏观PC" class="headerlink" title="7.关于空泡和宏观PC"></a>7.关于空泡和宏观PC</h3><p>流水线<code>CPU</code>应当保持宏观PC的连续性，因此空泡的<code>PC</code>不能随便选。一般来说，空泡的<code>PC</code>应当永远保持与下一条指令的<code>PC</code>一致：阻塞产生空泡的话就保持与被阻塞指令一致，<code>eret</code>清空延迟槽的空泡应当与EPC一致（如果是用清空延迟槽实现<code>eret</code>的话）。</p>
+<p>将空泡的PC永远置成<code>32'h0000_3000</code>也是不行的。尽管程序在第一次运行<code>32'h0000_3000</code>处的指令时会因为没有将<code>EXL</code>置1而不对中断做出响应，但是之后可就不好说了。这样就会导致程序在某一个位置因为阻塞了一下使得<code>EPC</code>置<code>3000</code>。这可就坏事了。此外，空泡的<code>BD</code>也应当与下一条指令保持一致。</p>
+<p>至于为什么空泡的<code>PC</code>不能和上一条指令一致呢？这是因为当上一条指令进入<code>CP0</code>所在级的下一级时，我们应当认为这条指令已经执行完了，这个时候异常中断的<code>VPC</code>就不应当发生在这条已经执行完的指令上（除非延迟槽指令<code>VPC-4</code>）——都执行完了怎么受害？</p>
 ]]></content>
       <categories>
-        <category>me</category>
+        <category>CO</category>
       </categories>
       <tags>
-        <tag>me</tag>
-        <tag>talks</tag>
+        <tag>CO</tag>
+        <tag>Verilog</tag>
+        <tag>流水线CPU</tag>
       </tags>
   </entry>
 </search>
