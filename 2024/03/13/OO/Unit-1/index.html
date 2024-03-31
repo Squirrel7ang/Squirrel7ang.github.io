@@ -26,10 +26,16 @@
 <meta property="og:description" content="从 + - * ^ 到简易科学计算器">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U1/hw1_uml.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U1/hw1_method_complexity.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U1/hw1_class_complexity.png">
 <meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U1/hw2_uml.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U1/hw2_method_complexity.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U1/hw2_class_complexity.png">
 <meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U1/hw3_uml.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U1/hw3_method_complexity.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U1/hw3_class_complexity.png">
 <meta property="article:published_time" content="2024-03-13T09:06:00.000Z">
-<meta property="article:modified_time" content="2024-03-13T09:38:52.062Z">
+<meta property="article:modified_time" content="2024-03-31T11:02:30.010Z">
 <meta property="article:author" content="Squirrel7ang">
 <meta property="article:tag" content="OO">
 <meta name="twitter:card" content="summary">
@@ -784,7 +790,7 @@ mjx-container[display="true"] + br {
         <div class="label text-third-text-color text-sm">分类</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">11</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
         <div class="label text-third-text-color text-sm">文章</div>
     </a>
 </div>
@@ -842,8 +848,8 @@ mjx-container[display="true"] + br {
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-03-13 17:38:52</span>
-            <span class="mobile">2024-03-13 17:38:52</span>
+            <span class="desktop">2024-03-31 19:02:30</span>
+            <span class="mobile">2024-03-31 19:02:30</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -897,23 +903,25 @@ mjx-container[display="true"] + br {
 
 
         <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-            <h1 id="从-到简易科学计算器"><a href="#从-到简易科学计算器" class="headerlink" title="从 + - * ^ 到简易科学计算器"></a>从 + - * ^ 到简易科学计算器</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>给定一个只含有 <code>x</code> 的表达式，完成对该表达式的化简（展开）并输出。要求：</p>
+            <h1 id="2024-BUAA-OO-Unit-1-从-到简易科学计算器"><a href="#2024-BUAA-OO-Unit-1-从-到简易科学计算器" class="headerlink" title="2024 BUAA OO Unit 1: 从 + - * ^ 到简易科学计算器"></a>2024 BUAA OO Unit 1: 从 + - * ^ 到简易科学计算器</h1><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>在面向对象程序设计中，我认为带着问题去设计程序是一件很有必要的事情。因此在这篇博客中，我会在每一次迭代设计的架构叙述中根据要求提出几个关键问题，再通过解决这些关键问题来呈现我的思考。</p>
+<h2 id="二、背景"><a href="#二、背景" class="headerlink" title="二、背景"></a>二、背景</h2><p>给定一个只含有 <code>x</code> 的单变量表达式，完成对该表达式的化简（展开）并输出。要求：</p>
 <ol>
 <li>输出最简无多余括号</li>
 <li>输出越短越好</li>
 </ol>
-<h2 id="第一次作业"><a href="#第一次作业" class="headerlink" title="第一次作业"></a>第一次作业</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入的表达式满足以下要求：</p>
+<h2 id="三、架构设计、考虑、分析、优化和反思"><a href="#三、架构设计、考虑、分析、优化和反思" class="headerlink" title="三、架构设计、考虑、分析、优化和反思"></a>三、架构设计、考虑、分析、优化和反思</h2><p>由于我在每一次作业中都记录了自己的设计策略和反思，我决定将架构的量化分析分析、优化和反思分作业呈现出来。设计考虑在下面的内容中都有体现。由于时间原因，我使用了puml语言描述类图，并利用graphviz将其转化为类图。</p>
+<h3 id="第一次作业"><a href="#第一次作业" class="headerlink" title="第一次作业"></a>第一次作业</h3><h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>输入的表达式满足以下要求：</p>
 <ol>
 <li>只有关于<code>x</code>的非负整数幂</li>
 <li>指数永远是非负整数</li>
 <li>只有一层括号</li>
 <li>输出不能有括号</li>
 </ol>
-<h3 id="数据限制"><a href="#数据限制" class="headerlink" title="数据限制"></a>数据限制</h3><ul>
+<h4 id="数据限制"><a href="#数据限制" class="headerlink" title="数据限制"></a>数据限制</h4><ul>
 <li>保证系数有可能爆 <code>int</code> </li>
-<li>由题目可知指数不会爆 <code>int</code></li>
+<li>但由题目可知指数不会爆 <code>int</code> ，因为只有一层括号，而指数最大不超过8。</li>
 </ul>
-<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>在叙述我的解决方案之前，我希望能通过解决七个关键问题描述我的思考。</p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>在叙述我的解决方案之前，我希望能通过解决七个关键问题描述我的思考。</p>
 <blockquote>
 <p>问题 0：我们需要做什么？总共有哪几个步骤？</p>
 </blockquote>
@@ -971,18 +979,18 @@ mjx-container[display="true"] + br {
 <p>递归下降的对象是AST，而AST是一棵树，因此递归下降的本质其实就是利用递归的方法遍历一棵树。而根据输入顺序进行递归意味着对这棵树的遍历是一次深度优先搜索。而递归的结束标志就是没有更多的表达式因子。</p>
 <p>如何递归呢？很简单。表达式就是很多个项，遍历一个表达式就要先遍历全部的项；遍历全部的项就是遍历全部的因子；如果因子是表达式，那就遍历这个表达式。与之前我们接触到的递归不同的是，并不是一个递归函数并不是调用自己本身递归，而是几个函数相互调用递归。</p>
 <pre class="mermaid">graph TD
-A(表达式)--&gt; A1( - )
+A(表达式)--&gt; A1( -)
 A(表达式)--&gt; B1(项1)
-    B1 --&gt; C11[ -1 ]  
+    B1 --&gt; C11[ -1]  
 A(表达式)--&gt; A2(+)
 A(表达式)--&gt; B2(项2)
     B2 --&gt; C21(表达式^6)
         C21 --&gt; D1(项4)
             D1 --&gt; E1(x^+02)
-        C21 --&gt; C211( - )
+        C21 --&gt; C211( -)
         C21 --&gt; D2(项5)
             D2 --&gt; E2( -00128)
-A(表达式)--&gt; A3( - )
+A(表达式)--&gt; A3( -)
 A(表达式)--&gt; B3(项3)
     B3 --&gt; C31[x^2]
     B3 --&gt; C32[*]
@@ -1017,23 +1025,88 @@ A(表达式)--&gt; B3(项3)
 <li><p>建立多项式类和单项式类（可扩展性）</p>
 </li>
 </ul>
-<h3 id="最终设计"><a href="#最终设计" class="headerlink" title="最终设计"></a>最终设计</h3><h4 id="UML类图"><a href="#UML类图" class="headerlink" title="UML类图"></a>UML类图</h4><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U1/hw1_uml.png" alt="hw1_uml"></p>
-<h4 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><h3 id="互测经验"><a href="#互测经验" class="headerlink" title="互测经验"></a>互测经验</h3><p>hw1 还算比较轻松，由正好被分到了零房，所以几乎没有遇到什么bug。说一下舍友的bug。</p>
+<h4 id="最终设计"><a href="#最终设计" class="headerlink" title="最终设计"></a>最终设计</h4><h5 id="类说明"><a href="#类说明" class="headerlink" title="类说明"></a>类说明</h5><table>
+<thead>
+<tr>
+<th align="center">类名</th>
+<th align="center">类型</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Main</td>
+<td align="center">类</td>
+<td align="center">主函数，功能不必多说</td>
+</tr>
+<tr>
+<td align="center">Token</td>
+<td align="center">类</td>
+<td align="center">表示将表达式预处理后的基本单位，如括号，常数等</td>
+</tr>
+<tr>
+<td align="center">Lexer</td>
+<td align="center">类</td>
+<td align="center">分词类。其主要属性为一个 <code>Token</code> 的 <code>ArrayList</code></td>
+</tr>
+<tr>
+<td align="center">Parser</td>
+<td align="center">类</td>
+<td align="center">根据 <code>Lexer</code> 解析表达式</td>
+</tr>
+<tr>
+<td align="center">Expr</td>
+<td align="center">类</td>
+<td align="center">表示表达式（因子）</td>
+</tr>
+<tr>
+<td align="center">Term</td>
+<td align="center">类</td>
+<td align="center">表示项</td>
+</tr>
+<tr>
+<td align="center">Factor</td>
+<td align="center">接口</td>
+<td align="center">表示因子</td>
+</tr>
+<tr>
+<td align="center">VarFactor</td>
+<td align="center">类</td>
+<td align="center">表示变量因子</td>
+</tr>
+<tr>
+<td align="center">NumFactor</td>
+<td align="center">类</td>
+<td align="center">表示常量因子</td>
+</tr>
+<tr>
+<td align="center">Simple</td>
+<td align="center">类</td>
+<td align="center">表示多项式</td>
+</tr>
+</tbody></table>
+<h5 id="UML类图"><a href="#UML类图" class="headerlink" title="UML类图"></a>UML类图</h5><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U1/hw1_uml.png" alt="hw1_uml"></p>
+<h4 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><h5 id="方法复杂度"><a href="#方法复杂度" class="headerlink" title="方法复杂度"></a>方法复杂度</h5><p>（方法很多，我只选取了其中比较复杂的几个方法。下同）</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U1/hw1_method_complexity.png" alt="hw1_method_complexity"></p>
+<p>可以看到复杂度最高的是Lexer，因为Lexer中需要用到大量的 <code>if-else</code> 语句来判断 <code>Token</code> 的类型。 <code>parseFactor</code> 同理。单项式的乘法对于0的特判多一点。在本次作业中固然不需要这么多的0特判，但是我希望如果单独把单项式的乘法方法拎出来放到Junit Test中进行测试，这个方法也能符合我的预期要求。toString方法复杂的原因是需要寻找第一个正数进行优化。但是实际上我应该写一个方法来完成这个任务的。</p>
+<h5 id="类复杂度"><a href="#类复杂度" class="headerlink" title="类复杂度"></a>类复杂度</h5><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U1/hw1_class_complexity.png" alt="hw1_class_complexity"></p>
+<p>Parser类复杂度高很大程度上是因为方法的内部聚合度太高。我在第二次作业中成功降低了Parser的复杂度。Simple的复杂度高是一件没有办法的事。Simple类表示最简多项式，其内部有几个算术运算方法，复杂度自然高。</p>
+<h4 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h4><p>很快，但是还能更快。我加了多变量处理，所以慢一点点。但这为可扩展性留了条路。</p>
+<h4 id="互测经验"><a href="#互测经验" class="headerlink" title="互测经验"></a>互测经验</h4><p>hw1 还算比较轻松，由正好被分到了零房，所以几乎没有遇到什么bug。说一下舍友的bug。</p>
 <ol>
 <li><code>(2)^32</code> 错误在于把 <code>BigInteger</code> 转成了 <code>Integer</code> 再与零比较，如果是零就表明这个 <code>BigInteger</code> 是零。想必错误的人没有怎么看过 <code>BigInteger</code> 的库函数。错误输出为 <code>0</code> ，因为强转为 <code>Integer</code> 后确实等于0。</li>
 <li>第二个错误原因太呆了。简单来说就是 <code>HashMap</code> 的迭代器是不保证有序的，尽管它在很多时候看起来是有序的。错误的同学把它当成有序的了，导致在一些奇怪的样例上得到了错误的输出。</li>
 </ol>
-<h2 id="第二次作业"><a href="#第二次作业" class="headerlink" title="第二次作业"></a>第二次作业</h2><h3 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h3><p>题目进行了小改动，未改动的地方没有列出来。自定义函数也没有列出来。</p>
+<h3 id="第二次作业"><a href="#第二次作业" class="headerlink" title="第二次作业"></a>第二次作业</h3><h4 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h4><p>题目进行了小改动，未改动的地方没有列出来。自定义函数也没有列出来。</p>
 <ul>
 <li>变量因子 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> 幂函数 | 指数函数 | 自定义函数<strong>调用</strong></li>
 <li>指数函数 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> ‘exp’ 空白项 ‘(‘ 空白项 因子 空白项 ‘)’ [空白项 指数]</li>
 <li>自定义函数调用 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="2.262ex" height="1.181ex" role="img" focusable="false" viewBox="0 -511 1000 522"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g></g></g></svg></mjx-container> 自定义函数名 空白项 ‘(‘ 空白项 因子 空白项 [‘,’ 空白项 因子 空白项 [‘,’ 空白项 因子 空白项]] ‘)’<br>输出要求：exp函数内必须是项，但是必须无多余括号</li>
 </ul>
-<h3 id="数据限制-1"><a href="#数据限制-1" class="headerlink" title="数据限制"></a>数据限制</h3><ul>
+<h4 id="数据限制-1"><a href="#数据限制-1" class="headerlink" title="数据限制"></a>数据限制</h4><ul>
 <li>指数不能超过8，但是可以不断嵌套。不保证指数不会爆 <code>int</code> （事实上它确实爆了）</li>
 <li>保证自定义函数的定义表达式中没有其他自定义函数在内。</li>
 </ul>
-<h3 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h3><blockquote>
+<h4 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h4><blockquote>
 <p>问题 7：有哪些改动？</p>
 </blockquote>
 <p>进行迭代的第一步设计就是考虑项目的哪些地方需要进行改动。按照我的实现，在第二次作业中需要大改的地方大概有：</p>
@@ -1059,14 +1132,14 @@ A(表达式)--&gt; B3(项3)
 <blockquote>
 <p>问题 9：多项式属性包括单项式，单项式属性有多项式，这种循环定义如何结束？</p>
 </blockquote>
-<p>我们之所以这样定义，是因为我们有需要这样定义的需求。因此得到循环定义的边界，就要回到这种看似无法停止循环的奇怪需求中。我们之所以这样定义，是因为 <code>exp</code> 中确实有多项式，但是这个多项式中并不一定有 <code>exp</code> 的因子。所以解决循环定义实际上很简单：让没有 <code>exp</code> 项的单项式中的多项式属性为空就行——这个空不一定是 <code>null</code> ，也可以是一个没有单项式的多项式对象。</p>
+<p>我们之所以这样定义，是因为我们有需要这样定义的需求。因此得到循环定义的边界，就要回到这种看似无法停止循环的奇怪需求中。我们之所以这样定义，是因为 <code>exp</code> 中确实有多项式，但是这个多项式中并不一定有 <code>exp</code> 的因子。所以解决循环定义实际上很简单：让没有 <code>exp</code> 项的单项式中的多项式属性为空就行——这个空不一定是 <code>null</code> ，也可以是一个没有单项式的多项式对象。（但一定不能是零单项式，否则这种定义就停不下来了！）</p>
 <p>定义解决了，下面分析多项式和单项式的计算。计算方法和第一次作业没有太大区别，但是需要着重注意的是判断同类项变复杂了。简单来说，需要递归判断同类项。</p>
 <blockquote>
 <p>问题 9：判断同类项？判断多项式相等？</p>
 </blockquote>
 <p>判断同类项是多项式和单项式运算的关键——指数由乘法实现，乘法由加法实现，而加法除了拷贝以外就是合并同类项了。可见判断同类项是多项式运算的基础。</p>
 <p>解决方法不难。我们需要给单项式类定义两个方法：<code>similarTo()</code> 和 <code>equalTo()</code> ，在给多项式定义一个 <code>equalTo()</code> 方法。然后把它们全部写完就好。基本上只要自己写一遍就知道怎么办了。</p>
-<p>此外， <code>Z boy</code> 等同学还提出了一个方法用来检查多项式和单项式是否相等，即判断相减之后是否为零。这在后续评测过程中有大作用。</p>
+<p>此外， <code>Z boy</code> 等同学还提出了一个方法用来检查多项式和单项式是否相等，即判断相减之后是否为零。这在后续评测过程中有大作用，因为判断两个多项式是否相等的方法并不是带入数值——这样很容易TLE判断不出来——而是将两个多项式用数学运算的方式对扣，如果结果为0就说明正确。</p>
 <p>此外多项式和单项式还需要注意的一点是需要及时把系数为零的单项式剔除掉——不剔除掉也可以，但是特判的地方会更多，冗余的数据也更多。</p>
 <blockquote>
 <p>问题 10：自定义函数处理？</p>
@@ -1084,7 +1157,7 @@ A(表达式)--&gt; B3(项3)
 <li>parse</li>
 <li>获取实参的String</li>
 <li>替换</li>
-<li>检查实参有没有嵌套函数。有则重复以上步骤。<br>我没有使用字符串替换，主要原因是觉得这个方法太奇怪了。试想如果别人问你你的项目中是怎么存储函数的，回答居然是用字符串存储？！我接受不了，我也不认为这是写一个多项式展开的项目应该有的思想。因此我使用了第二种方法，将实参作为因子对象替换函数表达式中的变量因子。</li>
+<li>检查实参有没有嵌套函数。有则重复以上步骤。<br>我没有使用字符串替换，主要原因是觉得这个方法太奇怪了。试想如果别人问你你的项目中是怎么存储函数这个对象的，回答居然是用字符串存储？！我接受不了，我也不认为这是写一个多项式展开的项目应该有的思想。因此我使用了第二种方法，将实参作为因子对象替换函数表达式中的变量因子。</li>
 </ol>
 </li>
 </ol>
@@ -1094,23 +1167,28 @@ A(表达式)--&gt; B3(项3)
 <li>如果后续处理的时候会对实际参数进行修改，那么实际参数也需要深拷贝。</li>
 </ol>
 <p>从复杂度上来说，两种方法应该是差不多的。前者循环遍历建立表达式，后者递归深拷贝建立表达式。都把函数表达式遍历了一遍。</p>
+<p>解决了自定义函数的大致处理思路，接下来需要关注的是自定义函数的具体实现。</p>
 <blockquote>
-<p>问题 11：浅拷贝？深拷贝？</p>
+<p>问题 11：如何存储函数？如何调用函数？</p>
+</blockquote>
+<p>在我的实现中，我写了两个类去管理函数。第一个是函数定义类（<code>FuncDef</code>）。这个类的核心属性是一个表达式对象，也就是一棵AST。第二个函数类是用来管理所有函数的（<code>FuncCall</code>），因此我引入了单例模式保证它只需要被实例化一次。 <code>FuncCall</code> 类最主要的功能是传入函数名称和实际参数，返回一个表达式，表示实参代入函数之后的结果。你看，我在描述 <code>FuncCall</code> 更多是注重描述它的功能——也就是这个类从外部去观测时是个什么样子。我个人认为这样新增函数比较方便，调用起来也十分舒适。</p>
+<blockquote>
+<p>问题 12：浅拷贝？深拷贝？</p>
 </blockquote>
 <p>深拷贝和浅拷贝是一个让我很头疼的问题，我也并没有实现的非常完美。但是经过第二次作业后，在多项式和单项式中，我对深拷贝和浅拷贝有一点思考。</p>
 <p>我的多项式和单项式参照了 <code>BigInteger</code> 类的相关方法，但是由于我的单项式对象在创建后可以被修改，我放弃了。我认为在单项式和多项式对象中，一经构造，就不应当修改对象的值。每一次调用 <code>add</code> 等方法应当构造一个新的对象返回。</p>
 <p>一切都解决了，剩下就看优化了。</p>
 <blockquote>
-<p>问题 12：输出优化？</p>
+<p>问题 13：输出优化？</p>
 </blockquote>
 <p>我为单项式类写了一个 <code>optimize()</code> 方法，返回一个新的输出更短的单项式。之所以这么写，有几种原因：</p>
 <ol>
 <li>我只需要将所有出现过单项式的 <code>mono.toString()</code> 方法改成 <code>mono.optimize().toString()</code> 就可以正确完成优化后的输出了，而在我的设计里 <code>mono.toString()</code> 只出现过一次。因此改动起来比较简单。</li>
-<li>如果时间真的来不及，我可以不调用 <code>optimize()</code> 方法，相当于把优化前和优化后的输出分离开了。</li>
+<li>如果设计时间真的赶不上第二次作业的DDL，我可以不调用 <code>optimize()</code> 方法，相当于把优化前和优化后的输出分离开了。</li>
 </ol>
 <p>关于能否得到最优输出这件事上，原本以为还是像第一次作业一样可以轻松拿满。但是看到了 <code>J boy</code> 在群里的发言，发现事情似乎不简单。经过与舍友的讨论，个人认为将长度为n的表达式输出成最短多项式是一个NP问题。得到最短输出并不困难，但是当系数增大时验证最短输出，我认为是一件非常困难的事情。</p>
-<p>举例：<br>$$<br>\begin{aligned}<br>&amp; exp((2<em>x</em>exp(x^2) + 2<em>exp(x) + 2</em>x^2 + 2<em>exp(x</em>exp(x)) + 3<em>x)) \<br>&amp; = exp((x</em>exp(x^2) + exp(x) + x^2 + exp(x*exp(x)) + x))^2 * exp(x)<br>\end{aligned}<br>$$<br>当系数增大的时候，不难想象还有更离谱的。系数分解的可能数太多了。</p>
-<p>据说 <code>L Boy</code> 完成了最离谱的优化并据说拿了满分。</p>
+<p>举例：<br>$$<br>\begin{eqnarray}<br>&amp;&amp;exp((2<em>x</em>exp(x^2) + 2<em>exp(x) + 2</em>x^2 + 2<em>exp(x</em>exp(x)) + 3<em>x))  \nonumber    \<br>~&amp;=&amp;exp((x</em>exp(x^2) + exp(x) + x^2 + exp(x<em>exp(x)) + x))^2 * exp(x)<br>\end{eqnarray}<br>$$<br>另外一个例子，本质是拆成 <code>0</code> 和 <code>4</code> ，只不过 <code>0</code> 和后面的相加消掉了。<br>$$<br>\begin{eqnarray}<br>&amp;&amp; exp((4+100000+200000</em>x+300000<em>x^2+400000</em>exp(1))) \nonumber \<br>&amp;=&amp;exp(4)<em>exp((1+2</em>x+3<em>x^2+4</em>exp(1)))^{100000}<br>\end{eqnarray}<br>$$</p>
+<p>当系数增大的时候，不难想象还有更离谱的。系数分解的可能数太多了。据说 <code>L Boy</code> 完成了最离谱的优化并据说拿了满分。</p>
 <p>具体来说，我做的优化大概有这么几点：</p>
 <ol>
 <li>如果 <code>exp</code> 只有一个单项式且这个单项式不是一个常数，那么提出常数的绝对值这个因子到外边一定不会更糟糕。</li>
@@ -1118,43 +1196,267 @@ A(表达式)--&gt; B3(项3)
 <li>实际上，第二步只需要遍历 <code>(gcd/1), (gcd/2), (gcd/3)...(gcd/9)</code> 这最多九个因数就行。因为第二步一定会有不止一个单项式，除以 <code>10</code> 或者更大的数就亏了。<br>此外还加上了第一次作业的优化，即正数要放在最前面不加正号。</li>
 </ol>
 <blockquote>
-<p>问题 13：反思？更好的设计？</p>
+<p>问题 14：反思？更好的设计？</p>
 </blockquote>
 <ol>
 <li>单项式类和多项式类高度耦合，这样做并不好，只是我想不到更好的方法了。</li>
 <li>优化时方法写得太乱了，没有贯彻 java 的模块化层次化的思想。</li>
-<li>深拷贝用的太多了。正确的方式是让多项式和单项式一经实例化就不可更改。这导致运算速率大大降低，目测在第一次作业性能的 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.816ex;" xmlns="http://www.w3.org/2000/svg" width="2.595ex" height="2.773ex" role="img" focusable="false" viewBox="0 -864.9 1147.1 1225.5"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mfrac"><g data-mml-node="mn" transform="translate(396.8,394) scale(0.707)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mn" transform="translate(220,-345) scale(0.707)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g><rect width="907.1" height="60" x="120" y="220"></rect></g></g></g></svg></mjx-container> 到 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.816ex;" xmlns="http://www.w3.org/2000/svg" width="1.795ex" height="2.773ex" role="img" focusable="false" viewBox="0 -864.9 793.6 1225.5"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mfrac"><g data-mml-node="mn" transform="translate(220,394) scale(0.707)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mn" transform="translate(220,-345) scale(0.707)"><path data-c="38" d="M70 417T70 494T124 618T248 666Q319 666 374 624T429 515Q429 485 418 459T392 417T361 389T335 371T324 363L338 354Q352 344 366 334T382 323Q457 264 457 174Q457 95 399 37T249 -22Q159 -22 101 29T43 155Q43 263 172 335L154 348Q133 361 127 368Q70 417 70 494ZM286 386L292 390Q298 394 301 396T311 403T323 413T334 425T345 438T355 454T364 471T369 491T371 513Q371 556 342 586T275 624Q268 625 242 625Q201 625 165 599T128 534Q128 511 141 492T167 463T217 431Q224 426 228 424L286 386ZM250 21Q308 21 350 55T392 137Q392 154 387 169T375 194T353 216T330 234T301 253T274 270Q260 279 244 289T218 306L210 311Q204 311 181 294T133 239T107 157Q107 98 150 60T250 21Z"></path></g><rect width="553.6" height="60" x="120" y="220"></rect></g></g></g></svg></mjx-container> 。这是一件很糟糕的事情。之后绝对不应该轻易改变一个类的属性。</li>
+<li>深拷贝用的太多了。正确的方式是让多项式和单项式一经实例化就不可更改，<strong>使之成为不可变对象</strong>。过多深拷贝导致运算速率大大降低，目测在第一次作业性能的 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.816ex;" xmlns="http://www.w3.org/2000/svg" width="2.595ex" height="2.773ex" role="img" focusable="false" viewBox="0 -864.9 1147.1 1225.5"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mfrac"><g data-mml-node="mn" transform="translate(396.8,394) scale(0.707)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mn" transform="translate(220,-345) scale(0.707)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g><rect width="907.1" height="60" x="120" y="220"></rect></g></g></g></svg></mjx-container> 到 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.816ex;" xmlns="http://www.w3.org/2000/svg" width="1.795ex" height="2.773ex" role="img" focusable="false" viewBox="0 -864.9 793.6 1225.5"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mfrac"><g data-mml-node="mn" transform="translate(220,394) scale(0.707)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mn" transform="translate(220,-345) scale(0.707)"><path data-c="38" d="M70 417T70 494T124 618T248 666Q319 666 374 624T429 515Q429 485 418 459T392 417T361 389T335 371T324 363L338 354Q352 344 366 334T382 323Q457 264 457 174Q457 95 399 37T249 -22Q159 -22 101 29T43 155Q43 263 172 335L154 348Q133 361 127 368Q70 417 70 494ZM286 386L292 390Q298 394 301 396T311 403T323 413T334 425T345 438T355 454T364 471T369 491T371 513Q371 556 342 586T275 624Q268 625 242 625Q201 625 165 599T128 534Q128 511 141 492T167 463T217 431Q224 426 228 424L286 386ZM250 21Q308 21 350 55T392 137Q392 154 387 169T375 194T353 216T330 234T301 253T274 270Q260 279 244 289T218 306L210 311Q204 311 181 294T133 239T107 157Q107 98 150 60T250 21Z"></path></g><rect width="553.6" height="60" x="120" y="220"></rect></g></g></g></svg></mjx-container> 。这是一件很糟糕的事情。之后绝对不应该轻易改变一个类的属性。</li>
 </ol>
-<h3 id="最终设计-1"><a href="#最终设计-1" class="headerlink" title="最终设计"></a>最终设计</h3><h4 id="UML类图-1"><a href="#UML类图-1" class="headerlink" title="UML类图"></a>UML类图</h4><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U1/hw2_uml.png" alt="hw2_uml"></p>
-<h4 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><h3 id="互测经验-1"><a href="#互测经验-1" class="headerlink" title="互测经验"></a>互测经验</h3><p>目测有这么几种错误：</p>
+<h4 id="最终设计-1"><a href="#最终设计-1" class="headerlink" title="最终设计"></a>最终设计</h4><h5 id="类说明-1"><a href="#类说明-1" class="headerlink" title="类说明"></a>类说明</h5><table>
+<thead>
+<tr>
+<th align="center">类名</th>
+<th align="center">类型</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Main</td>
+<td align="center">类</td>
+<td align="center">主函数，功能不必多说</td>
+</tr>
+<tr>
+<td align="center">Token</td>
+<td align="center">类</td>
+<td align="center">表示将表达式预处理后的基本单位，如括号，常数等</td>
+</tr>
+<tr>
+<td align="center">Lexer</td>
+<td align="center">类</td>
+<td align="center">分词类。其主要属性为一个 <code>Token</code> 的 <code>ArrayList</code></td>
+</tr>
+<tr>
+<td align="center">Parser</td>
+<td align="center">类</td>
+<td align="center">根据 <code>Lexer</code> 解析表达式</td>
+</tr>
+<tr>
+<td align="center">Expr</td>
+<td align="center">类</td>
+<td align="center">表示表达式（因子）</td>
+</tr>
+<tr>
+<td align="center">Term</td>
+<td align="center">类</td>
+<td align="center">表示项</td>
+</tr>
+<tr>
+<td align="center">Factor</td>
+<td align="center">接口</td>
+<td align="center">表示因子</td>
+</tr>
+<tr>
+<td align="center">VarFactor</td>
+<td align="center">类</td>
+<td align="center">表示变量因子</td>
+</tr>
+<tr>
+<td align="center">NumFactor</td>
+<td align="center">类</td>
+<td align="center">表示常量因子</td>
+</tr>
+<tr>
+<td align="center">ExpFactor</td>
+<td align="center">类</td>
+<td align="center">指数函数因子</td>
+</tr>
+<tr>
+<td align="center">Poly</td>
+<td align="center">类</td>
+<td align="center">表示多项式</td>
+</tr>
+<tr>
+<td align="center">Mono</td>
+<td align="center">类</td>
+<td align="center">表示单项式</td>
+</tr>
+<tr>
+<td align="center">FuncCall</td>
+<td align="center">类</td>
+<td align="center">表示函数调用类。其主要属性为函数名到函数定义类的 <code>HashMap</code></td>
+</tr>
+<tr>
+<td align="center">FuncDef</td>
+<td align="center">类</td>
+<td align="center">表示函数定义</td>
+</tr>
+</tbody></table>
+<h5 id="UML类图-1"><a href="#UML类图-1" class="headerlink" title="UML类图"></a>UML类图</h5><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U1/hw2_uml.png" alt="hw2_uml"></p>
+<h4 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><h5 id="方法复杂度分析"><a href="#方法复杂度分析" class="headerlink" title="方法复杂度分析"></a>方法复杂度分析</h5><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U1/hw2_method_complexity.png" alt="hw2_method_complexity"></p>
+<p>可以看到，复杂度最高的方法是寻找最优公因子的优化方法和单项式的 <code>toString</code> 方法，其认知复杂度最高。当时一个小时出头飞速写完，再花了一个小时 debug ，思路都想好了，但是代码结构方面属实没有怎么构思。但是两个方法以外有大量的方法的圈复杂度太高。说白了就是特判的 if 语句太多，应该把接口做得更好，少一点 if 多一点 for 。</p>
+<h5 id="类复杂度分析"><a href="#类复杂度分析" class="headerlink" title="类复杂度分析"></a>类复杂度分析</h5><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U1/hw2_class_complexity.png" alt="hw2_class_complexity"></p>
+<p>可以看到单项式和多项式类的方法复杂度几乎要爆炸了，毕竟我为它们实现了很多的运算方法，并尽可能参考 <code>BigInteger</code> 标准库为他们写基本方法。而 <code>Lexer</code> 和 <code>Parser</code> 的复杂度是我感到惊讶的。我特地将 <code>Lexer</code> 和 <code>Parser</code> 的方法中case类似的语句中的内容进行拆解以提高可读性，因此我认为 <code>Lexer</code> 和 <code>Parser</code> 的复杂度应该不是大问题。</p>
+<p>下面着重分析一下多项式类和单项式类的复杂度：</p>
+<p>先是看看多项式类的80的WMC是怎么出来的。在这80点WMC中，有近40点是四个方法：多项式加减（<code>add</code> <code>sub</code>）、多项式是否是因子（<code>isFactor</code> ）和多项式的最佳公因数是多少（ <code>bestCommonDivisor</code> ）。学习了别人的架构之后，我认为多项式加减的复杂度主要来源于零单项式的特判；在判断多项式是否是因子的时候需要进行大量特判，在这方面我不认为可以化简；在求解最佳公因子时，使用单个方法完成多个情况的优化会使得这个方法的复杂度爆炸。可以将不同情况的处理转化为私有方法，增强代码可读性。</p>
+<p>再观测单项式类的WMC复杂度。令我头疼的一点是：单项式类的复杂度并不是因为某几个方法过于复杂，而是单纯因为方法太多了。其中圈复杂度大于5的只有两个方法：判断同类项方法（ <code>similarTo</code>）和 <code>toString</code> 方法。后者可以直接将特殊情况封装为私有方法解决，但是前者的高复杂度来源于单项式和多项式数据结构的缺陷：零多项式的特判导致代码冗余。</p>
+<h4 id="性能分析-1"><a href="#性能分析-1" class="headerlink" title="性能分析"></a>性能分析</h4><p>深拷贝太多导致性能太差，不过相比房间里其他同学，个人感觉自己的性能还不算太差，估计是因为深拷贝和情况特判导致时间复杂度的常数因子过大，导致运行时间长。但是复杂度的量级应该还是正常的。</p>
+<h4 id="互测经验-1"><a href="#互测经验-1" class="headerlink" title="互测经验"></a>互测经验</h4><p>目测有这么几种错误：</p>
 <ol>
-<li><code>0; exp(4294967297)</code> 用 <code>Integer.parseInt()</code> 读入再转 <code>BigInteger</code> 。估计也是没怎么了解 <code>BigInteger</code> 库。</li>
+<li><code>0; exp(4294967297)</code> 用 <code>Integer.parseInt()</code> 读入再转 <code>BigInteger</code> 。估计也是没怎么了解 <code>BigInteger</code> 库，或者是迭代着迭代着忘记自己以前写的东西了。</li>
 <li><code>0; 1-1</code> 第一次作业弱测第三个点，应当输出 <code>0</code> ，实际输出空串 <code> </code> ，第二次作业弱测没有这种简单的点了。错得有点呆。</li>
 <li><code>exp((-x))</code> 错误输出为 <code>exp(-x)</code> ，估计是当系数绝对值为1并且后面只有一个 <code>x</code> 或者一个 <code>exp</code> 时默认不输出括号。</li>
 <li><code>exp(1)^2 * exp(2)</code> 非常非常奇怪的错误。他会先把单项式加入一个 <code>HashMap</code> ，然后再遍历 <code>HashMap</code> 相乘。错在 <code>exp(1)^2</code> 和 <code>exp(2)</code> 在单项式上是相等的，标准库默认 <code>HashMap</code> 已经有一个项之后就不会再放一个相同的项了。所以错误输出成了 <code>exp(2)</code> </li>
 <li><code>exp(2000000014*x + 5000000035)</code> 出错的人找出了最大公因数 <code>1000000007</code> ，然后线性遍历了它的所有的因子找出所有的因数用来验证提出来后是否会更短。线性遍历了所有因子……这是一个十位数的质数啊……出错原因 TLE</li>
 </ol>
-<h2 id="第三次作业"><a href="#第三次作业" class="headerlink" title="第三次作业"></a>第三次作业</h2><h3 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h3><ul>
+<h3 id="第三次作业"><a href="#第三次作业" class="headerlink" title="第三次作业"></a>第三次作业</h3><h4 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h4><ul>
 <li>加入求导因子。现在可以导了！</li>
 <li>自定义函数可以由已定义的自定义函数定义。</li>
 </ul>
-<h3 id="数据限制-2"><a href="#数据限制-2" class="headerlink" title="数据限制"></a>数据限制</h3><ul>
+<h4 id="数据限制-2"><a href="#数据限制-2" class="headerlink" title="数据限制"></a>数据限制</h4><ul>
 <li>保证自定义函数中不会出现求导因子。</li>
 </ul>
 <blockquote>
-<p>问题 14：有哪些改动？</p>
+<p>问题 15：有哪些改动？</p>
 </blockquote>
 <p>准确来说，这次作业几乎没有改动。</p>
 <ul>
 <li>求导方面，我为单项式类和多项式类各添加了一个 <code>diff</code> 方法，返回自身求导之后的结果就行。</li>
 <li>自定义函数方面，由于我在读入函数的过程中就对函数进行了解析，而解析的过程中会顺带着把已经定义的函数一块解析了，所以自定义函数几乎没有任何改动。</li>
+<li>优化方面，已经摆烂了。在我自己的设计中，如果要优化就得动手术，不甚好。</li>
 </ul>
 <blockquote>
-<p>问题 15：有无优化？</p>
+<p>问题 16：有无优化？</p>
 </blockquote>
-<p>其实第二次作业 <code>J boy</code> 就已经想出逆天优化了。他们真的把 <code>exp</code> 中的数拆开提公因子了，导致强测第13个数据点长了一个字符。经过个人分析，我认为他们并没有遍历所有拆解过程，毕竟我认为这几乎不可能在短时间内完成，特别是当数据大了的时候。我认为最有可能的情况是判断是不是只有一个数字与其他数字不相等，然后判定优化。</p>
-<h3 id="最终设计-2"><a href="#最终设计-2" class="headerlink" title="最终设计"></a>最终设计</h3><h4 id="UML类图-2"><a href="#UML类图-2" class="headerlink" title="UML类图"></a>UML类图</h4><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U1/hw3_uml.png" alt="hw3_uml"></p>
-<h4 id="复杂度分析-2"><a href="#复杂度分析-2" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><h3 id="互测经验-2"><a href="#互测经验-2" class="headerlink" title="互测经验"></a>互测经验</h3>
+<p>其实第二次作业 <code>J boy</code> 就已经想出逆天优化了。他们真的把 <code>exp</code> 中的数拆开提公因子了，导致强测第13个数据点长了一个字符。阅读 <code>L Boy</code> 的帖子之后，思路大概是这样的。</p>
+<ol>
+<li>首先一般只会多提一个 <code>exp</code> 出来，提两个 <code>exp</code> 说明里面缩短的长度至少 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.09ex;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.312ex" role="img" focusable="false" viewBox="0 -540 778 580"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3E" d="M84 520Q84 528 88 533T96 539L99 540Q106 540 253 471T544 334L687 265Q694 260 694 250T687 235Q685 233 395 96L107 -40H101Q83 -38 83 -20Q83 -19 83 -17Q82 -10 98 -1Q117 9 248 71Q326 108 378 132L626 250L378 368Q90 504 86 509Q84 513 84 520Z"></path></g></g></g></svg></mjx-container> 10，而这在一般情况下不太可能发生。</li>
+<li>如果只提一个 <code>exp</code> 出来，就只需要拆解一项即可。而且拆解出来的两项中的一项应该是原本算出的 <code>gcd</code> 的倍数（如果可以的话应该还可以把另外几个数的 <code>gcd</code> 算出来）。如果拆成了，那就更新表达式。如果被拆成就继续拆，只要设置一个优化上限（一个全局变量不断递增或者设置时间）就能保证不会超时了。</li>
+</ol>
+<h4 id="最终设计-2"><a href="#最终设计-2" class="headerlink" title="最终设计"></a>最终设计</h4><h5 id="类说明-2"><a href="#类说明-2" class="headerlink" title="类说明"></a>类说明</h5><table>
+<thead>
+<tr>
+<th align="center">类名</th>
+<th align="center">类型</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Main</td>
+<td align="center">类</td>
+<td align="center">主函数，功能不必多说</td>
+</tr>
+<tr>
+<td align="center">Token</td>
+<td align="center">类</td>
+<td align="center">表示将表达式预处理后的基本单位，如括号，常数等</td>
+</tr>
+<tr>
+<td align="center">Lexer</td>
+<td align="center">类</td>
+<td align="center">分词类。其主要属性为一个 <code>Token</code> 的 <code>ArrayList</code></td>
+</tr>
+<tr>
+<td align="center">Parser</td>
+<td align="center">类</td>
+<td align="center">根据 <code>Lexer</code> 解析表达式</td>
+</tr>
+<tr>
+<td align="center">Expr</td>
+<td align="center">类</td>
+<td align="center">表示表达式（因子）</td>
+</tr>
+<tr>
+<td align="center">Term</td>
+<td align="center">类</td>
+<td align="center">表示项</td>
+</tr>
+<tr>
+<td align="center">Factor</td>
+<td align="center">接口</td>
+<td align="center">表示因子</td>
+</tr>
+<tr>
+<td align="center">VarFactor</td>
+<td align="center">类</td>
+<td align="center">表示变量因子</td>
+</tr>
+<tr>
+<td align="center">NumFactor</td>
+<td align="center">类</td>
+<td align="center">表示常量因子</td>
+</tr>
+<tr>
+<td align="center">ExpFactor</td>
+<td align="center">类</td>
+<td align="center">指数函数因子</td>
+</tr>
+<tr>
+<td align="center">DiffFactor</td>
+<td align="center">类</td>
+<td align="center">表示微分因子</td>
+</tr>
+<tr>
+<td align="center">Poly</td>
+<td align="center">类</td>
+<td align="center">表示多项式</td>
+</tr>
+<tr>
+<td align="center">Mono</td>
+<td align="center">类</td>
+<td align="center">表示单项式</td>
+</tr>
+<tr>
+<td align="center">FuncCall</td>
+<td align="center">类</td>
+<td align="center">表示函数调用类。其主要属性为函数名到函数定义类的 <code>HashMap</code></td>
+</tr>
+<tr>
+<td align="center">FuncDef</td>
+<td align="center">类</td>
+<td align="center">表示函数定义</td>
+</tr>
+</tbody></table>
+<h5 id="UML类图-2"><a href="#UML类图-2" class="headerlink" title="UML类图"></a>UML类图</h5><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U1/hw3_uml.png" alt="hw3_uml"></p>
+<h4 id="复杂度分析-2"><a href="#复杂度分析-2" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><h5 id="方法复杂度分析-1"><a href="#方法复杂度分析-1" class="headerlink" title="方法复杂度分析"></a>方法复杂度分析</h5><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U1/hw3_method_complexity.png" alt="hw3_method_complexity"></p>
+<p>第三次作业的复杂度相较第二次作业并没有明显的改动。这里不多赘述。</p>
+<h5 id="类复杂度分析-1"><a href="#类复杂度分析-1" class="headerlink" title="类复杂度分析"></a>类复杂度分析</h5><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U1/hw3_class_complexity.png" alt="hw3_class_complexity"></p>
+<p>第三次作业的类复杂度相较第二次作业几乎完全没有改动，这里不再赘述。</p>
+<h4 id="性能分析-2"><a href="#性能分析-2" class="headerlink" title="性能分析"></a>性能分析</h4><p>和第二次作业一样，还是过度深拷贝和过度0特判导致程序性能大打折扣。虽然在第二次作业已经遇到这类问题了，但是还是不想给程序动手术重构。多项式和单项式两个文件就占了总代码量的一半。</p>
+<h4 id="互测经验-2"><a href="#互测经验-2" class="headerlink" title="互测经验"></a>互测经验</h4><p>第三次互测有点难顶，愣是一个都没有测出来。bug大概有两种：</p>
+<ol>
+<li><code>exp(-exp(x))</code> <strong>输出格式错误。</strong> 和 <code>exp(-x)</code> 错的差不多吧。DPO居然没测出来。”看来核心技术（测评技术）还是要掌握在自己手里。“（by 第二位 <code>L Boy</code> ）<strong>许多同学的评测机都没法评测输出结果，因为大家都懒。卡格式错误很容易刀到别人。</strong></li>
+<li>第二种bug就难顶了。在拿到别人的代码进行测试的时候我就知道肯定有因为算法太差导致运行时间太慢进而导致出现超时的错误，但是有一说一真的构造不出低 <code>Cost</code> 的数据使得运行时间超过 <code>2</code> 秒。看了一下房间里其他人的hack数据，他们构造了<br><mjx-container class="MathJax" jax="SVG" display="true"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="48.485ex" height="2.565ex" role="img" focusable="false" viewBox="0 -883.9 21430.6 1133.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g><g data-mml-node="mi" transform="translate(520,0)"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mo" transform="translate(1092,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(1481,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(1947,0)"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mi" transform="translate(2519,0)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g><g data-mml-node="mo" transform="translate(3022,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(3411,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(3877,0)"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mi" transform="translate(4449,0)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g><g data-mml-node="mo" transform="translate(4952,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(5341,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(5807,0)"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mi" transform="translate(6379,0)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g><g data-mml-node="mo" transform="translate(6882,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(7271,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(7737,0)"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mi" transform="translate(8309,0)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g><g data-mml-node="mo" transform="translate(8812,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(9201,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(9667,0)"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mi" transform="translate(10239,0)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g><g data-mml-node="mo" transform="translate(10742,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(11131,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(11597,0)"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mi" transform="translate(12169,0)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g><g data-mml-node="mo" transform="translate(12672,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(13061,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(13527,0)"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mi" transform="translate(14099,0)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g><g data-mml-node="mo" transform="translate(14602,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(14991,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(15457,0)"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mi" transform="translate(16029,0)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g><g data-mml-node="mo" transform="translate(16532,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="msup" transform="translate(16921,0)"><g data-mml-node="mi"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mn" transform="translate(605,413) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g><g data-mml-node="mo" transform="translate(17929.6,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(18318.6,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(18707.6,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(19096.6,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(19485.6,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(19874.6,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(20263.6,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(20652.6,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(21041.6,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg></mjx-container><br>运算结果是<br>$$<br>exp((exp(exp(exp(x^2)))+exp(x^2)+exp(exp(x^2))+exp(exp(exp(exp(exp(exp(exp(x^2)))))))+exp(exp(exp(exp(exp(x^2)))))+x^2+exp(exp(exp(exp(x^2))))+exp(exp(exp(exp(exp(exp(x^2))))))))<em>2</em>x<br>$$<br>组里的一些同学 TLE 了。<br>甚至还有更离谱的：<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">g(z)=exp(exp(exp(exp(z))))</span><br><span class="line">f(y)=exp(exp(exp(exp(g(y)))))</span><br><span class="line">f(x)*g(x)-f(x)*f(exp(exp(exp(exp(x^8)))))</span><br></pre></td></tr></table></figure></div>
+水群里更有甚者：<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">g(z)=exp(exp(exp(z)))</span><br><span class="line">f(y)=exp(exp(exp(g(y))))</span><br><span class="line">h(x)=exp(exp(exp(f(x))))</span><br><span class="line">h(f(g(exp(exp(exp(exp(x^8)))))))</span><br></pre></td></tr></table></figure></div>
+展开后有22层exp。 <code>Cost</code> 目测不超过1000。本人运行时间不超过一秒。组内一些代码运行时间不低于十分钟。我研究了一下这个问题。</li>
+</ol>
+<p>看了一下被hack的天权星，设计者<strong>保留了太多不必要的因子（比如一个exp(x)会被拆成四个因子： <code>x^0</code> <code>1</code> <code>exp(0)</code> <code>exp(x)</code> ，而且有意思的是 <code>1</code> 和 <code>exp(0)</code> 会反复横跳相互转换）</strong>，而这些因子会被保留到表达式计算的最后一步才被化简（调用一个名为 <code>drop</code> 的方法将不必要的因子或项丢掉）。虽然没有细看代码，但是根据运行结果看来也是指数级的了。</p>
+<p>另外一个 <code>bug</code> 是第三位 <code>L Boy</code> 分享的。在他的设计中，<strong>每一个 <code>exp</code> 的 <code>toString</code> 方法都包括调用两次 <code>exp</code> 自身里面因子的 <code>toString</code> 方法</strong>（尽管调用一次后存下来然后下次需要用的时候再用也可以，但是他并没有这么做。毕竟如果有一个八个字母组成的方法名称能解决的问题，何必在存一个临时变量呢）。每一层的两次调用导致顶层的 <code>toString</code>  变成了一个完美的二叉树，也就是一个完美的 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="5.799ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 2563.3 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="398" d="M56 340Q56 423 86 494T164 610T270 680T388 705Q521 705 621 601T722 341Q722 260 693 191T617 75T510 4T388 -22T267 3T160 74T85 189T56 340ZM610 339Q610 428 590 495T535 598T463 651T384 668Q332 668 289 638T221 566Q168 485 168 339Q168 274 176 235Q189 158 228 105T324 28Q356 16 388 16Q415 16 442 24T501 54T555 111T594 205T610 339ZM223 263V422H263V388H514V422H554V263H514V297H263V263H223Z"></path></g><g data-mml-node="mo" transform="translate(778,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="msup" transform="translate(1167,0)"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="mi" transform="translate(533,363) scale(0.707)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="mo" transform="translate(2174.3,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg></mjx-container> 的时间复杂度，导致超时。这真的并不容易发现。</p>
+<p>估计房间里的天衡星也犯了类似的错误。此外他和 <code>L Boy</code> 都是通过调用 <code>exp</code> 内部因子的 <code>toString</code> 方法来判断该 <code>exp</code> 内部的因子是否等于0（如果内部因子的字符串长度为0就说明内部因子等于0）。这是应该是为了 <code>exp(0)=1</code> 的优化而设计的算法。</p>
+<p>这倒是给我了一个启示：想调用 <code>toString</code> 方法就别再 <code>toString</code> 方法里面化简表达式。如果不化简的话，哪需要判断是否为0呢？如果<strong>建立了抽象层次</strong>的话就不会想着在一个 <code>toString</code> 方法里面完成表达式的计算和输出两件事情了。</p>
+<h2 id="四、Debug策略"><a href="#四、Debug策略" class="headerlink" title="四、Debug策略"></a>四、Debug策略</h2><p>本次迭代开发没有出现大bug，一些小bug已经忘得差不多了。因此我暂时省略了出现的bug。</p>
+<p>整体Debug策略大概如下：</p>
+<ol>
+<li>有简单数据就按照简单的数据进行debug。这个应该不用多说，简单的数据往往能最直接地暴露问题。</li>
+<li>没有简单的数据就把数据变简单，剥离出其中核心的让你出错的地方。</li>
+<li>没有数据就捏造数据，需要构建评测机。但是考虑到个人搭建评测机实在是过于困难和费时，可以参考大佬的评测机进行魔改。</li>
+</ol>
+<p>debug注意事项：</p>
+<ol>
+<li><code>debug</code>一般情况下与运行结果一致，但是在一些特殊情况下不一致。目测导致这项改变的唯一<strong>原因是<code>toString</code>方法对<code>debug</code>的内容进行了修改</strong>。在<code>IDEA</code>中把<code>toString</code>方法关掉就行。一般来说如果 <code>toString</code> 方法对对象进行了修改，<code>IDEA</code>会在调试的过程中报一个<code>Warning</code>。</li>
+<li><code>debug</code> <strong>可以采用由浅入深</strong>，类似二分搜索的方式进行<code>debug</code>。二分搜索的精髓之一在于先确定大范围，再一步步缩小包围圈，最终定位目标。由于<code>Java</code>的方法调用关系与二分查找的思想比较吻合，我们可以先找<code>MainClass</code> 的哪一步出现了问题，再查找 <code>MainClass</code> 中出问题的步骤中是哪一步出现了错误，层层深入，最终确定目标位置。利用步入和步过，仔细观察IDEA的堆栈，可以定位问题发生的位置、深度等信息；观察下方变量，可以确定当前位置的状态，判断当前是否异常。总的来说IDEA的调试能力还是很强大的。</li>
+<li><strong>多交流！！！</strong> 自己犯的问题在很多情况下别人都犯过，只不过自己意识不到自己犯的错误就是别人犯的错误。</li>
+<li>永远不要依赖数据点！永远要尝试自己构造数据！构造数据不是课程组的要求，却也是 OO 锻炼的能力之一。正所谓“核心技术还是要掌握在自己的手里”。</li>
+<li><strong>在修复暴露的问题之前，先仔细想想是不是有类似的问题还没有暴露出来。</strong> 比如说这次迭代开发中，我曾经发现我的多项式相加写的有问题，但是却没有想起来多项式相减的代码是几乎照抄相加的代码的。导致同一个问题de了两次bug，浪费了不少时间。</li>
+</ol>
+<h2 id="五、心得体会"><a href="#五、心得体会" class="headerlink" title="五、心得体会"></a>五、心得体会</h2><h3 id="设计建议"><a href="#设计建议" class="headerlink" title="设计建议"></a>设计建议</h3><ol>
+<li>自顶向下进行设计。先构思需要用到的类（从数据出发（比如多项式的数据结构）或者从功能出发（比如函数调用）），再进一步构思类需要用到的方法，再进一步构思方法需要处理的各种情况。具体理由虽然我说不上来，但是从数据结构和行为需求构建整体代码框架再深入细节在整体设计把握上真的有大好处。</li>
+<li>虽然说先构思再动笔，但是实际情况可能是：<ol>
+<li>完全没有思路；</li>
+<li>构思了一大半，发现行不通；</li>
+<li>完成构思，发现不会写代码；</li>
+<li>写了一大半代码，发现行不通…<br> 个人认为这是非常非常常见的。比如在这第二次作业中，让我十分崩溃的事情是完成了多项式和单项式类的构思和基本代码，却发现单项式类有多项式对象作为属性，多项式类有单项式对象作为属性，循环定义直接把我整崩了。在遇到这种情况的时候，强烈建议<strong>多和同学交流架构设计</strong>，说不定你遇到的问题别人正好遇到了，说不定你眼中的难题在别人看来根本就不是事。</li>
+</ol>
+</li>
+<li>不要依赖中测数据点。</li>
+</ol>
+<h3 id="迭代感想"><a href="#迭代感想" class="headerlink" title="迭代感想"></a>迭代感想</h3><p>这次迭代开发还有许多不完美的地方，一方面真的很想看一看大佬们的设计细节，另一方面自己已经开摆了www。</p>
+<p>总的来说吧，这次的迭代开发真的非常非常地好。在上学期的先导课中，我一直在用自己熟悉的面向过程编程完成各个任务。但是经过了第一单元的迭代开发训练，我慢慢开始接受面向对象的编程思想了。在我拿到新一轮的迭代任务的时候，我会试着思考我需要扩展那些架构，实现哪些功能，试着去思考程序中的不同模块在外界看来应该满足什么样的要求。这是我认为我学到的最有价值的事情。</p>
+<h2 id="六、课程建议"><a href="#六、课程建议" class="headerlink" title="六、课程建议"></a>六、课程建议</h2><p>首先，真心感谢用心的吴际老师和面向对象结构与设计的助教们！经过多年的完善，面向对象结构与设计课程在我看来是最能锻炼代码能力的一门课。课程的代码量不是越多越好，但是CS需要有代码量的课程！</p>
+<p>在今年的OO课程中，我觉得有一个小的改进建议：在 OO 迭代开发中，一直很难找到一份比较好的代码示例：实验的代码虽然规范，但是实现的功能太简单了；研讨课的同学往往只会分析思路，而不会给出代码（毕竟这是课程组要求）。但是这样子就带来一个问题：究竟什么样的代码才是真正规范，真正好的代码呢？课程组固然给出了通过面向对象的量化分析手段来分析，但却并没有指导同学们如何系统地利用这种量化分析手段。我觉得可以抽个时间讲讲这些量化分析手段，比如一节研讨课的十五分钟时间。</p>
+<p>为什么我对源码这么执着呢？因为即便实现思路相同，程序运行效果仍然可能大相径庭！我和某位 <code>Z Boy</code> 的实现思路大致相同，但是在执行 <code>(x+1)^1000</code> 时，我的程序的运行时间却是他的三倍！能解决这个问题只有看具体代码，因此规范代码是一件我认为很重要的事情，而且如果能让同学们在进厂打工之前接触到一些厂里的规范——哪怕只是毛皮——也是工程能力提升的很重要的一环。规范的代码不容易得到，一种我认为比较可行的办法是学习现有的规范的开源的代码。或是让同学们去阅读简单的规范的代码，或是将复杂的代码进行缩减和抽象。</p>
+<p>但不过无法实现也没有关系。现在的 OO 课程已经非常非常良心了！</p>
+
         </div>
 
         
@@ -1168,7 +1470,7 @@ A(表达式)--&gt; B3(项3)
         
             <li>
                 <strong>更新于
-                    :</strong> 2024-03-13 17:38:52
+                    :</strong> 2024-03-31 19:02:30
             </li>
         
         <li>
@@ -1204,6 +1506,21 @@ A(表达式)--&gt; B3(项3)
 
         
             <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/03/31/OO/Unit-2/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">「BUAA OO」Unit-2 电梯调度</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
                 
                 
                     <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
@@ -1276,7 +1593,7 @@ A(表达式)--&gt; B3(项3)
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
         <div class="page-title">「BUAA OO」Unit-1 表达式计算</div>
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8E-%E5%88%B0%E7%AE%80%E6%98%93%E7%A7%91%E5%AD%A6%E8%AE%A1%E7%AE%97%E5%99%A8"><span class="nav-text">从 + - * ^ 到简易科学计算器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="nav-text">第一次作业</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%99%90%E5%88%B6"><span class="nav-text">数据限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E8%AE%BE%E8%AE%A1"><span class="nav-text">最终设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%92%E6%B5%8B%E7%BB%8F%E9%AA%8C"><span class="nav-text">互测经验</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="nav-text">第二次作业</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-1"><span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%99%90%E5%88%B6-1"><span class="nav-text">数据限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-1"><span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E8%AE%BE%E8%AE%A1-1"><span class="nav-text">最终设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%92%E6%B5%8B%E7%BB%8F%E9%AA%8C-1"><span class="nav-text">互测经验</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="nav-text">第三次作业</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-2"><span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%99%90%E5%88%B6-2"><span class="nav-text">数据限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E8%AE%BE%E8%AE%A1-2"><span class="nav-text">最终设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%92%E6%B5%8B%E7%BB%8F%E9%AA%8C-2"><span class="nav-text">互测经验</span></a></li></ol></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2024-BUAA-OO-Unit-1-%E4%BB%8E-%E5%88%B0%E7%AE%80%E6%98%93%E7%A7%91%E5%AD%A6%E8%AE%A1%E7%AE%97%E5%99%A8"><span class="nav-text">2024 BUAA OO Unit 1: 从 + - * ^ 到简易科学计算器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%89%8D%E8%A8%80"><span class="nav-text">一、前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%83%8C%E6%99%AF"><span class="nav-text">二、背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E3%80%81%E8%80%83%E8%99%91%E3%80%81%E5%88%86%E6%9E%90%E3%80%81%E4%BC%98%E5%8C%96%E5%92%8C%E5%8F%8D%E6%80%9D"><span class="nav-text">三、架构设计、考虑、分析、优化和反思</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="nav-text">第一次作业</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="nav-text">第二次作业</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="nav-text">第三次作业</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81Debug%E7%AD%96%E7%95%A5"><span class="nav-text">四、Debug策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%BF%83%E5%BE%97%E4%BD%93%E4%BC%9A"><span class="nav-text">五、心得体会</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E5%BB%BA%E8%AE%AE"><span class="nav-text">设计建议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E6%84%9F%E6%83%B3"><span class="nav-text">迭代感想</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%AF%BE%E7%A8%8B%E5%BB%BA%E8%AE%AE"><span class="nav-text">六、课程建议</span></a></li></ol></li></ol>
 
     </div>
 </div>

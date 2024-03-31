@@ -13,23 +13,26 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://squirrel7ang.github.io/2024/03/03/os/pre/"/>
+    <link rel="canonical" href="https://squirrel7ang.github.io/2024/03/31/oo/unit-2/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="刷绿导师太爽啦">
+        <meta name="description" content="电梯能随意踢人？？？">
 <meta property="og:type" content="article">
-<meta property="og:title" content="「BUAA OS」操作系统假期预习">
-<meta property="og:url" content="https://squirrel7ang.github.io/2024/03/03/OS/Pre/index.html">
+<meta property="og:title" content="「BUAA OO」Unit-2 电梯调度">
+<meta property="og:url" content="https://squirrel7ang.github.io/2024/03/31/OO/Unit-2/index.html">
 <meta property="og:site_name" content="Squirrel7ang Blog">
-<meta property="og:description" content="刷绿导师太爽啦">
+<meta property="og:description" content="电梯能随意踢人？？？">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-03-03T07:08:00.000Z">
-<meta property="article:modified_time" content="2024-03-16T14:05:33.894Z">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U2/hw1_method_complexity.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U2/hw1_class_complexity.png">
+<meta property="article:published_time" content="2024-03-31T10:55:00.000Z">
+<meta property="article:modified_time" content="2024-03-31T11:03:46.371Z">
 <meta property="article:author" content="Squirrel7ang">
-<meta property="article:tag" content="OS">
+<meta property="article:tag" content="OO">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://squirrel7ang.github.io/images/OO/U2/hw1_method_complexity.png">
     
     
     <!--- Icon Part-->
@@ -41,7 +44,7 @@
     
     <title>
         
-            「BUAA OS」操作系统假期预习 -
+            「BUAA OO」Unit-2 电梯调度 -
         
         Squirrel7ang&#39;s Blog
     </title>
@@ -807,10 +810,10 @@ mjx-container[display="true"] + br {
             
                 
                 
-                <img src="https://squirrel7ang.github.io/images/cover/cover_12.png" alt="「BUAA OS」操作系统假期预习" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                <img src="https://squirrel7ang.github.io/images/cover/cover_14.png" alt="「BUAA OO」Unit-2 电梯调度" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
                 
                 <div class="w-full flex items-center absolute bottom-0 justify-start">
-                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">「BUAA OS」操作系统假期预习</h1>
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">「BUAA OO」Unit-2 电梯调度</h1>
                 </div>
             
             </div>
@@ -831,15 +834,15 @@ mjx-container[display="true"] + br {
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2024-03-03 15:08</span>
-        <span class="mobile">2024-03-03 15:08</span>
+        <span class="desktop">2024-03-31 18:55</span>
+        <span class="mobile">2024-03-31 18:55</span>
         <span class="hover-info">创建</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-03-16 22:05:33</span>
-            <span class="mobile">2024-03-16 22:05:33</span>
+            <span class="desktop">2024-03-31 19:03:46</span>
+            <span class="mobile">2024-03-31 19:03:46</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -853,7 +856,7 @@ mjx-container[display="true"] + br {
                     
                         
                         <li>
-                            <a href="/categories/OS/">OS</a>&nbsp;
+                            <a href="/categories/OO/">OO</a>&nbsp;
                         </li>
                     
                     
@@ -867,7 +870,7 @@ mjx-container[display="true"] + br {
             <ul>
                 
                     <li>
-                        <a href="/tags/OS/">OS</a>&nbsp;
+                        <a href="/tags/OO/">OO</a>&nbsp;
                     </li>
                 
             </ul>
@@ -893,71 +896,135 @@ mjx-container[display="true"] + br {
 
 
         <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-            <h2 id="预习内容"><a href="#预习内容" class="headerlink" title="预习内容"></a>预习内容</h2><p>OS的假期预习发布时间远晚于 CO 的假期预习，将近开学才开放预习内容，正确的。</p>
-<p>按照个人理解，假期预习大概就是理解这么几件事：</p>
-<ol>
-<li>学习使用<code>linux</code>和 linux 中基本的<code>GNU工具</code>，如<code>ls</code> <code>make</code> <code>vim</code>等等</li>
-<li>学习一个标准一点的、系统一点的 MIPS 程序长什么样子</li>
-<li>学习 C 语言是怎么被翻译成 MIPS 汇编，再翻译成二进制可执行文件，再跑起来的</li>
-<li>学习使用 <code>GDB</code> 和 <code>QEMU</code></li>
+            <h1 id="电梯"><a href="#电梯" class="headerlink" title="电梯"></a>电梯</h1><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>考虑到第一次博客写的实在是太复杂，第二次作业的博客我希望能够按照更加清晰的结构来叙述我的设计。在这次博客中，我将解题思路单独叙述，再进一步叙述我的设计架构。</p>
+<h2 id="二、题目背景"><a href="#二、题目背景" class="headerlink" title="二、题目背景"></a>二、题目背景</h2><h3 id="第一次作业"><a href="#第一次作业" class="headerlink" title="第一次作业"></a>第一次作业</h3><h4 id="1-题目背景"><a href="#1-题目背景" class="headerlink" title="1. 题目背景"></a>1. 题目背景</h4><ol>
+<li>六部电梯</li>
+<li>每部电梯单独工作</li>
+<li>每个人只能等它指定的一部电梯</li>
+<li>每部电梯最多承载六个人</li>
+<li>每部电梯在一楼和十一楼往返运行</li>
+<li>根据题意，每部电梯需要在每一层楼都能停留，即不能出现高低层电梯和奇偶层电梯这类电梯</li>
+<li>每次上下一层楼花费0.4秒</li>
+<li>开关门各0.2秒，从门开始打开到完全关闭期间，乘客可以随意进出</li>
+<li>电梯没有加速度，纸片人不会被门夹</li>
+<li>电梯就是神，只要愿意就可以随意吃人吐人</li>
+<li>人可能在任意时间在任意楼层按电梯（具体什么时候在哪层楼取决于输入）</li>
+<li>输入不能使得初始楼层和目标楼层相等</li>
 </ol>
-<p>一步步来。</p>
-<h3 id="安装Linux"><a href="#安装Linux" class="headerlink" title="安装Linux"></a>安装Linux</h3><p>我安装的是<code>Ubuntu22.04</code>，使用<code>vmware workstation</code>运行。理由是配置比较白痴。同时我也在WSL上安装了<code>Ubuntu</code>。虽然还没弄明白wsl的图形化界面要怎么安装，但即便没有图形化界面，个人感觉使用体验要远好于<code>vmware</code>。</p>
-<h4 id="本地代理"><a href="#本地代理" class="headerlink" title="本地代理"></a>本地代理</h4><p>wsl的开本地代理可以在本地的”C:\Users%USERNAME%.wslconfig”文件中进行配置完成。一般来说该文件不存在，需要自行创建。创建后向其中写入以下内容:</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[experimental]</span><br><span class="line">autoMemoryReclaim=gradual</span><br><span class="line">networkingMode=mirrored</span><br><span class="line">dnsTunneling=true</span><br><span class="line">firewall=true</span><br><span class="line">autoProxy=true</span><br></pre></td></tr></table></figure></div>
-<p>然后在命令行将wsl关掉：</p>
-<div class="highlight-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; wsl --shutdown</span><br><span class="line">&gt; wsl</span><br></pre></td></tr></table></figure></div>
-<p>如果打开wsl没有出现“NAT模式下不支持localhost”之类的文字就算成功了</p>
-<p>在vmware的Ubuntu中进行本地代理则稍微有一点麻烦。我使用的是clash for windows进行联网，在Ubuntu中也可以启动本地代理通过windows的clash访问指定网站。</p>
-<ol>
-<li>先在windows下打开命令行，输入<code>ipconfig</code>，找到<code>无线局域网适配器 WLAN</code>下的<code>IPv4 地址</code></li>
-<li>将clash中的<code>Allow LAN</code>打开，记录<code>Port</code>号。</li>
-<li>在ubuntu的网络设置中选择<code>本地代理-手动</code>，将<code>https代理</code>、<code>http代理</code>、<code>Socks主机</code>三个选项的每一个都分别写入<code>IPv4 地址</code>以及<code>Port</code>号。随后就可以正常上网了</li>
+<h4 id="2-评价标准"><a href="#2-评价标准" class="headerlink" title="2. 评价标准"></a>2. 评价标准</h4><p>课程组提供了两个标准。一个是正确性评判标准，一个是性能评判标准</p>
+<h5 id="正确性评判"><a href="#正确性评判" class="headerlink" title="正确性评判"></a>正确性评判</h5><ol>
+<li>每个人最后都必须到达目标楼层。</li>
+<li>电梯最多搭载6人。</li>
+<li>电梯不能飞速运行，比如电梯不能在小于0.4秒的时间内移动一层楼。</li>
+<li>电梯总运行时间不能比课程组的标准运行时间（<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="3.669ex" height="1.889ex" role="img" focusable="false" viewBox="0 -677 1621.6 834.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="TeXAtom" transform="translate(617,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g><g data-mml-node="mi" transform="translate(469,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mi" transform="translate(830,0)"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g></g></g></g></g></svg></mjx-container>）长太久。具体来说，不能比 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="28.158ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 12445.7 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D45A" d="M21 287Q22 293 24 303T36 341T56 388T88 425T132 442T175 435T205 417T221 395T229 376L231 369Q231 367 232 367L243 378Q303 442 384 442Q401 442 415 440T441 433T460 423T475 411T485 398T493 385T497 373T500 364T502 357L510 367Q573 442 659 442Q713 442 746 415T780 336Q780 285 742 178T704 50Q705 36 709 31T724 26Q752 26 776 56T815 138Q818 149 821 151T837 153Q857 153 857 145Q857 144 853 130Q845 101 831 73T785 17T716 -10Q669 -10 648 17T627 73Q627 92 663 193T700 345Q700 404 656 404H651Q565 404 506 303L499 291L466 157Q433 26 428 16Q415 -11 385 -11Q372 -11 364 -4T353 8T350 18Q350 29 384 161L420 307Q423 322 423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 181Q151 335 151 342Q154 357 154 369Q154 405 129 405Q107 405 92 377T69 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(878,0)"><path data-c="1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g><g data-mml-node="mi" transform="translate(1407,0)"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1979,0)"><g data-mml-node="mo"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="msub" transform="translate(389,0)"><g data-mml-node="mi"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="TeXAtom" transform="translate(617,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g><g data-mml-node="mi" transform="translate(469,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mi" transform="translate(830,0)"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g></g></g><g data-mml-node="mo" transform="translate(2232.8,0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="mn" transform="translate(3233,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g><g data-mml-node="mo" transform="translate(4233,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(4622,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mo" transform="translate(5066.7,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mn" transform="translate(5455.7,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z" transform="translate(500,0)"></path><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z" transform="translate(778,0)"></path><path data-c="35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z" transform="translate(1278,0)"></path></g><g data-mml-node="mo" transform="translate(7455.9,0)"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g><g data-mml-node="msub" transform="translate(8456.1,0)"><g data-mml-node="mi"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="TeXAtom" transform="translate(617,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g><g data-mml-node="mi" transform="translate(469,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mi" transform="translate(830,0)"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g></g></g><g data-mml-node="mo" transform="translate(10077.7,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></g></svg></mjx-container> 长（单位：秒）</li>
+<li>关门后才能开门，开门后才能关门。</li>
+<li>符合客观事实，比如不能开着门上下移动，不能让人不乘电梯瞬移到目标楼层之类的。具体要求见指导书。</li>
 </ol>
-<h4 id="安装相关GNU工具"><a href="#安装相关GNU工具" class="headerlink" title="安装相关GNU工具"></a>安装相关GNU工具</h4><p>基本gcc工具</p>
-<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install build-essential</span><br></pre></td></tr></table></figure></div>
-
-<p>mips相关模拟开发工具</p>
-<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gcc-mips-linux-gnu qemu-system-mips gdb-multiarch</span><br></pre></td></tr></table></figure></div>
-
-<p>之后的作业如果遇到奇怪的报错可能还有一下其他的库没有装。这个到时候再说吧。</p>
-<h3 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h3><p>我们直接看Makefile，这里参考了绿导师的makefile查看技巧。</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ make -nB # 查看make命令都会执行哪些命令，并输出到标准输出（但是不执行这些命令）</span><br><span class="line">$ make run -nB # 查看make run命令都会执行哪些命令，并输出到标准输出（但是不执行这些命令）</span><br></pre></td></tr></table></figure></div>
-
-<p><code>-n</code>和<code>-B</code>选项可以用<code>man make | vim -</code>来查看</p>
-<p>对于make中眼花缭乱的指令，可以在vim中输入<code>:%s/ /\n  /g</code>命令来完成一种简单的formatting。</p>
-<p>拿mips-exercise的makefile来说，</p>
-<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># make</span></span><br><span class="line">mips-linux-gnu-gcc --std=gnu99 -EL -G 0 -mno-abicalls -fno-pic -ffreestanding -fno-stack-protector -fno-builtin -Wa,-xgot -Wall -mxgot -mno-fix-r4000 -march=4kc -g -ggdb -I./include/ -c -o hello.o hello.c</span><br><span class="line">mips-linux-gnu-gcc --std=gnu99 -EL -G 0 -mno-abicalls -fno-pic -ffreestanding -fno-stack-protector -fno-builtin -Wa,-xgot -Wall -mxgot -mno-fix-r4000 -march=4kc -g -ggdb -I./include/ -c -o output.o output.c</span><br><span class="line">mips-linux-gnu-gcc --std=gnu99 -EL -G 0 -mno-abicalls -fno-pic -ffreestanding -fno-stack-protector -fno-builtin -Wa,-xgot -Wall -mxgot -mno-fix-r4000 -march=4kc -g -ggdb -I./include/ -c -o start.o start.S</span><br><span class="line">mips-linux-gnu-ld -EL -G 0 -static -n -nostdlib --fatal-warnings -o hello -N -T linker.lds hello.o output.o start.o</span><br><span class="line"></span><br><span class="line"><span class="comment"># make run</span></span><br><span class="line">qemu-system-mipsel -cpu 4Kc -m 64 -nographic -M malta -no-reboot  -kernel hello</span><br><span class="line"></span><br><span class="line"><span class="comment"># make dbg</span></span><br><span class="line">make dbg_run &gt;/dev/null 2&gt;&amp;1 &amp; gdb-multiarch hello -ex <span class="string">"target remote localhost:1234"</span></span><br><span class="line">killall qemu-system-mipsel</span><br><span class="line"></span><br><span class="line"><span class="comment"># make clean</span></span><br><span class="line"><span class="built_in">rm</span> -rf *~ *.o hello *.objdump</span><br><span class="line"></span><br><span class="line"><span class="comment"># make dbg_run</span></span><br><span class="line">qemu-system-mipsel -cpu 4Kc -m 64 -nographic -M malta -no-reboot -s -S  -kernel hello</span><br></pre></td></tr></table></figure></div>
-<p>可以发现：</p>
+<h5 id="性能评判"><a href="#性能评判" class="headerlink" title="性能评判"></a>性能评判</h5><p>课程组提供了较为复杂的评估标准，不太容易懂。简单来说就是满足以下几点要求：</p>
 <ol>
-<li>make就是简单的生成了一个hello的可执行文件。它忽略了标准库，使用静态链接，禁用内联函数和栈保护器，禁用对mips-r4000的修复。简单来说，这些编译操作都是为了保证我们写的程序能够在裸机上运行</li>
-<li>使用<code>qemu-system-mipsel</code> 在4Kc, MIPS Malta Core运行了hello。在Debug的时候使用了-S选项让CPU在开始运行的时候停下来，使用-s指令在localhost:1234开启了一个gdbserver用于远程调试。</li>
-<li>使用<code>gdb-multiarch</code>进行remote dbg，完成之后再干碎qemu进程。</li>
+<li>不要让系统运行影响电梯运行时间。（系统要快）</li>
+<li>不要让一个人等太久。（等待时间只按电梯到抵达目标楼层的时间）（乘客要爽）</li>
+<li>不要让电梯无效运行。（电费要少）</li>
 </ol>
-<h3 id="观察运行情况"><a href="#观察运行情况" class="headerlink" title="观察运行情况"></a>观察运行情况</h3><p>gdb自带tui，能够方便地查看运行结果</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(gdb) layout asm</span><br><span class="line">(gdb) layout src</span><br></pre></td></tr></table></figure></div>
-<p>asm这可以将CPU从启动时的0xBFC00000开始执行的所有指令都显示出来，能够很好地观察到每一条指令的运行</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mips-linux-gnu-objdump -d hello | vim -</span><br></pre></td></tr></table></figure></div>
-<p>将可执行文件hello反汇编来看到hello是怎么运行的。在asm的tui下也可以显示相同的内容。</p>
+<h2 id="三、解题思路"><a href="#三、解题思路" class="headerlink" title="三、解题思路"></a>三、解题思路</h2><h3 id="第一次作业-1"><a href="#第一次作业-1" class="headerlink" title="第一次作业"></a>第一次作业</h3><h3 id="1-我们有哪些需求？"><a href="#1-我们有哪些需求？" class="headerlink" title="1. 我们有哪些需求？"></a>1. 我们有哪些需求？</h3><p>纵观题目，我们可以得出一个简单的结构设计：</p>
+<ol>
+<li>对于人来说：输入→分配到电梯→等电梯→搭电梯→出来</li>
+<li>对于电梯来说：读等待的人→决定要不要接他→接/不接→送客</li>
+</ol>
+<p>所以基本上，我们需要有这么几个类：</p>
+<ol>
+<li><code>InputThread</code> 输入线程 - 采购</li>
+<li><code>Schedule</code> 分配线程 - 把人分给电梯吃</li>
+<li><code>Elevator</code> 电梯线程 - 吃人吐人</li>
+<li><code>Client</code> 顾客类 - 人<br>然后，我们接着模块化，简化对象但是增加对象数量：</li>
+<li><code>RequestQueue</code> 请求队列 - 采购但是没有被分配的人</li>
+<li><code>WaitQueue</code> 等待队列 - 分配但是没有被电梯吃掉的人</li>
+<li><code>Strategies</code> 策略类 - 决定电梯先吃哪个人<br>剩余的类不起到决定性效果，只是起了一点辅助作用，在此不在列举。</li>
+</ol>
+<h3 id="2-我们需要哪些线程？"><a href="#2-我们需要哪些线程？" class="headerlink" title="2. 我们需要哪些线程？"></a>2. 我们需要哪些线程？</h3><p>先理一理要求和思路：</p>
+<ol>
+<li>首先毫无疑问，我们需要<strong>1个输入线程</strong>。</li>
+<li>六部电梯需要单独运行，因此需要一个<strong>6个电梯运行线程</strong>。</li>
+<li>但是考虑到之后的作业，我们应该需要一个调度器，用于将乘客分配给不同的电梯。因此我们可以再新建<strong>1个调度器线程</strong>。</li>
+<li>我们希望电梯开关门期间可以进入新乘客，而不是<code>sleep(200)</code>休眠200毫秒。考虑到休眠期间电梯是不会进行输入的，我们可以再新建<strong>6个电梯输入线程</strong>。</li>
+<li>经过实践，我发现第四点思考难以实现。直接删掉</li>
+<li>总结一下，<strong>1个输入，1个调度，6个电梯</strong>。</li>
+</ol>
+<h3 id="3-线程与线程之间的关系如何（生产-消费模式）？"><a href="#3-线程与线程之间的关系如何（生产-消费模式）？" class="headerlink" title="3. 线程与线程之间的关系如何（生产-消费模式）？"></a>3. 线程与线程之间的关系如何（生产-消费模式）？</h3><p>这是一个很奇怪的问题，在吃了苦头之前我甚至都没有问过自己这个问题。</p>
+<p>电梯单元采用的多线程设计模式比较简单，即生产-消费模式。在我的设计中，生产消费关系有俩：输入和调度、调度和电梯。</p>
+<h4 id="1-输入线程和调度线程"><a href="#1-输入线程和调度线程" class="headerlink" title="(1) 输入线程和调度线程"></a>(1) 输入线程和调度线程</h4><p>输入进来的乘客需要交给调度线程，由调度线程经过合适的调度策略（在这次作业中，调度策略就是把乘客调度到它指定的电梯）交给电梯。因此输入和调度线程构成生产-消费关系：输入不断生产客户，调度器不断消费客户。而存放生产出来的产品的地方正是<code>RequestQueue</code>类。</p>
+<h4 id="2-调度线程和电梯线程"><a href="#2-调度线程和电梯线程" class="headerlink" title="(2) 调度线程和电梯线程"></a>(2) 调度线程和电梯线程</h4><p>调度器会将自己得到的客户交给电梯，由电梯进行消费。从输入进来的顾客会在输出后被释放，因此到这里为止搭乘电梯的顾客构成的供应链就到达链的末尾了。存放生产出来的客户的是我们的<code>WaitQueue</code>类，也就是在指定电梯面前等待的客户构成的集合。这样的集合一共有六个，每个电梯各一个。</p>
+<h3 id="4-什么是锁？什么是同步方法？"><a href="#4-什么是锁？什么是同步方法？" class="headerlink" title="4. 什么是锁？什么是同步方法？"></a>4. 什么是锁？什么是同步方法？</h3><p>写这个板块纯粹是因为我在<code>synchronized</code>方法上吃了苦头。总结起来我最开始不理解的地方大概就只有这么几点：</p>
+<ol>
+<li>每一个<code>synchronized</code>部分一次只能由一个获得了指定锁的线程运行。这种指定的锁只有一把，当这个线程在运行的时候它就占有了锁，其他线程必定就没有占有锁，因此其他线程必定无法运行。</li>
+<li>每一个<code>synchronized</code>锁就是一个对象。同步方法的锁就是调用这个同步方法的对象本身。静态同步方法锁的是类对象本身，简单理解就是这整个类的所有静态同步方法共同竞争的一把锁，它不会影响非静态同步方法。</li>
+<li><strong>没事别吃饱了撑的把所有方法都锁上。</strong> 只有线程与线程产生竞争的部分需要上锁。竞争的部分是设计决定的，适当地将方法设置为private方法或许是一个好的选择。</li>
+<li>原则上同步方法都应该在交出锁之前<code>notify</code>，<strong>但是有一个情况例外</strong>：就是这个同步方法是被另一个同步方法调用的。这时这个同步方法哪怕结束了，锁也不会被释放。这时不需要<code>notify</code>，否则就轮询了。</li>
+<li><strong>同一对象的同步方法调用该对象的同步方法是不会死锁的。</strong> 运行父方法就会得到这个对象的锁，而在调用叶方法的时候父方法会发现已经有锁了，于是大胆进入叶方法里头。</li>
+<li><strong>在生产-消费模型中，基本上只有涉及到共享数据对象的时候才会出现同步方法。</strong> 其他时候不怎么使用也不需要过多担心，否则可能就要狠狠担心一下了。</li>
+</ol>
+<h3 id="5-电梯运行策略"><a href="#5-电梯运行策略" class="headerlink" title="5. 电梯运行策略"></a>5. 电梯运行策略</h3><p>详细见调度策略选择。</p>
+<h2 id="四、设计分析"><a href="#四、设计分析" class="headerlink" title="四、设计分析"></a>四、设计分析</h2><h3 id="第一次作业-2"><a href="#第一次作业-2" class="headerlink" title="第一次作业"></a>第一次作业</h3><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U2/hw1_method_complexity.png" alt="hw1_method_complexity"></p>
+<p>所有圈复杂度较高的方法我都看了一圈，事实就是if-else及其嵌套太多。每一个if-else里面的内容就两行：一行设置下一个状态，一行return。我当然可以拆开这些if-else，然后把每一次嵌套都封装成一个私有方法，但是我并不认为这会让可读性变高，反而可能会过度封装。</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U2/hw1_class_complexity.png" alt="hw1_class_complexity"></p>
+<p>我承认Strategies类写的确实不太好，不过我已经不知道怎么优化了。至于Elevator类和WaitQueue类我倒是不是很担心，我在写一个类的时候会根据外界需求在里面封装好许多好用的方法，哪怕这些方法可能并不会用到，就有点像自己搓一个小的库一样吧。这使得方法复杂度很高，但是实际上既不影响可读性，我也不认为与封装的思想相矛盾。</p>
+<p>另一方面，由于我设置了UP和DOWN两个状态，导致几乎所有和上与下有关的代码都会高度相似、对称。后面我了解到原来枚举类型也是可以设置方法的，这样子我或许可以将这部分代码简化不少。</p>
+<h2 id="五、调度策略选择"><a href="#五、调度策略选择" class="headerlink" title="五、调度策略选择"></a>五、调度策略选择</h2><p>这里叙述几种常用的策略和我的选择：</p>
+<h3 id="1-ALS调度策略"><a href="#1-ALS调度策略" class="headerlink" title="1. ALS调度策略"></a>1. ALS调度策略</h3><p>我至今也不知道ALS到底是什么的缩写，但是只要在互联网上搜索“ALS调度策略”，我们一定能找到北航计院的身影。</p>
+<p>ALS的调度策略很简单：</p>
+<ol>
+<li>电梯有人时，谁先到电梯就先送谁</li>
+<li>电梯没人时，去接最早来的人</li>
+<li>同向能捎带就捎带<br>ALS的缺点很明显</li>
+<li>首先，尽管有主请求的定义，但是当电梯为空的时候，主请求很容易被捎带请求覆盖。因为只要一个空电梯捎带了一个人，那么被捎带的人就是主请求。所以这并不能避免等待时间长的人有更长的等待时间</li>
+<li>主请求容易诱导电梯，让电梯实际上并没有那么公正的策略，而是成为了一个谁手快谁占据更好的位置谁就更容易搭上电梯。</li>
+<li>电梯的不公正的接客原则还使得电梯运行路程可能会更长，使得耗电更多</li>
+</ol>
+<p>ALS代表了一类算法，或者说一类算法的原则：优先接最早到达的人。这是ALS的整体原则，也是我们在设计时可以考虑的原则。</p>
+<p>但是ALS并不是那么好。比如：</p>
+<blockquote>
+<p><strong>Example 1</strong>: 假如有一大波同学1楼到9楼，他们先按了电梯；而有另一波同学想从10楼到1楼，但是他们全部都按晚了电梯。根据ALS，他们的请求不会被响应，直到前一波人的请求全部被完成—。当电梯到9楼，电梯宁愿去接最早到的乘客，也就是1楼的乘客，也不愿意接10楼的乘客——哪怕电梯只需要上行一层楼！</p>
+</blockquote>
+<p>这就出现了SCAN策略和LOOK策略。</p>
+<h3 id="2-SCAN-LOOK策略"><a href="#2-SCAN-LOOK策略" class="headerlink" title="2. SCAN/LOOK策略"></a>2. SCAN/LOOK策略</h3><p>回想一下我们现在乘坐的电梯，在<code>Example 1</code>中二楼的乘客每次上电梯的时候应该会发现有一大波人从电梯里涌出来。这是因为电梯采用了<code>LOOK</code>策略。在讲<code>LOOK</code>之前，先讲一下<code>SCAN</code>策略。</p>
+<p><code>SCAN</code>策略做的事就是在最高层和最底层之间来回扫。<code>SCAN</code>没有主请求，但是顺带着却能够接到更多人。在<code>Example 1</code>当中，他们会先去接10楼的乘客——不是因为10楼的乘客优先级有多高，只是因为电梯会运行到最高层（11层）再往下运行，而往下运行的时候就正好能够捎带10楼的乘客。</p>
+<p>但是11楼是没有必要去的，因为11楼没有人。这就引出了<code>LOOK</code>策略。<code>LOOK</code>策略意在解决<code>SCAN</code>中的无效运行。在<code>LOOK</code>中，我们只需要找到最高的有需求的楼层就行了：不需要到11楼，而是到10楼就行。</p>
+<p>通过这个例子我还想说明一个问题，那就是<strong>只做大优化不做小优化</strong>。当你以为<code>LOOK</code>比<code>SCAN</code>好的时候，请思考这么一件事：如果在<code>LOOK</code>接到十楼的乘客并且开门了打算往下走，这时如果有一个十一楼的乘客刚刚按电梯，那这个十一楼的倒霉蛋就要在等一轮了。也就是说，无用的运行有可能会有用，这取决于具体输入。<strong>不要为一些小细节优化，总是要尝试进行大优化。</strong></p>
+<h3 id="3-LOOK-ALS"><a href="#3-LOOK-ALS" class="headerlink" title="3. LOOK + ALS"></a>3. LOOK + ALS</h3><p><code>LOOK</code>和<code>ALS</code>不仅仅是两个具体策略，他们更反映了两个思想方法或者原则：一个认为最早来的人最应该先响应，另一个认为我自己走我的路，方便我响应我就响应。<code>LOOK</code> 原则和 <code>ALS</code> 原则各有优劣：<code>LOOK</code>很容易使某一个人等待时间过长，而<code>ALS</code>可能会对某一些按按钮晚的人很不公平。</p>
+<p>这两个原则可以结合一下，取长补短。比方说，我们可以优先响应同方向上到达时间最早的人，在保证能够接到它的前提下再去捎带其他人。这样子在一个方向上很难出现等待时间过长的人，进而会更好。</p>
+<h3 id="4-我的算法"><a href="#4-我的算法" class="headerlink" title="4. 我的算法"></a>4. 我的算法</h3><p>我认为<code>LOOK + ALS</code>并不足以满足乘客的需求，因为这种算法只能考虑当前情况下等待时间最长的人，却不能考虑当前情况下多个等待时间很长的人。当一个方向上有很多等待时间很长的人的时候，而我们在没有接到他们之前接了其他捎带的人，那么这时候我们很可能就只能接到一个等待时间很长的人，也就是主请求。而其他人等待时间明明也很长，却因为在电梯接到他们之前捎带了其他人，因而无法搭乘电梯。</p>
+<p>坏心情算法认为造成这样的原因是因为主请求太少了。如果有多个主请求，我们就可以先保证先去接这些主请求，再去考虑是否捎带。</p>
+<p>在我的算法中，请求的优先级是根据乘客的心情的好坏来决定的。我规定，如果电梯在一次捎带过程中明明可以和我同方向经过了我的楼层却不捎带我，那么我的坏心情就+1，也就是我的优先级在电梯眼中就提高了1级。这种算法来源于使用新北电梯的真实感受，我把它叫做坏心情算法。</p>
+<p>坏心情算法解救了<code>LOOK + ALS</code>算法中两个等待时间较长的人可能只能接到一个的问题，实际上如果稍微更改一下坏心情算法，将时间而不是坏心情作为最高优先级，我们就得到了<code>LOOK + ALS</code>算法了。</p>
+<p>坏心情算法的缺点也是很明显的：它几乎完全被坏心情的人带偏了。如果坏心情的人比较多，请求比较苛刻，那么它们可能会占据电梯的所有位置，导致捎带的人减少，进而导致电梯要花费更长的时间才能够送完所有乘客</p>
+<h3 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h3><p>没有最好的调度策略，所有的调度策略都有反例，因为未来是未知的，人流量、目的、到达时间就无法纳入考虑因素当中。再退一步讲，即便我们能够知晓未来的一举一动，判断出最佳策略也是困难的。因此经过第一次作业后，我同意指导书的观点，最好的策略就是变换策略。不过麻烦死了……</p>
+<h2 id="六、设计反思"><a href="#六、设计反思" class="headerlink" title="六、设计反思"></a>六、设计反思</h2><h2 id="七、Bug-Debug"><a href="#七、Bug-Debug" class="headerlink" title="七、Bug & Debug"></a>七、Bug &amp; Debug</h2><h3 id="遇到的Bug"><a href="#遇到的Bug" class="headerlink" title="遇到的Bug"></a>遇到的Bug</h3><h4 id="1-电梯的等待队列waitQueue不是线程安全的"><a href="#1-电梯的等待队列waitQueue不是线程安全的" class="headerlink" title="1. 电梯的等待队列waitQueue不是线程安全的"></a>1. 电梯的等待队列waitQueue不是线程安全的</h4><p>解决方案：使用同步方法。</p>
+<h4 id="2-电梯为空时无法决定新的方向"><a href="#2-电梯为空时无法决定新的方向" class="headerlink" title="2. 电梯为空时无法决定新的方向"></a>2. 电梯为空时无法决定新的方向</h4><p>解决方案：那就根据<code>LOOK</code>策略选择一个方向。</p>
+<h4 id="3-同步方法过多"><a href="#3-同步方法过多" class="headerlink" title="3. 同步方法过多"></a>3. 同步方法过多</h4><p>解决方案：分析线程的关系，只在容易产生冲突的地方进行同步；私有化方法</p>
+<h4 id="4-git-commit-–amend使用不熟练"><a href="#4-git-commit-–amend使用不熟练" class="headerlink" title="4. git commit –amend使用不熟练"></a>4. git commit –amend使用不熟练</h4><p>解决方案：自己手动解决冲突就行，应该相当于commit一次再与上一次提交merge。</p>
+<h4 id="5-疑似非法提交"><a href="#5-疑似非法提交" class="headerlink" title="5. 疑似非法提交"></a>5. 疑似非法提交</h4><p>我为不同类写了一个debug()方法，但是问题是难以判断调试信息输出的位置。搜索后发现下面这行代码可以打印当前Thread运行位置。评测的时候检测非法字符串的时候检测到了这一行代码。</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(Thread.currentThread().getStackTrace()[<span class="number">1</span>].getMethodName())</span><br></pre></td></tr></table></figure></div>
 
+<h3 id="Debug策略"><a href="#Debug策略" class="headerlink" title="Debug策略"></a>Debug策略</h3><p>多线程Debug是一件麻烦事，不过IDEA帮我们做了不少工作。IDEA中右键断电的红点点可以选择默认多线程Debug，因而在每一个线程运行到这一行代码的时候都能够停下来（不过我倒是很好奇gdb有没有这种功能）。即便如此，Debug还是麻烦的：Debug效率本来就低，现在还要同时在六个电梯线程中打断点，这我真的受不了一点。所以建议直接print大法调试。我在每一个我需要用到的类里面写了一个debug()方法，用于往终端输出该对象的信息。另外建议使用ANSI escape code给调试信息上个色，或者直接输出到标准错误输出（因为IDEA中标准错误输出是红色的）</p>
+<h2 id="八、心得体会"><a href="#八、心得体会" class="headerlink" title="八、心得体会"></a>八、心得体会</h2><h2 id="九、课程建议"><a href="#九、课程建议" class="headerlink" title="九、课程建议"></a>九、课程建议</h2>
         </div>
 
         
             <div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
                 <div class="article-copyright-info-container">
     <ul>
-        <li><strong>标题:</strong> 「BUAA OS」操作系统假期预习</li>
+        <li><strong>标题:</strong> 「BUAA OO」Unit-2 电梯调度</li>
         <li><strong>作者:</strong> Squirrel7ang</li>
         <li><strong>创建于
-                :</strong> 2024-03-03 15:08:00</li>
+                :</strong> 2024-03-31 18:55:00</li>
         
             <li>
                 <strong>更新于
-                    :</strong> 2024-03-16 22:05:33
+                    :</strong> 2024-03-31 19:03:46
             </li>
         
         <li>
-            <strong>链接:</strong> https://redefine.ohevan.com/2024/03/03/OS/Pre/
+            <strong>链接:</strong> https://redefine.ohevan.com/2024/03/31/OO/Unit-2/
         </li>
         <li>
             <strong>
@@ -979,7 +1046,7 @@ mjx-container[display="true"] + br {
             <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
                 
                     <li class="tag-item mx-0.5">
-                        <a href="/tags/OS/">#OS</a>&nbsp;
+                        <a href="/tags/OO/">#OO</a>&nbsp;
                     </li>
                 
             </ul>
@@ -990,29 +1057,14 @@ mjx-container[display="true"] + br {
         
             <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
                 
-                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-                        <a class="prev"
-                        rel="prev"
-                        href="/2024/03/13/OO/Unit-1/"
-                        >
-                            <span class="left arrow-icon flex justify-center items-center">
-                                <i class="fa-solid fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">「BUAA OO」Unit-1 表达式计算</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
                         <a class="next"
                         rel="next"
-                        href="/2024/02/01/CO/P0/"
+                        href="/2024/03/13/OO/Unit-1/"
                         >
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">「BUAA CO」P0总结</span>
+                                <span class="post-nav-title-item">「BUAA OO」Unit-1 表达式计算</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex justify-center items-center">
@@ -1075,8 +1127,8 @@ mjx-container[display="true"] + br {
             <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
-        <div class="page-title">「BUAA OS」操作系统假期预习</div>
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E4%B9%A0%E5%86%85%E5%AE%B9"><span class="nav-text">预习内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Linux"><span class="nav-text">安装Linux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A"><span class="nav-text">作业</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%82%E5%AF%9F%E8%BF%90%E8%A1%8C%E6%83%85%E5%86%B5"><span class="nav-text">观察运行情况</span></a></li></ol></li></ol>
+        <div class="page-title">「BUAA OO」Unit-2 电梯调度</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%B5%E6%A2%AF"><span class="nav-text">电梯</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%89%8D%E8%A8%80"><span class="nav-text">一、前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%A2%98%E7%9B%AE%E8%83%8C%E6%99%AF"><span class="nav-text">二、题目背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="nav-text">第一次作业</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-text">三、解题思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A-1"><span class="nav-text">第一次作业</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%88%91%E4%BB%AC%E6%9C%89%E5%93%AA%E4%BA%9B%E9%9C%80%E6%B1%82%EF%BC%9F"><span class="nav-text">1. 我们有哪些需求？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E5%93%AA%E4%BA%9B%E7%BA%BF%E7%A8%8B%EF%BC%9F"><span class="nav-text">2. 我们需要哪些线程？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%BA%BF%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB%E5%A6%82%E4%BD%95%EF%BC%88%E7%94%9F%E4%BA%A7-%E6%B6%88%E8%B4%B9%E6%A8%A1%E5%BC%8F%EF%BC%89%EF%BC%9F"><span class="nav-text">3. 线程与线程之间的关系如何（生产-消费模式）？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%BB%80%E4%B9%88%E6%98%AF%E9%94%81%EF%BC%9F%E4%BB%80%E4%B9%88%E6%98%AF%E5%90%8C%E6%AD%A5%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="nav-text">4. 什么是锁？什么是同步方法？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%94%B5%E6%A2%AF%E8%BF%90%E8%A1%8C%E7%AD%96%E7%95%A5"><span class="nav-text">5. 电梯运行策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E8%AE%BE%E8%AE%A1%E5%88%86%E6%9E%90"><span class="nav-text">四、设计分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A-2"><span class="nav-text">第一次作业</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%B0%83%E5%BA%A6%E7%AD%96%E7%95%A5%E9%80%89%E6%8B%A9"><span class="nav-text">五、调度策略选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-ALS%E8%B0%83%E5%BA%A6%E7%AD%96%E7%95%A5"><span class="nav-text">1. ALS调度策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SCAN-LOOK%E7%AD%96%E7%95%A5"><span class="nav-text">2. SCAN&#x2F;LOOK策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-LOOK-ALS"><span class="nav-text">3. LOOK + ALS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%88%91%E7%9A%84%E7%AE%97%E6%B3%95"><span class="nav-text">4. 我的算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%80%BB%E7%BB%93"><span class="nav-text">5. 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%AE%BE%E8%AE%A1%E5%8F%8D%E6%80%9D"><span class="nav-text">六、设计反思</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81Bug-Debug"><span class="nav-text">七、Bug &amp; Debug</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84Bug"><span class="nav-text">遇到的Bug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Debug%E7%AD%96%E7%95%A5"><span class="nav-text">Debug策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E5%BF%83%E5%BE%97%E4%BD%93%E4%BC%9A"><span class="nav-text">八、心得体会</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E8%AF%BE%E7%A8%8B%E5%BB%BA%E8%AE%AE"><span class="nav-text">九、课程建议</span></a></li></ol></li></ol>
 
     </div>
 </div>
