@@ -1258,12 +1258,14 @@ ele --&gt; rq</pre>
 <h4 id="8-多产品的生产消费模型"><a href="#8-多产品的生产消费模型" class="headerlink" title="8. 多产品的生产消费模型"></a>8. 多产品的生产消费模型</h4><p>电梯的重置<code>RESET</code>有至少两种实现方式：一种是将<code>RESET</code>作为一种属性写入电梯中，电梯每次切换状态需要查看是否处于需要<code>RESET</code>的状态，需要则<code>RESET</code>。但是如果有多个<code>RESET</code>指令同时涌进来的话，前一条<code>RESET</code>指令就会被覆盖掉，不过由于第六次和第七次作业的约束（同一电梯的两条<code>RESET</code>不能有太近的时间间隔），这种情况几乎不可能发生。</p>
 <p>另一种实现方式是将<code>RESET</code>看成另一种产品传递给电梯，构建区别于乘客这种产品的另一条生产-消费供应链。这就产生了多产品的生产消费模型。这给控制设计带来了不少的麻烦（自己写一遍就知道问题了）。</p>
 <p>解决方案：让多产品的输入共用一把锁，使用<code>Check-and-Act</code>行为进行设计。</p>
+<h4 id="9-停不下来"><a href="#9-停不下来" class="headerlink" title="9. 停不下来"></a>9. 停不下来</h4><p>解决方案：具体停不下来的原因千奇百怪，设置合适的终止条件基本就能停下来了</p>
 <h3 id="Debug策略"><a href="#Debug策略" class="headerlink" title="Debug策略"></a>Debug策略</h3><p>多线程<code>Debug</code>是一件麻烦事，不过<code>IDEA</code>帮我们做了不少工作。<code>IDEA</code>中右键断点的红点点可以选择默认多线程<code>Debug</code>，因而在每一个线程运行到这一行代码的时候都能够停下来（不过我倒是很好奇<code>gdb</code>有没有这种功能）。缺点就是实际上运行时不会有线程停下来，所以导致运行和调试可能带来不同。即便如此，<code>Debug</code>还是麻烦的：<code>Debug</code>效率本来就低，现在还要同时在六个电梯线程中打断点，这我真的受不了一点。<strong>所以我直接<code>print</code>大法调试</strong>。我在每一个我需要用到的类里面写了一个<code>debug()</code>方法，用于往终端输出该对象的信息。另外建议将<code>printf</code>大法打印出来的信息直接输出到标准错误输出，因为<code>IDEA</code>中标准错误输出是红色的。</p>
 <p><strong>在第六次和第七次作业中我写了一个<code>Debug</code>类（里面全是静态方法），所有的printf函数都是调用Debug类的静态方法完成的</strong>。并且在<code>Debug</code>类中设置了一个参数<code>valid</code>，输出当且仅当<code>valie = true</code>，否则不会输出debug调试信息。</p>
 <h2 id="七、心得体会"><a href="#七、心得体会" class="headerlink" title="七、心得体会"></a>七、心得体会</h2><p>首先印象最深的是关于<code>synchronized</code>关键字。<code>synchronized</code>的同步语句块或者同步方法只需要在共享对象上使用，或者更一般地，只需要在多个线程产生访存冲突的地方使用。合适的<code>synchronized</code>可以更好地保证程序的正确性和安全性。在第五次作业中，由于滥用<code>synchronized</code>关键字，我得到了非常糟糕的第五次作业初稿。</p>
 <p>此外，这次作业也算是掌握了一些基本的多线程编程的基本思想。生产-消费模型是多线程或者并行编程中的一个最基本的模型，电梯分配属于他们的一个简化版本：没有产品上限，不需要考虑生产消费速度，也几乎不需要考虑某一个电梯闲置时间过长的情况（顶多强测分数低一点）。此外，<code>JAVA</code>提供了非常舒适的多线程编程方法，在其他并行编程模型中不一定会有这么舒适的选项。</p>
 <p>最重要的，应该是对多线程有了更深的理解吧。个人感觉这种多线程编程、并行编程的编程方法，在日后的编程学习中应当会有非常好的应用，而且不一定会有机会再接触到了。</p>
 <h2 id="八、课程建议"><a href="#八、课程建议" class="headerlink" title="八、课程建议"></a>八、课程建议</h2><p>不知道第三单元和第四单元学些什么，但是第二单元多线程确实蛮有用的，如果后两单元没啥大事的话个人认为其实可以把这一单元延长一点…点。</p>
+<p>（好像还是说了很多废话…）</p>
 ]]></content>
       <categories>
         <category>OO</category>
