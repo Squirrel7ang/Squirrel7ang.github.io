@@ -25,14 +25,24 @@
 <meta property="og:site_name" content="Squirrel7ang Blog">
 <meta property="og:description" content="电梯能随意踢人？？？">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U2/hw1_method_complexity.png">
-<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U2/hw1_class_complexity.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U2/hw5_coouml.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U2/hw5_uml.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U2/hw5_method.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U2/hw5_class.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U2/hw6_coouml.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U2/hw6_method.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U2/hw6_class.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U2/hw7_coouml.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U2/hw7_uml.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U2/hw7_method.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U2/hw7_class.png">
+<meta property="og:image" content="https://squirrel7ang.github.io/images/OO/U2/ElevatorThreadComplexity.png">
 <meta property="article:published_time" content="2024-03-31T10:55:00.000Z">
-<meta property="article:modified_time" content="2024-03-31T11:20:50.810Z">
+<meta property="article:modified_time" content="2024-04-19T07:04:15.792Z">
 <meta property="article:author" content="Squirrel7ang">
 <meta property="article:tag" content="OO">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://squirrel7ang.github.io/images/OO/U2/hw1_method_complexity.png">
+<meta name="twitter:image" content="https://squirrel7ang.github.io/images/OO/U2/hw5_coouml.png">
     
     
     <!--- Icon Part-->
@@ -841,8 +851,8 @@ mjx-container[display="true"] + br {
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2024-03-31 19:20:50</span>
-            <span class="mobile">2024-03-31 19:20:50</span>
+            <span class="desktop">2024-04-19 15:04:15</span>
+            <span class="mobile">2024-04-19 15:04:15</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -896,8 +906,9 @@ mjx-container[display="true"] + br {
 
 
         <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-            <h1 id="电梯"><a href="#电梯" class="headerlink" title="电梯"></a>电梯</h1><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>考虑到第一次博客写的实在是太复杂，第二次作业的博客我希望能够按照更加清晰的结构来叙述我的设计。在这次博客中，我将解题思路单独叙述，再进一步叙述我的设计架构。</p>
-<h2 id="二、题目背景"><a href="#二、题目背景" class="headerlink" title="二、题目背景"></a>二、题目背景</h2><h3 id="第一次作业"><a href="#第一次作业" class="headerlink" title="第一次作业"></a>第一次作业</h3><h4 id="1-题目背景"><a href="#1-题目背景" class="headerlink" title="1. 题目背景"></a>1. 题目背景</h4><ol>
+            <h1 id="电梯"><a href="#电梯" class="headerlink" title="电梯"></a>电梯</h1><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>考虑到第一次博客写的实在是太复杂，第六次作业的博客我希望能够按照更加清晰的结构来叙述我的设计。在这次博客中，我将解题思路单独叙述，再进一步叙述我的设计架构。</p>
+<h2 id="二、题目背景"><a href="#二、题目背景" class="headerlink" title="二、题目背景"></a>二、题目背景</h2><p>重述题目，熟悉题目的话可以跳过这一部分。</p>
+<h3 id="第五次作业"><a href="#第五次作业" class="headerlink" title="第五次作业"></a>第五次作业</h3><h4 id="1-题目背景"><a href="#1-题目背景" class="headerlink" title="1. 题目背景"></a>1. 题目背景</h4><ol>
 <li>六部电梯</li>
 <li>每部电梯单独工作</li>
 <li>每个人只能等它指定的一部电梯</li>
@@ -926,7 +937,36 @@ mjx-container[display="true"] + br {
 <li>不要让一个人等太久。（等待时间只按电梯到抵达目标楼层的时间）（乘客要爽）</li>
 <li>不要让电梯无效运行。（电费要少）</li>
 </ol>
-<h2 id="三、解题思路"><a href="#三、解题思路" class="headerlink" title="三、解题思路"></a>三、解题思路</h2><h3 id="第一次作业-1"><a href="#第一次作业-1" class="headerlink" title="第一次作业"></a>第一次作业</h3><h3 id="1-我们有哪些需求？"><a href="#1-我们有哪些需求？" class="headerlink" title="1. 我们有哪些需求？"></a>1. 我们有哪些需求？</h3><p>纵观题目，我们可以得出一个简单的结构设计：</p>
+<h3 id="第六次作业"><a href="#第六次作业" class="headerlink" title="第六次作业"></a>第六次作业</h3><h4 id="1-题目背景-1"><a href="#1-题目背景-1" class="headerlink" title="1. 题目背景"></a>1. 题目背景</h4><p>只叙述有改动的地方：</p>
+<ol>
+<li>每个人不再制定电梯。</li>
+<li>每个人可以被调度器分配到任何一个电梯，分配后除非重置，否则不可更改。</li>
+<li>电梯在把分配到自己的乘客全部运送完之后，除非有新的乘客再被分配进来，否则不应该再移动（移动会判错）。</li>
+<li>乘客在被分配到电梯后应该输出<code>RECEIVE</code>语句，也就是要输出一些东西表明乘客分配到了这部电梯。</li>
+<li>电梯支持<code>RESET</code>命令，<code>RESET</code>通过标准输入输入进来，电梯必须在5s内响应<code>RESET</code>请求，并且在这5s中最多移动两层楼（输出两次<code>ARRIVE</code>）。响应<code>RESET</code>请求的标志为输出<code>RESET_BEGIN</code>语句。</li>
+<li><code>RESET</code>需要1.2s完成，并在完成时输出<code>RESET_END</code>语句表明<code>RESET</code>完成。</li>
+<li><code>RESET</code>是用于设置电梯的新的运行状态的，这包括移动一层楼的速度和满载人数。</li>
+<li><code>RESET</code>期间电梯里不能有人（可能需要踢人），<code>RESET</code>要在关门时才能<code>RESET</code>。</li>
+<li><code>RESET</code>期间电梯不能接受新乘客。</li>
+<li>先前被电梯接到的人在该电梯<code>RESET</code>后需要重新<code>RECEIVE</code>，当然这也意味着电梯<code>RESET</code>后可以原本的乘客可以不再坐这部电梯。</li>
+</ol>
+<h4 id="2-评价标准-1"><a href="#2-评价标准-1" class="headerlink" title="2. 评价标准"></a>2. 评价标准</h4><p>和上次作业几乎完全相同。</p>
+<h3 id="第七次作业"><a href="#第七次作业" class="headerlink" title="第七次作业"></a>第七次作业</h3><h4 id="1-题目背景-2"><a href="#1-题目背景-2" class="headerlink" title="1. 题目背景"></a>1. 题目背景</h4><p>只叙述有改动的地方：</p>
+<ol>
+<li>增加双轿厢电梯。电梯初始默认单轿厢电梯，接受第二类<code>RESET</code>后转变为双轿厢电梯。</li>
+<li>增加第二类<code>RESET</code>请求，用于将电梯重置为双轿厢电梯，<code>RESET</code>用时1.2s。相当于把单轿厢拆掉新建了一个双轿厢电梯。第二类<code>RESET</code>请求包括双轿厢电梯的换乘楼层、移动速度、最大人数等。</li>
+<li>双轿厢在没有收到<code>RECEIVE</code>请求时仍然可以移动。</li>
+<li>双轿厢分为下层轿厢<code>轿厢A</code>和上层轿厢<code>轿厢B</code>，<code>轿厢A</code>只能在换乘楼层及其下方楼层移动，<code>轿厢B</code>只能在换乘楼层及其上方楼层移动。</li>
+<li>电梯在重置为双轿厢电梯后，<code>轿厢A</code>默认在换乘楼层的下面一层，<code>轿厢B</code>默认在换乘楼层的上面一层，</li>
+<li>双轿厢电梯不接受<code>RESET</code>。输入保证不会出现这种情况。</li>
+<li>显然，双轿厢电梯不能Crush。换乘楼层同时只能有一部电梯。</li>
+<li>乘客只要离开轿厢（输出<code>OUT</code>）就需要重新<code>RECEIVE</code>。</li>
+</ol>
+<h4 id="2-评价标准-2"><a href="#2-评价标准-2" class="headerlink" title="2. 评价标准"></a>2. 评价标准</h4><ol>
+<li>双轿厢电梯的耗电量是正常电梯的1/4。这无疑增加了影子电梯的编写难度。</li>
+</ol>
+<h2 id="三、解题思路"><a href="#三、解题思路" class="headerlink" title="三、解题思路"></a>三、解题思路</h2><p>具体的代码设计架构在第四部分。不想看解题思路的可以跳过。</p>
+<h3 id="第五次作业-1"><a href="#第五次作业-1" class="headerlink" title="第五次作业"></a>第五次作业</h3><h4 id="1-我们有哪些需求？"><a href="#1-我们有哪些需求？" class="headerlink" title="1. 我们有哪些需求？"></a>1. 我们有哪些需求？</h4><p>纵观题目，我们可以得出一个简单的结构设计：</p>
 <ol>
 <li>对于人来说：输入→分配到电梯→等电梯→搭电梯→出来</li>
 <li>对于电梯来说：读等待的人→决定要不要接他→接/不接→送客</li>
@@ -936,78 +976,183 @@ mjx-container[display="true"] + br {
 <li><code>InputThread</code> 输入线程 - 采购</li>
 <li><code>Schedule</code> 分配线程 - 把人分给电梯吃</li>
 <li><code>Elevator</code> 电梯线程 - 吃人吐人</li>
-<li><code>Client</code> 顾客类 - 人</li>
+<li><code>Client</code> 顾客类 - 人<br>然后，我们接着模块化，简化对象但是增加对象数量：</li>
+<li><code>RequestQueue</code> 请求队列 - 采购但是没有被分配的人</li>
+<li><code>WaitQueue</code> 等待队列 - 分配但是没有被电梯吃掉的人</li>
+<li><code>Strategies</code> 策略类 - 决定电梯先吃哪个人<br>剩余的类不起到决定性效果，只是起了一点辅助作用，在此不在列举。</li>
 </ol>
-<p>然后，我们接着模块化，简化对象但是增加对象数量：<br>5. <code>RequestQueue</code> 请求队列 - 采购但是没有被分配的人<br>6. <code>WaitQueue</code> 等待队列 - 分配但是没有被电梯吃掉的人<br>7. <code>Strategies</code> 策略类 - 决定电梯先吃哪个人<br>剩余的类不起到决定性效果，只是起了一点辅助作用，在此不在列举。</p>
-<h3 id="2-我们需要哪些线程？"><a href="#2-我们需要哪些线程？" class="headerlink" title="2. 我们需要哪些线程？"></a>2. 我们需要哪些线程？</h3><p>先理一理要求和思路：</p>
+<h4 id="2-我们需要哪些线程？"><a href="#2-我们需要哪些线程？" class="headerlink" title="2. 我们需要哪些线程？"></a>2. 我们需要哪些线程？</h4><p>先理一理要求和思路：</p>
 <ol>
 <li>首先毫无疑问，我们需要<strong>1个输入线程</strong>。</li>
 <li>六部电梯需要单独运行，因此需要一个<strong>6个电梯运行线程</strong>。</li>
 <li>但是考虑到之后的作业，我们应该需要一个调度器，用于将乘客分配给不同的电梯。因此我们可以再新建<strong>1个调度器线程</strong>。</li>
-<li>我们希望电梯开关门期间可以进入新乘客，而不是<code>sleep(200)</code>休眠200毫秒。考虑到休眠期间电梯是不会进行输入的，我们可以再新建<strong>6个电梯输入线程</strong>。</li>
-<li>经过实践，我发现第四点思考难以实现。直接删掉</li>
+<li>我们希望电梯开关门期间可以进入新乘客，而不是<code>sleep(200)</code>休眠200毫秒。考虑到休眠期间电梯是不会进行输入的，我们可以再新建<strong>6个电梯管理线程</strong>。</li>
+<li>经过实践，我发现第四点思考难以实现也并不必要。直接删掉。</li>
 <li>总结一下，<strong>1个输入，1个调度，6个电梯</strong>。</li>
 </ol>
-<h3 id="3-线程与线程之间的关系如何（生产-消费模式）？"><a href="#3-线程与线程之间的关系如何（生产-消费模式）？" class="headerlink" title="3. 线程与线程之间的关系如何（生产-消费模式）？"></a>3. 线程与线程之间的关系如何（生产-消费模式）？</h3><p>这是一个很奇怪的问题，在吃了苦头之前我甚至都没有问过自己这个问题。</p>
+<h4 id="3-线程与线程之间的关系如何（生产-消费模式）？"><a href="#3-线程与线程之间的关系如何（生产-消费模式）？" class="headerlink" title="3. 线程与线程之间的关系如何（生产-消费模式）？"></a>3. 线程与线程之间的关系如何（生产-消费模式）？</h4><p>这是一个很奇怪的问题，在吃了苦头之前我甚至都没有问过自己这个问题。</p>
 <p>电梯单元采用的多线程设计模式比较简单，即生产-消费模式。在我的设计中，生产消费关系有俩：输入和调度、调度和电梯。</p>
-<h4 id="1-输入线程和调度线程"><a href="#1-输入线程和调度线程" class="headerlink" title="(1) 输入线程和调度线程"></a>(1) 输入线程和调度线程</h4><p>输入进来的乘客需要交给调度线程，由调度线程经过合适的调度策略（在这次作业中，调度策略就是把乘客调度到它指定的电梯）交给电梯。因此输入和调度线程构成生产-消费关系：<strong>输入不断生产客户，调度器不断消费客户</strong>。而存放生产出来的产品的地方正是<code>RequestQueue</code>类。</p>
-<h4 id="2-调度线程和电梯线程"><a href="#2-调度线程和电梯线程" class="headerlink" title="(2) 调度线程和电梯线程"></a>(2) 调度线程和电梯线程</h4><p><strong>调度器会将自己得到的客户交给电梯，由电梯进行消费</strong>。从输入进来的顾客会在输出后被释放，因此到这里为止搭乘电梯的顾客构成的供应链就到达链的末尾了。存放生产出来的客户的是我们的<code>WaitQueue</code>类，也就是在指定电梯面前等待的客户构成的集合。这样的集合一共有六个，每个电梯各一个。</p>
-<h3 id="4-什么是锁？什么是同步方法？"><a href="#4-什么是锁？什么是同步方法？" class="headerlink" title="4. 什么是锁？什么是同步方法？"></a>4. 什么是锁？什么是同步方法？</h3><p>写这个板块纯粹是因为我在<code>synchronized</code>方法上吃了苦头。总结起来我最开始不理解的地方大概就只有这么几点：</p>
+<h6 id="1-输入线程和调度线程"><a href="#1-输入线程和调度线程" class="headerlink" title="(1) 输入线程和调度线程"></a>(1) 输入线程和调度线程</h6><p>输入进来的乘客需要交给调度线程，由调度线程经过合适的调度策略（在这次作业中，调度策略就是把乘客调度到它指定的电梯）交给电梯。因此输入和调度线程构成生产-消费关系：输入不断生产客户，调度器不断消费客户。而存放生产出来的产品的地方正是<code>RequestQueue</code>类。</p>
+<h6 id="2-调度线程和电梯线程"><a href="#2-调度线程和电梯线程" class="headerlink" title="(2) 调度线程和电梯线程"></a>(2) 调度线程和电梯线程</h6><p>调度器会将自己得到的客户交给电梯，由电梯进行消费。从输入进来的顾客会在输出后被释放，因此到这里为止搭乘电梯的顾客构成的供应链就到达链的末尾了。存放生产出来的客户的是我们的<code>WaitQueue</code>类，也就是在指定电梯面前等待的客户构成的集合。这样的集合一共有六个，每个电梯各一个。</p>
+<h4 id="4-什么是锁？什么是同步方法？"><a href="#4-什么是锁？什么是同步方法？" class="headerlink" title="4. 什么是锁？什么是同步方法？"></a>4. 什么是锁？什么是同步方法？</h4><p>写这个板块纯粹是因为我在<code>synchronized</code>方法上吃了苦头。总结起来我最开始不理解的地方大概就只有这么几点：</p>
 <ol>
 <li>每一个<code>synchronized</code>部分一次只能由一个获得了指定锁的线程运行。这种指定的锁只有一把，当这个线程在运行的时候它就占有了锁，其他线程必定就没有占有锁，因此其他线程必定无法运行。</li>
-<li>每一个<code>synchronized</code>锁就是一个对象。同步方法的锁就是调用这个同步方法的对象本身。静态同步方法锁的是类对象本身，简单理解就是这<strong>整个类的所有静态同步方法共同竞争的一把锁</strong>，它不会影响非静态同步方法。</li>
+<li>每一个<code>synchronized</code>锁就是一个对象。同步方法的锁就是这个同步方法所处的对象本身。静态同步方法锁的是类对象本身，简单理解就是这整个类的所有静态同步方法共同竞争的一把锁，它不会影响非静态同步方法。</li>
 <li><strong>没事别吃饱了撑的把所有方法都锁上。</strong> 只有线程与线程产生竞争的部分需要上锁。竞争的部分是设计决定的，适当地将方法设置为private方法或许是一个好的选择。</li>
 <li>原则上同步方法都应该在交出锁之前<code>notify</code>，<strong>但是有一个情况例外</strong>：就是这个同步方法是被另一个同步方法调用的。这时这个同步方法哪怕结束了，锁也不会被释放。这时不需要<code>notify</code>，否则就轮询了。</li>
 <li><strong>同一对象的同步方法调用该对象的同步方法是不会死锁的。</strong> 运行父方法就会得到这个对象的锁，而在调用叶方法的时候父方法会发现已经有锁了，于是大胆进入叶方法里头。</li>
 <li><strong>在生产-消费模型中，基本上只有涉及到共享数据对象的时候才会出现同步方法。</strong> 其他时候不怎么使用也不需要过多担心，否则可能就要狠狠担心一下了。</li>
 </ol>
-<h3 id="5-电梯运行策略"><a href="#5-电梯运行策略" class="headerlink" title="5. 电梯运行策略"></a>5. 电梯运行策略</h3><p>详细见调度策略选择。</p>
-<h2 id="四、设计分析"><a href="#四、设计分析" class="headerlink" title="四、设计分析"></a>四、设计分析</h2><h3 id="第一次作业-2"><a href="#第一次作业-2" class="headerlink" title="第一次作业"></a>第一次作业</h3><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U2/hw1_method_complexity.png" alt="hw1_method_complexity"></p>
-<p>所有圈复杂度较高的方法我都看了一圈，事实就是<strong>if-else及其嵌套太多</strong>。每一个if-else里面的内容就两行：一行设置下一个状态，一行return。<strong>我当然可以拆开这些if-else，然后把每一次嵌套都封装成一个私有方法，但是我并不认为这样优化会让可读性变高，反而可能会过度封装</strong>。</p>
-<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U2/hw1_class_complexity.png" alt="hw1_class_complexity"></p>
-<p>我承认Strategies类写的确实不太好，不过我已经不知道怎么优化了。至于Elevator类和WaitQueue类我倒是不是很担心，我在写一个类的时候会根据外界需求在里面封装好许多好用的方法，哪怕这些方法可能并不会用到，就有点像自己搓一个小的库一样吧。这使得方法复杂度很高，但是实际上既不影响可读性，我也不认为与封装的思想相矛盾。</p>
-<p>另一方面，<strong>由于我设置了UP和DOWN两个状态，导致几乎所有和上与下有关的代码都会高度对称</strong>。后面我了解到原来枚举类型也是可以设置方法的，这样子我或许可以将这部分代码简化不少。</p>
-<h2 id="五、调度策略选择"><a href="#五、调度策略选择" class="headerlink" title="五、调度策略选择"></a>五、调度策略选择</h2><p>这里叙述几种常用的策略和我的选择：</p>
-<h3 id="1-ALS调度策略"><a href="#1-ALS调度策略" class="headerlink" title="1. ALS调度策略"></a>1. ALS调度策略</h3><p>我至今也不知道ALS到底是什么的缩写，但是只要在互联网上搜索“ALS调度策略”，我们一定能找到北航计院的身影。</p>
-<p>ALS的调度策略很简单：</p>
+<h4 id="5-电梯运行策略"><a href="#5-电梯运行策略" class="headerlink" title="5. 电梯运行策略"></a>5. 电梯运行策略</h4><p>详细见第五部分“五、调度策略选择”</p>
+<h3 id="第六次作业-1"><a href="#第六次作业-1" class="headerlink" title="第六次作业"></a>第六次作业</h3><h4 id="1-有哪些改动？"><a href="#1-有哪些改动？" class="headerlink" title="1. 有哪些改动？"></a>1. 有哪些改动？</h4><p>第六次作业的主要改动有两个方面：一个是<code>RESET</code>，一个是乘客不知道进哪个电梯，需要调度器去调度乘客。</p>
+<p>我们来分析一下我们现在的线程情况。</p>
+<p>首先，一个输入线程，一个调度器线程，六个电梯线程，这八个线程应该是没得跑了。六个电梯显示关系实在是太复杂了，我们先考虑一个电梯，也就是先考虑3个线程先。（直觉告诉我们，六个电梯彼此应该没有太多的关系。）</p>
+<pre class="mermaid">graph TD
+in(输入)
+sch(调度器)
+ele(电梯)</pre>
+
+<p>然后检查一下这三个线程的关系：</p>
+<pre class="mermaid">graph LR
+in(输入)
+sch(调度器)
+ele(电梯)
+wq(等待队列)
+rq(请求/输入队列)
+rs(重置信号队列)
+
+in --&gt; rq --&gt; sch
+in --&gt; rs --&gt; ele
+sch --&gt; wq --&gt; ele
+ele --&gt; rq</pre>
+
+<p>其中，箭头表示生产-消费传递链。然后可以分离出电梯这个模块：</p>
+<div class="highlight-container" data-rel="Text"><figure class="iseeu highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">	                                +------------------+</span><br><span class="line">									|   **Elevator**   |</span><br><span class="line">									+------------------+</span><br><span class="line">   +--------------------------------|--&gt; ResetQueue    |</span><br><span class="line">   |                                |                  |</span><br><span class="line">Input            +--&gt; Scheduler ----|--&gt; WaitQueue     |</span><br><span class="line">   |             |                  |                  |</span><br><span class="line">   +--&gt; RequestQueue &lt;--------------|--- KickOut       |</span><br><span class="line">                                    +------------------+</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="2-线程终止条件"><a href="#2-线程终止条件" class="headerlink" title="2. 线程终止条件"></a>2. 线程终止条件</h4><p>和第五次作业不同，第六次作业中电梯不再只是消费者：被电梯踢出来的乘客会重新进入调度器接受调度，因此电梯在某种意义上也是生产者。</p>
+<p><strong>生产和消费构成的闭环会导致一个问题：电梯和调度器线程根本停不下来！</strong> 调度器需要查看<code>RequestQueue</code>判断是否停止：如果<code>RequestQueue</code>为空并且结束了就把电梯也停下来。<code>RequestQueue</code>的结束是依赖于电梯线程的，电梯线程只要不停，<code>RequestQueue</code>就停不下来，调度器也停不下来，进而电梯也停不下来，使得程序无法结束运行。</p>
+<p>为什么会出现这种情况呢？因为在闭环中只查看线程之间存放乘客的共享对象，是无法给生产消费链画上终止符号的。我们需要更多信息。对于调度器线程来说，它不仅仅需要知道共享对象的状态，还需要知道电梯线程的状态才行。再调度器得知输入线程结束了之后，调度器线程还需要确认电梯将所有的乘客都送完了才行。</p>
+<p><strong>所以解决方案很简单：调度器如果发现输入线程结束了，并且没有人需要调度，并且每个电梯都没有人了，就让所有电梯都停下来，并且自己结束运行。</strong></p>
+<h4 id="3-调度器调度策略"><a href="#3-调度器调度策略" class="headerlink" title="3. 调度器调度策略"></a>3. 调度器调度策略</h4><p>详细见第五部分“五、调度策略选择”</p>
+<h3 id="第七次作业-1"><a href="#第七次作业-1" class="headerlink" title="第七次作业"></a>第七次作业</h3><h4 id="1-有哪些改动"><a href="#1-有哪些改动" class="headerlink" title="1. 有哪些改动"></a>1. 有哪些改动</h4><p>第七次作业是最后一次重构的机会了！我把握住了，然后写了一tuo…</p>
+<p>个人认为第七次作业可能会遇到这些问题：</p>
 <ol>
-<li><strong>电梯有人时，谁先到电梯就先送谁</strong></li>
-<li><strong>电梯没人时，去接最早来的人</strong></li>
-<li><strong>同向能捎带就捎带</strong></li>
+<li>双轿厢电梯和单轿厢电梯一共有三个线程，但是不会同时启用。那么应该由谁来管理这些线程？</li>
+<li>如何处理双轿厢电梯在换乘楼层的冲突？</li>
+<li>设计单双轿厢电梯，线程之间如何交互？</li>
 </ol>
-<p>ALS的缺点很明显</p>
+<h4 id="2-谁来管理电梯线程"><a href="#2-谁来管理电梯线程" class="headerlink" title="2. 谁来管理电梯线程"></a>2. 谁来管理电梯线程</h4><p>第七次作业中的电梯线程的管理其实很简单：创建单轿厢电梯、销毁单轿厢电梯、创建双轿厢电梯。所以主要矛盾集中在单双轿厢电梯的切换上。很难让单轿厢电梯创建双轿厢电梯（因为逻辑上很奇怪）所以强烈建议<strong>加入一个中间层来管理所有电梯线程</strong> （<strong>比如<code>H Boy</code>提出的创建电梯井</strong> ） 。线程的创建和销毁都是调用中间层的方法来完成的。</p>
+<p>吴老师在第八次课提到了线程池，但是我没有使用过，并不清楚。</p>
+<h4 id="3-如何处理双轿厢电梯在换乘楼层的冲突？"><a href="#3-如何处理双轿厢电梯在换乘楼层的冲突？" class="headerlink" title="3. 如何处理双轿厢电梯在换乘楼层的冲突？"></a>3. 如何处理双轿厢电梯在换乘楼层的冲突？</h4><p>换乘楼层就是临界区，临界区应当配备一把锁。进入临界区就要获得锁，否则等待。离开临界区就释放锁。</p>
+<h4 id="4-单双轿厢设计如何"><a href="#4-单双轿厢设计如何" class="headerlink" title="4. 单双轿厢设计如何"></a>4. 单双轿厢设计如何</h4><p>见第四部分“四、架构设计和分析 - 第三次作业”。</p>
+<h2 id="四、架构设计和分析"><a href="#四、架构设计和分析" class="headerlink" title="四、架构设计和分析"></a>四、架构设计和分析</h2><p>这是代码架构分析，不包含任何解题思路。解题思路请看第三部分“三、解题思路”</p>
+<h3 id="第五次作业-2"><a href="#第五次作业-2" class="headerlink" title="第五次作业"></a>第五次作业</h3><h4 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h4><p>第五次架构设计比较简单，实现的功能也比较简单。整体设计从UML协作图中基本可以看的清清楚楚，个人认为没有太多地方需要特别叙述。解题思路</p>
+<h5 id="UML协作图"><a href="#UML协作图" class="headerlink" title="UML协作图"></a>UML协作图</h5><p>在网上搜了一圈，感觉协作图（通信图）五花八门。有利用时序图来画协作图的，有我下面这样的，有利用方块表示类的。我认为只要能够说清楚线程之间的写作关系就行，因此我打算在三次作业的协作图中使用下图的形式。</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U2/hw5_coouml.png" alt="hw5_coouml"></p>
+<p>整体上就是一个生产消费模型，输(gong)入(chang)线程生产乘客，交给调(tao)度(bao)平台调度，最后交(mai)给电梯消费掉。</p>
+<h5 id="UML类图"><a href="#UML类图" class="headerlink" title="UML类图"></a>UML类图</h5><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U2/hw5_uml.png" alt="hw5_uml"></p>
+<h4 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U2/hw5_method.png" alt="hw5_method"></p>
+<p>所有圈复杂度较高的方法我都看了一圈，事实就是<strong>if-else及其嵌套太多</strong>，用于各种条件判断。每一个if-else里面的内容就两行：一行设置下一个状态，一行return。我当然可以拆开这些if-else，然后把每一次嵌套都封装成一个私有方法，但是我并不认为这会让可读性变高，反而可能会过度封装。此外可以发现，<strong>复杂度过高的方法其实都被私有化了</strong>。</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U2/hw5_class.png" alt="hw5_class"></p>
+<p>我承认Strategies类写的确实不太好，不过我已经不知道怎么优化了。至于Elevator类和WaitQueue类我倒是不是很担心，我在写一个类的时候会根据外界需求在里面封装好许多好用的方法，哪怕这些方法可能并不会用到，就有点像自己搓一个小的库一样吧。这使得方法复杂度很高，但是实际上既不影响可读性，我也不认为与封装的思想相矛盾。在之后的作业中我沿用了这个类，导致复杂度一直降不下来。</p>
+<p>另一方面，<strong>由于我设置了UP和DOWN两个状态，导致几乎所有和上与下有关的代码都会高度相似、对称</strong>。后面我了解到原来枚举类型也是可以设置方法的，这样子我或许可以将这部分代码简化不少。</p>
+<h3 id="第六次作业-2"><a href="#第六次作业-2" class="headerlink" title="第六次作业"></a>第六次作业</h3><p>整体上分了三类线程类和三类共享对象，具体如下图所示。个人认为整体还是比较清晰的。</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U2/hw6_coouml.png" alt="hw6_coouml"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U2/hw6_method.png" alt="hw6_method"></p>
+<p>仍然是策略类的方法复杂度过高，过高原因同第五次作业相同：单纯因为需要很多的条件判断。但是整体上可读性还是蛮高的：各种<code>if-else</code>判断整体来说看得还是比较清楚的。</p>
+<p>其次复杂的事<code>Elevator</code>类中的<code>actWait()</code>和<code>run()</code>方法。<code>actWait()</code>由于设计遗留的历史原因，他和<code>run()</code>方法其实有一部分代码高度相似。<strong>当时在写的时候想了半天没有想明白应该怎么设计多线程的终止条件，于是写了一个很复杂的终止条件判断</strong>，最后结果是放在<code>Elevator.run()</code>也觉得怪，放在<code>actWait()</code>中也觉得怪，所以就把两边的代码都保留了。实际上终止条件并没有这么复杂，不过我在写完第三次作业之前都不知道要怎么设计，算是一个小遗憾吧。</p>
+<p><code>SchStrategy</code> 的 <code>onTheWay()</code> 方法由于时间问题，虽然写了但是没有启用，姑且不认为它复杂。<code>TestMain</code>是用于测试的代码，未提交至平台上。</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U2/hw6_class.png" alt="hw6_class"></p>
+<p><code>WaitQueue</code>的复杂度来源于各种不同限制条件下的查询和检索：查询高于某一楼层的希望向上走的乘客、查询该层楼下所有向下的乘客等等。每个方法并不复杂，但是由于方法实在太多，复杂度不得不上来。</p>
+<p><code>Elevator</code>类的主要复杂度就是上面提到的几个复杂度较高的方法。删去后方法复杂度马上降下来了。</p>
+<p><code>EleStrategy</code>的方法复杂度和第五次作业的<code>Strategies</code>复杂度完全一致，不过多叙述。</p>
+<h3 id="第七次作业-2"><a href="#第七次作业-2" class="headerlink" title="第七次作业"></a>第七次作业</h3><p>第七次作业的主要改动在于封装了电梯。</p>
+<p>在第五次和第六次作业中我一直是让线程对象<strong>直接调用共享对象中的方法</strong>来完成添加乘客，删除乘客等操作。但是后面发现似乎并不一定需要直接调用共享对象的方法，而<strong>可以将共享对象封装到其他对象中</strong>，调用其他对象的方法来完成。</p>
+<p>比方说，如果调度器要将乘客加入到电梯中，我们会说：“把这个家伙分配给这个电梯！”而不会说：“把这个乘客放到这个电梯的等待队列中。”对于调度器来说，前者的思想更符合我个人的直觉。</p>
+<p>这有什么区别呢？前者我们将电梯的等待队列的概念隐藏了，<strong>电梯对于外界而言没有等待队列的概念，外界只知道自己将一个乘客分配给了这个电梯</strong>。但是后者却将电梯的等待队列暴露了出来。</p>
+<p>直接上协作图吧。</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U2/hw7_coouml.png" alt="hw7_coouml"></p>
+<p>关系个人认为还是很清晰的。主要是添加<code>TrashCarrier</code>现成将电梯完全封装了起来后结构变得十分清晰。</p>
+<p>类图则稍微复杂了一点。我删除了所有私有化方法（继承接口是一点不会啊）</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U2/hw7_uml.png" alt="hw7_uml"></p>
+<p>从中可以看出虽然加入了<code>Elevator</code>中间层，但是这没有降低多少设计复杂度。单轿厢类、电梯线程类和电梯中间层类应该有更清晰的层次关系，但是当时设计没有想太多，于是就写成这样了。</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U2/hw7_method.png" alt="hw7_method"></p>
+<p><code>EleStrategy</code>即为先前的<code>Strategy</code>和<code>Strategies</code>类，复杂原因已经在前文中叙述过，在此不再叙述。</p>
+<p><code>TestMain</code>是测试的一部分，不属于项目，也不会提交至评测平台。</p>
+<p><code>ElevatorThread.run()</code>的主要复杂度来和第六次作业一样，源于结束条件的判断。不过相比第六次作业已经有了很大程度上的降低。</p>
+<p><code>Elevator.outputString()</code>是一个用于输出的静态方法。对于单双轿厢电梯，双轿厢的上下层电梯都需要特判后才能进行输出，这导致设计的圈复杂度增加。</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U2/hw7_class.png" alt="hw7_class"></p>
+<p><code>EleStrategy</code>的复杂度同第六次和第五次作业一致，不再过多叙述。</p>
+<p><code>ElevatorThread</code>的复杂度是我没料到的，我坚持认为它不复杂。大概就是：认知复杂度高的方法<code>essential圈复杂度</code>都很低，</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U2/ElevatorThreadComplexity.png" alt="ElevatorThreadComplexity"></p>
+<h2 id="五、调度策略选择"><a href="#五、调度策略选择" class="headerlink" title="五、调度策略选择"></a>五、调度策略选择</h2><p>这一部分是关于具体的调度器调度策略，以及电梯的调度策略的叙述和我的选择。</p>
+<p>经过第一单元的淬炼，我想第五次作业应该会有各种各样的神奇策略能够被想出来。但事实就是没人这么干。大多数人使用的都是<code>LOOK</code>策略。这里叙述几种常用的策略和我的选择：</p>
+<h3 id="第五次作业-3"><a href="#第五次作业-3" class="headerlink" title="第五次作业"></a>第五次作业</h3><p>第五次作业调度器没有任何调度策略。调度仅发生在单个电梯中</p>
+<h4 id="1-ALS调度策略"><a href="#1-ALS调度策略" class="headerlink" title="1. ALS调度策略"></a>1. ALS调度策略</h4><p>我至今也不知道<code>ALS</code>到底是什么的缩写，但是只要在互联网上搜索“ALS调度策略”，我们一定能找到北航计院的身影。</p>
+<p><code>ALS</code>的调度策略很简单：</p>
 <ol>
-<li>首先，尽管有主请求的定义，但是当电梯为空的时候，<strong>主请求很容易被捎带请求覆盖</strong>。因为只要一个空电梯捎带了一个人，那么被捎带的人就是主请求。所以这并不能避免等待时间长的人有更长的等待时间</li>
-<li>主请求容易诱导电梯，让<strong>电梯实际上并没有那么公正的策略</strong>，而是成为了一个谁手快谁占据更好的位置谁就更容易搭上电梯。</li>
-<li>电梯的不公正的接客原则还使得电梯<strong>运行路程可能会更长，使得耗电更多</strong></li>
+<li>电梯有人时，谁先到电梯就先送谁</li>
+<li>电梯没人时，去接最早来的人</li>
+<li>同向能捎带就捎带<br><code>ALS</code>的缺点很明显：</li>
+<li>首先，尽管有主请求的定义，但是当电梯为空的时候，主请求很容易被捎带请求覆盖。因为只要一个空电梯捎带了一个人，那么被捎带的人就是主请求。所以这并不能避免等待时间长的人有更长的等待时间。</li>
+<li>主请求容易诱导电梯，让电梯实际上并没有那么公正的策略，而是成为了一个谁手快谁占据更好的位置谁就更容易搭上电梯。</li>
+<li>电梯的不公正的接客原则还使得电梯运行路程可能会更长，使得耗电更多。</li>
 </ol>
-<p><strong>ALS代表了一类算法，或者说一类算法的原则：优先接最早到达的人。</strong>这是ALS的整体原则，也是我们在设计时可以考虑的原则。</p>
-<p>但是ALS并不是那么好。比如：</p>
+<p><code>ALS</code>代表了一类算法，或者说一类算法的原则：优先接最早到达的人。这是ALS的整体原则，也是我们在设计时可以考虑的原则。</p>
+<p>但是<code>ALS</code>并不是那么好。比如：</p>
 <blockquote>
-<p><strong>Example 1</strong>: 假如有一大波同学1楼到9楼，他们先按了电梯；而有另一波同学想从10楼到1楼，但是他们全部都按晚了电梯。根据ALS，他们的请求不会被响应，直到前一波人的请求全部被完成—。当电梯到9楼，电梯宁愿去接最早到的乘客，也就是1楼的乘客，也不愿意接10楼的乘客——哪怕电梯只需要上行一层楼！</p>
+<p><strong>Example 1</strong>: 假如有一大波同学1楼到9楼，他们先按了电梯；而有另一波同学想从10楼到1楼，但是他们全部都按晚了电梯。</p>
 </blockquote>
-<p>这就出现了SCAN策略和LOOK策略。</p>
-<h3 id="2-SCAN-LOOK策略"><a href="#2-SCAN-LOOK策略" class="headerlink" title="2. SCAN/LOOK策略"></a>2. SCAN/LOOK策略</h3><p>回想一下我们现在乘坐的电梯，在<code>Example 1</code>中二楼的乘客每次上电梯的时候应该会发现有一大波人从电梯里涌出来。这是因为电梯采用了<code>LOOK</code>策略。在讲<code>LOOK</code>之前，先讲一下<code>SCAN</code>策略。</p>
-<p><code>SCAN</code>策略做的事就是<strong>在最高层和最底层之间来回扫。</strong> <code>SCAN</code>没有主请求，但是顺带着却能够接到更多人。在<code>Example 1</code>当中，他们会先去接10楼的乘客——不是因为10楼的乘客优先级有多高，只是因为电梯会运行到最高层（11层）再往下运行，而往下运行的时候就正好能够捎带10楼的乘客。</p>
-<p>但是11楼是没有必要去的，因为11楼没有人。这就引出了<code>LOOK</code>策略。<code>LOOK</code>策略意在解决<code>SCAN</code>中的无效运行。<strong>在<code>LOOK</code>中，我们只需要找到最高（远）的有需求的楼层就行了</strong>：不需要到11楼，而是到10楼就行。</p>
+<p>根据<code>ALS</code>，他们的请求不会被响应，直到前一波人的请求全部被完成—。当电梯到9楼，电梯宁愿去接最早到的乘客，也就是1楼的乘客，也不愿意接10楼的乘客——哪怕电梯只需要上行一层楼！</p>
+<p>事实上，不加改进的<code>ALS</code>策略的实(qiang)际(ce)表现也不佳。这就出现了<code>SCAN</code>策略和<code>LOOK</code>策略。</p>
+<h4 id="2-SCAN-LOOK策略"><a href="#2-SCAN-LOOK策略" class="headerlink" title="2. SCAN/LOOK策略"></a>2. SCAN/LOOK策略</h4><p>回想一下我们现在乘坐的电梯，在<code>Example 1</code>中二楼的乘客每次上电梯的时候应该会发现有一大波人从电梯里涌出来。这是因为电梯采用了<code>LOOK</code>策略。在讲<code>LOOK</code>之前，先讲一下<code>SCAN</code>策略。</p>
+<p><strong><code>SCAN</code>策略做的事就是在最高层和最底层之间来回扫</strong>。<code>SCAN</code>没有主请求，但是顺带着却能够接到更多人。在<code>Example 1</code>当中，他们会先去接10楼的乘客——不是因为10楼的乘客优先级有多高，只是因为电梯会运行到最高层（11层）再往下运行，而往下运行的时候就正好能够捎带10楼的乘客。</p>
+<p>但是11楼是没有必要去的，因为11楼没有人。这就引出了<code>LOOK</code>策略。**<code>LOOK</code>策略意在解决<code>SCAN</code>中的无效运行<strong>。</strong>在<code>LOOK</code>中，我们只需要找到最高和最低的有需求的楼层就行了**：不需要到11楼，而是到10楼就行。</p>
 <p>通过这个例子我还想说明一个问题，那就是<strong>只做大优化不做小优化</strong>。当你以为<code>LOOK</code>比<code>SCAN</code>好的时候，请思考这么一件事：如果在<code>LOOK</code>接到十楼的乘客并且开门了打算往下走，这时如果有一个十一楼的乘客刚刚按电梯，那这个十一楼的倒霉蛋就要在等一轮了。也就是说，无用的运行有可能会有用，这取决于具体输入。<strong>不要为一些小细节优化，总是要尝试进行大优化。</strong></p>
-<h3 id="3-LOOK-ALS"><a href="#3-LOOK-ALS" class="headerlink" title="3. LOOK + ALS"></a>3. LOOK + ALS</h3><p><code>LOOK</code>和<code>ALS</code> <strong>不仅仅是两个具体策略，他们更反映了两个思想方法或者原则</strong>：一个认为最早来的人最应该先响应，另一个认为我自己走我的路，方便我响应我就响应。<code>LOOK</code> 原则和 <code>ALS</code> 原则各有优劣：<code>LOOK</code>很容易使某一个人等待时间过长，而<code>ALS</code>可能会对某一些按按钮晚的人很不公平。</p>
-<p>这两个原则可以结合一下，取长补短。比方说，我们<strong>可以优先响应同方向上到达时间最早的人，在保证能够接到它的前提下再去捎带其他人。</strong>这样子在一个方向上很难出现等待时间过长的人，进而会更好。</p>
-<h3 id="4-我的算法"><a href="#4-我的算法" class="headerlink" title="4. 我的算法"></a>4. 我的算法</h3><p>我认为<code>LOOK + ALS</code>并不足以满足乘客的需求，因为这种算法只能考虑当前情况下等待时间最长的人，却不能考虑当前情况下多个等待时间很长的人。当一个方向上有很多等待时间很长的人的时候，而我们在没有接到他们之前接了其他捎带的人，那么这时候我们很可能就只能接到一个等待时间很长的人，也就是主请求。而其他人等待时间明明也很长，却因为在电梯接到他们之前捎带了其他人，因而无法搭乘电梯。</p>
-<p><strong>坏心情算法认为<code>LOOK + ALS</code>不好的原因是因为主请求太少了</strong>。如果有多个主请求，我们就可以先保证先去接这些主请求，再去考虑是否捎带。</p>
-<p>在我的算法中，请求的优先级是根据乘客的心情的好坏来决定的。我规定，<strong>如果电梯在一次捎带过程中明明可以和我同方向经过了我的楼层却不捎带我，那么我的坏心情就+1，也就是我的优先级在电梯眼中就提高了1级。</strong> <del>这种算法来源于使用新北电梯的真实感受，</del> 我把它叫做坏心情算法。</p>
-<p>坏心情算法解决了<code>LOOK + ALS</code>算法中两个等待时间较长的人可能只能接到一个的问题，实际上如果稍微更改一下坏心情算法，将时间而不是坏心情作为最高优先级，我们就得到了<code>LOOK + ALS</code>算法了。</p>
-<p>坏心情算法的缺点也是很明显的：它几乎完全被坏心情的人带偏了。如果坏心情的人比较多，请求比较苛刻，那么它们可能会占据电梯的所有位置，导致捎带的人减少，进而导致电梯要花费更长的时间才能够送完所有乘客</p>
-<h3 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h3><p>没有最好的调度策略，所有的调度策略都有反例，因为未来是未知的，人流量、目的、到达时间就无法纳入考虑因素当中。再退一步讲，即便我们能够知晓未来的一举一动，判断出最佳策略也是困难的。因此经过第一次作业后，我同意指导书的观点，最好的策略就是变换策略。不过麻烦死了……</p>
-<h2 id="六、设计反思"><a href="#六、设计反思" class="headerlink" title="六、设计反思"></a>六、设计反思</h2><h2 id="七、Bug-Debug"><a href="#七、Bug-Debug" class="headerlink" title="七、Bug & Debug"></a>七、Bug &amp; Debug</h2><h3 id="遇到的Bug"><a href="#遇到的Bug" class="headerlink" title="遇到的Bug"></a>遇到的Bug</h3><h4 id="1-电梯的等待队列waitQueue不是线程安全的"><a href="#1-电梯的等待队列waitQueue不是线程安全的" class="headerlink" title="1. 电梯的等待队列waitQueue不是线程安全的"></a>1. 电梯的等待队列waitQueue不是线程安全的</h4><p>解决方案：使用同步方法。</p>
+<p><code>LOOK</code>策略是一种非常好的策略。在第六次和第七次作业中，由于调度器会将乘客分配给不同电梯，很难出现一个电梯会有很多很多人的情况（数据限制最多100个乘客，平均下来每部电梯不超过17个乘客，很快就能送完）。所以<code>LOOK</code>的弊端再次看来并不会这么明显。</p>
+<h4 id="3-LOOK-ALS"><a href="#3-LOOK-ALS" class="headerlink" title="3. LOOK + ALS"></a>3. LOOK + ALS</h4><p><code>LOOK</code>和<code>ALS</code>不仅仅是两个具体策略，他们更反映了两个思想方法或者原则：<strong>一个认为最早来的人最应该先响应，另一个认为我自己走我的路，方便我响应我就响应</strong>。<code>LOOK</code> 原则和 <code>ALS</code> 原则各有优劣：<code>LOOK</code>很容易使某一个人等待时间过长，而<code>ALS</code>可能会对某一些按按钮晚的人很不公平。</p>
+<p>这两个原则可以结合一下，取长补短。比方说，<strong>我们可以优先响应同方向上到达时间最早的人，在保证能够接到它的前提下再去捎带其他人</strong>。这样子在一个方向上很难出现等待时间过长的人，进而会更好。</p>
+<h4 id="4-我的算法"><a href="#4-我的算法" class="headerlink" title="4. 我的算法"></a>4. 我的算法</h4><p>我认为<code>LOOK + ALS</code>并不足以满足乘客的需求，因为这种算法只能考虑当前情况下等待时间最长的人，却不能考虑当前情况下多个等待时间很长的人。当一个方向上有很多等待时间很长的人的时候，而我们在没有接到他们之前接了其他捎带的人，那么这时候我们很可能就只能接到一个等待时间很长的人，也就是主请求。而其他人等待时间明明也很长，却因为在电梯接到他们之前捎带了其他人，因而无法搭乘电梯。</p>
+<p><strong>坏心情算法认为造成这样的原因是因为主请求太少了。</strong> 如果有多个主请求，我们就可以先保证先去接这些主请求，再去考虑是否捎带。</p>
+<p><strong>在我的算法中，请求的优先级是根据乘客的心情的好坏来决定的</strong>。我规定，<strong>如果电梯在一次捎带过程中明明可以和我同方向经过了我的楼层却不捎带我，那么我的坏心情就+1，也就是我的优先级在电梯眼中就提高了1级</strong>。<del>这种算法来源于使用新北电梯的真实感受，我把它叫做坏心情算法。</del></p>
+<p>坏心情算法解救了<code>LOOK + ALS</code>算法中两个等待时间较长的人可能只能接到一个的问题，实际上如果稍微更改一下坏心情算法，将时间而不是坏心情作为最高优先级，我们就得到了另一种<code>LOOK + ALS</code>算法了。</p>
+<p>坏心情算法的缺点也是很明显的：<strong>它几乎完全被坏心情的人带偏了</strong>。如果坏心情的人比较多，并且这些气急败坏的人的请求比较苛刻，那么它们可能会占据电梯的所有位置，导致捎带的人减少，进而导致电梯要花费更长的时间才能够送完所有乘客。</p>
+<h4 id="5-LOOK的贪心改进"><a href="#5-LOOK的贪心改进" class="headerlink" title="5. LOOK的贪心改进"></a>5. LOOK的贪心改进</h4><p>方法提出自研讨课同学<code>N Boy</code>。膜！</p>
+<p>传统<code>LOOK</code>认为只接同向可捎带的乘客。但是实际上在乘客较少的情况下，<code>LOOK</code>可以两个方向上的乘客都接上，以减少开关门时间。</p>
+<h4 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h4><p>没有最好的调度策略，所有的调度策略都有反例，因为未来是未知的，人流量、目的、到达时间就无法纳入考虑因素当中。再退一步讲，即便我们能够知晓未来的一举一动，判断出最佳策略也是困难的。因此经过第五次作业后，我同意指导书的观点，最好的策略就是变换策略。<del>不过真的麻烦死了……</del></p>
+<h3 id="第六次作业-3"><a href="#第六次作业-3" class="headerlink" title="第六次作业"></a>第六次作业</h3><p>在第六次作业中，乘客不再指定进入电梯号，而是由同(wan)学(jia)自行调配。因此在第六次作业中有两个策略需要完成：一个是把乘客分配到不同电梯的策略，另一个是电梯接送乘客的策略。由于电梯在没有RECEIVE的时候不能移动，<strong>因此不能让电梯自由竞争乘客</strong>。</p>
+<p>第六次作业中的调度策略整体来说大概有这么几种构调度策略/原则：</p>
+<h4 id="1-123456"><a href="#1-123456" class="headerlink" title="1. 123456"></a>1. 123456</h4><p>顾名思义，把乘客依次分配给1, 2, …6号电梯。性能十分均衡，性能分也很一般。</p>
+<h4 id="2-随机调度原则"><a href="#2-随机调度原则" class="headerlink" title="2. 随机调度原则"></a>2. 随机调度原则</h4><p>随机将乘客分配到不同的电梯。实测随机调度大概能够在强测中获得 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.312ex;" xmlns="http://www.w3.org/2000/svg" width="4.651ex" height="1.819ex" role="img" focusable="false" viewBox="0 -666 2055.8 804"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2265" d="M83 616Q83 624 89 630T99 636Q107 636 253 568T543 431T687 361Q694 356 694 346T687 331Q685 329 395 192L107 56H101Q83 58 83 76Q83 77 83 79Q82 86 98 95Q117 105 248 167Q326 204 378 228L626 346L360 472Q291 505 200 548Q112 589 98 597T83 616ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="39" d="M352 287Q304 211 232 211Q154 211 104 270T44 396Q42 412 42 436V444Q42 537 111 606Q171 666 243 666Q245 666 249 666T257 665H261Q273 665 286 663T323 651T370 619T413 560Q456 472 456 334Q456 194 396 97Q361 41 312 10T208 -22Q147 -22 108 7T68 93T121 149Q143 149 158 135T173 96Q173 78 164 65T148 49T135 44L131 43Q131 41 138 37T164 27T206 22H212Q272 22 313 86Q352 142 352 280V287ZM244 248Q292 248 321 297T351 430Q351 508 343 542Q341 552 337 562T323 588T293 615T246 625Q208 625 181 598Q160 576 154 546T147 441Q147 358 152 329T172 282Q197 248 244 248Z"></path><path data-c="36" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z" transform="translate(500,0)"></path></g></g></g></svg></mjx-container> 的优秀性能分。再在基础上做一些小优化就可以拿到很不错的分数了。</p>
+<p>调度的随机性意味着得分的随机性，不清楚课程组会不会反复测试代码然后取平均，但是本地运行多次可能会有不同的效果。乘客量和乘客密度大的时候几乎不会有分数波动。</p>
+<h4 id="3-捎带原则"><a href="#3-捎带原则" class="headerlink" title="3. 捎带原则"></a>3. 捎带原则</h4><p>方便捎带就能捎带，结合<code>LOOK</code>类算法可以有不错的性能。不适用于坏心情这一类复杂的算法，理由是很难计算能不能捎带这个人。</p>
+<h4 id="4-影子电梯"><a href="#4-影子电梯" class="headerlink" title="4. 影子电梯"></a>4. 影子电梯</h4><p>实际上，根据现有的所有信息，我们是能计算出乘客应该分配到哪一个电梯最好的。我们只需要模拟一遍电梯的运行，算出把乘客分配到哪个电梯更好，然后分配给电梯就行。而且这个分配的时间是由调度器完成的，意味着分配不会占用电梯运行时间。这是最理想的贪心算法。由于模拟过程好似有一个和实际电梯完全一样的电梯在运行，所以称模拟的电梯为影子电梯。</p>
+<p>影子电梯的模拟也是分好坏的。优秀的影子电梯可以做到强测 <mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.312ex;" xmlns="http://www.w3.org/2000/svg" width="4.651ex" height="1.819ex" role="img" focusable="false" viewBox="0 -666 2055.8 804"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2265" d="M83 616Q83 624 89 630T99 636Q107 636 253 568T543 431T687 361Q694 356 694 346T687 331Q685 329 395 192L107 56H101Q83 58 83 76Q83 77 83 79Q82 86 98 95Q117 105 248 167Q326 204 378 228L626 346L360 472Q291 505 200 548Q112 589 98 597T83 616ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="39" d="M352 287Q304 211 232 211Q154 211 104 270T44 396Q42 412 42 436V444Q42 537 111 606Q171 666 243 666Q245 666 249 666T257 665H261Q273 665 286 663T323 651T370 619T413 560Q456 472 456 334Q456 194 396 97Q361 41 312 10T208 -22Q147 -22 108 7T68 93T121 149Q143 149 158 135T173 96Q173 78 164 65T148 49T135 44L131 43Q131 41 138 37T164 27T206 22H212Q272 22 313 86Q352 142 352 280V287ZM244 248Q292 248 321 297T351 430Q351 508 343 542Q341 552 337 562T323 588T293 615T246 625Q208 625 181 598Q160 576 154 546T147 441Q147 358 152 329T172 282Q197 248 244 248Z"></path><path data-c="39" d="M352 287Q304 211 232 211Q154 211 104 270T44 396Q42 412 42 436V444Q42 537 111 606Q171 666 243 666Q245 666 249 666T257 665H261Q273 665 286 663T323 651T370 619T413 560Q456 472 456 334Q456 194 396 97Q361 41 312 10T208 -22Q147 -22 108 7T68 93T121 149Q143 149 158 135T173 96Q173 78 164 65T148 49T135 44L131 43Q131 41 138 37T164 27T206 22H212Q272 22 313 86Q352 142 352 280V287ZM244 248Q292 248 321 297T351 430Q351 508 343 542Q341 552 337 562T323 588T293 615T246 625Q208 625 181 598Q160 576 154 546T147 441Q147 358 152 329T172 282Q197 248 244 248Z" transform="translate(500,0)"></path></g></g></g></svg></mjx-container> 分。</p>
+<p>影子电梯也有模拟不到的地方，比如很难将<code>RESET</code>用时考虑进影子电梯中。</p>
+<p>单电梯的调度策略和上次一样，<code>LOOK</code>就行。</p>
+<h3 id="第七次作业-3"><a href="#第七次作业-3" class="headerlink" title="第七次作业"></a>第七次作业</h3><p>几乎没有变化，本人第七次作业摆大烂。至于调度策略，基本上同第六次和第五次作业。</p>
+<h2 id="六、Bug-Debug"><a href="#六、Bug-Debug" class="headerlink" title="六、Bug & Debug"></a>六、Bug &amp; Debug</h2><h3 id="遇到的Bug"><a href="#遇到的Bug" class="headerlink" title="遇到的Bug"></a>遇到的Bug</h3><h4 id="1-电梯的等待队列waitQueue不是线程安全的"><a href="#1-电梯的等待队列waitQueue不是线程安全的" class="headerlink" title="1. 电梯的等待队列waitQueue不是线程安全的"></a>1. 电梯的等待队列waitQueue不是线程安全的</h4><p>解决方案：使用同步方法。</p>
 <h4 id="2-电梯为空时无法决定新的方向"><a href="#2-电梯为空时无法决定新的方向" class="headerlink" title="2. 电梯为空时无法决定新的方向"></a>2. 电梯为空时无法决定新的方向</h4><p>解决方案：那就根据<code>LOOK</code>策略选择一个方向。</p>
 <h4 id="3-同步方法过多"><a href="#3-同步方法过多" class="headerlink" title="3. 同步方法过多"></a>3. 同步方法过多</h4><p>解决方案：分析线程的关系，只在容易产生冲突的地方进行同步；私有化方法</p>
 <h4 id="4-git-commit-–amend使用不熟练"><a href="#4-git-commit-–amend使用不熟练" class="headerlink" title="4. git commit –amend使用不熟练"></a>4. git commit –amend使用不熟练</h4><p>解决方案：自己手动解决冲突就行，应该相当于commit一次再与上一次提交merge。</p>
-<h4 id="5-疑似非法提交"><a href="#5-疑似非法提交" class="headerlink" title="5. 疑似非法提交"></a>5. 疑似非法提交</h4><p>我为不同类写了一个debug()方法，但是问题是难以判断调试信息输出的位置。搜索后发现下面这行代码可以打印当前Thread运行位置。评测的时候检测非法字符串的时候检测到了这一行代码。</p>
-<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(Thread.currentThread().getStackTrace()[<span class="number">1</span>].getMethodName())</span><br></pre></td></tr></table></figure></div>
+<h4 id="5-疑似非法提交"><a href="#5-疑似非法提交" class="headerlink" title="5. 疑似非法提交"></a>5. 疑似非法提交</h4><p>我为不同类写了一个debug()方法，但是问题是难以判断调试信息输出的位置。搜索后发现下面这行代码可以打印当前Thread运行位置。评测中检测非法字符串的时候检测到了这一行代码。</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(Thread.currentThread().getStackTrace(](<span class="number">1</span>].getMethodName())</span><br></pre></td></tr></table></figure></div>
 
-<h3 id="Debug策略"><a href="#Debug策略" class="headerlink" title="Debug策略"></a>Debug策略</h3><p>多线程Debug是一件麻烦事，不过IDEA帮我们做了不少工作。IDEA中右键断电的红点点可以选择默认多线程Debug，因而在每一个线程运行到这一行代码的时候都能够停下来（不过我倒是很好奇gdb有没有这种功能）。即便如此，Debug还是麻烦的：Debug效率本来就低，现在还要同时在六个电梯线程中打断点，这我真的受不了一点。所以建议直接print大法调试。我在每一个我需要用到的类里面写了一个debug()方法，用于往终端输出该对象的信息。另外建议使用ANSI escape code给调试信息上个色，或者直接输出到标准错误输出（因为IDEA中标准错误输出是红色的）</p>
-<h2 id="八、心得体会"><a href="#八、心得体会" class="headerlink" title="八、心得体会"></a>八、心得体会</h2><h2 id="九、课程建议"><a href="#九、课程建议" class="headerlink" title="九、课程建议"></a>九、课程建议</h2>
+<h4 id="6-RESET和RECEIVE冲突"><a href="#6-RESET和RECEIVE冲突" class="headerlink" title="6. RESET和RECEIVE冲突"></a>6. RESET和RECEIVE冲突</h4><p>这在第六次作业和第七次作业中比较常见。<code>RECEIVE</code>不能再电梯的<code>RESET</code>期间输出，否则错误。第六次作业误打误撞把冲突解决了，导致第七次作业出现这个报错的时候我都不知道原来还有这项要求。</p>
+<p>解决方案：加一把锁，<code>RESET</code>期间持有锁，完成<code>RESET</code>后释放。简单来说就是电梯必须在外界看来永远都是在正常运行的。如果在不正常期间运行的话，外界对电梯的访问就会被阻塞住。</p>
+<p>注意事项：另一种解决方案是通过查看电梯的运行状态来判断要不要等待，如果电梯在<code>RESET</code>状态就等待，直到被<code>notify()</code>。这样的实现是不稳妥的，很有可能在你查看状态的下一瞬间电梯就完成<code>RESET</code>并且<code>notify()</code>，这样子就查看电梯状态的线程就永远不可能醒过来了。<strong>如果一个线程的运行依赖另一个线程的状态，那么最好用锁。</strong></p>
+<h4 id="7-未RESET-BEGIN就重新分配等待队列中的乘客"><a href="#7-未RESET-BEGIN就重新分配等待队列中的乘客" class="headerlink" title="7. 未RESET_BEGIN就重新分配等待队列中的乘客"></a>7. 未RESET_BEGIN就重新分配等待队列中的乘客</h4><p><strong>在<code>RESET_BEGIN</code>之前电梯需要把分配到这部电梯的乘客交给调度器，调度器会调度乘客，乘客会被分给新的电梯并输出<code>RECEIVE</code><strong>。这看起来没什么问题，但是这一切都可能在一瞬间完成，然后下一瞬间电梯才输出<code>RESET_BEGIN</code>！</strong>意味着电梯还没有<code>RESET_BEGIN</code>时，另一个电梯就抢走了原本电梯的乘客！</strong> 第六次和第七次作业不允许出现这样的行为。</p>
+<p>解决方案：我的解决方案比较奇葩。我会先让乘客从电梯轿厢中假装出来（输出开关门和出电梯但时在对象的数据中仍然存在于电梯轿厢中），然后输出<code>RESET_BEGIN</code>，再把乘客送给调度器。</p>
+<h4 id="8-多产品的生产消费模型"><a href="#8-多产品的生产消费模型" class="headerlink" title="8. 多产品的生产消费模型"></a>8. 多产品的生产消费模型</h4><p>电梯的重置<code>RESET</code>有至少两种实现方式：一种是将<code>RESET</code>作为一种属性写入电梯中，电梯每次切换状态需要查看是否处于需要<code>RESET</code>的状态，需要则<code>RESET</code>。但是如果有多个<code>RESET</code>指令同时涌进来的话，前一条<code>RESET</code>指令就会被覆盖掉，不过由于第六次和第七次作业的约束（同一电梯的两条<code>RESET</code>不能有太近的时间间隔），这种情况几乎不可能发生。</p>
+<p>另一种实现方式是将<code>RESET</code>看成另一种产品传递给电梯，构建区别于乘客这种产品的另一条生产-消费供应链。这就产生了多产品的生产消费模型。这给控制设计带来了不少的麻烦（自己写一遍就知道问题了）。</p>
+<p>解决方案：让多产品的输入共用一把锁，使用<code>Check-and-Act</code>行为进行设计。</p>
+<h3 id="Debug策略"><a href="#Debug策略" class="headerlink" title="Debug策略"></a>Debug策略</h3><p>多线程<code>Debug</code>是一件麻烦事，不过<code>IDEA</code>帮我们做了不少工作。<code>IDEA</code>中右键断点的红点点可以选择默认多线程<code>Debug</code>，因而在每一个线程运行到这一行代码的时候都能够停下来（不过我倒是很好奇<code>gdb</code>有没有这种功能）。缺点就是实际上运行时不会有线程停下来，所以导致运行和调试可能带来不同。即便如此，<code>Debug</code>还是麻烦的：<code>Debug</code>效率本来就低，现在还要同时在六个电梯线程中打断点，这我真的受不了一点。<strong>所以我直接<code>print</code>大法调试</strong>。我在每一个我需要用到的类里面写了一个<code>debug()</code>方法，用于往终端输出该对象的信息。另外建议将<code>printf</code>大法打印出来的信息直接输出到标准错误输出，因为<code>IDEA</code>中标准错误输出是红色的。</p>
+<p><strong>在第六次和第七次作业中我写了一个<code>Debug</code>类（里面全是静态方法），所有的printf函数都是调用Debug类的静态方法完成的</strong>。并且在<code>Debug</code>类中设置了一个参数<code>valid</code>，输出当且仅当<code>valie = true</code>，否则不会输出debug调试信息。</p>
+<h2 id="七、心得体会"><a href="#七、心得体会" class="headerlink" title="七、心得体会"></a>七、心得体会</h2><p>首先印象最深的是关于<code>synchronized</code>关键字。<code>synchronized</code>的同步语句块或者同步方法只需要在共享对象上使用，或者更一般地，只需要在多个线程产生访存冲突的地方使用。合适的<code>synchronized</code>可以更好地保证程序的正确性和安全性。在第五次作业中，由于滥用<code>synchronized</code>关键字，我得到了非常糟糕的第五次作业初稿。</p>
+<p>此外，这次作业也算是掌握了一些基本的多线程编程的基本思想。生产-消费模型是多线程或者并行编程中的一个最基本的模型，电梯分配属于他们的一个简化版本：没有产品上限，不需要考虑生产消费速度，也几乎不需要考虑某一个电梯闲置时间过长的情况（顶多强测分数低一点）。此外，<code>JAVA</code>提供了非常舒适的多线程编程方法，在其他并行编程模型中不一定会有这么舒适的选项。</p>
+<p>最重要的，应该是对多线程有了更深的理解吧。个人感觉这种多线程编程、并行编程的编程方法，在日后的编程学习中应当会有非常好的应用，而且不一定会有机会再接触到了。</p>
+<h2 id="八、课程建议"><a href="#八、课程建议" class="headerlink" title="八、课程建议"></a>八、课程建议</h2><p>不知道第三单元和第四单元学些什么，但是第二单元多线程确实蛮有用的，如果后两单元没啥大事的话个人认为其实可以把这一单元延长一点…点。</p>
+
         </div>
 
         
@@ -1021,7 +1166,7 @@ mjx-container[display="true"] + br {
         
             <li>
                 <strong>更新于
-                    :</strong> 2024-03-31 19:20:50
+                    :</strong> 2024-04-19 15:04:15
             </li>
         
         <li>
@@ -1129,7 +1274,7 @@ mjx-container[display="true"] + br {
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
         <div class="page-title">「BUAA OO」Unit-2 电梯调度</div>
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%B5%E6%A2%AF"><span class="nav-text">电梯</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%89%8D%E8%A8%80"><span class="nav-text">一、前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%A2%98%E7%9B%AE%E8%83%8C%E6%99%AF"><span class="nav-text">二、题目背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="nav-text">第一次作业</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-text">三、解题思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A-1"><span class="nav-text">第一次作业</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%88%91%E4%BB%AC%E6%9C%89%E5%93%AA%E4%BA%9B%E9%9C%80%E6%B1%82%EF%BC%9F"><span class="nav-text">1. 我们有哪些需求？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E5%93%AA%E4%BA%9B%E7%BA%BF%E7%A8%8B%EF%BC%9F"><span class="nav-text">2. 我们需要哪些线程？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%BA%BF%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB%E5%A6%82%E4%BD%95%EF%BC%88%E7%94%9F%E4%BA%A7-%E6%B6%88%E8%B4%B9%E6%A8%A1%E5%BC%8F%EF%BC%89%EF%BC%9F"><span class="nav-text">3. 线程与线程之间的关系如何（生产-消费模式）？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%BB%80%E4%B9%88%E6%98%AF%E9%94%81%EF%BC%9F%E4%BB%80%E4%B9%88%E6%98%AF%E5%90%8C%E6%AD%A5%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="nav-text">4. 什么是锁？什么是同步方法？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%94%B5%E6%A2%AF%E8%BF%90%E8%A1%8C%E7%AD%96%E7%95%A5"><span class="nav-text">5. 电梯运行策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E8%AE%BE%E8%AE%A1%E5%88%86%E6%9E%90"><span class="nav-text">四、设计分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A-2"><span class="nav-text">第一次作业</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%B0%83%E5%BA%A6%E7%AD%96%E7%95%A5%E9%80%89%E6%8B%A9"><span class="nav-text">五、调度策略选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-ALS%E8%B0%83%E5%BA%A6%E7%AD%96%E7%95%A5"><span class="nav-text">1. ALS调度策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SCAN-LOOK%E7%AD%96%E7%95%A5"><span class="nav-text">2. SCAN&#x2F;LOOK策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-LOOK-ALS"><span class="nav-text">3. LOOK + ALS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%88%91%E7%9A%84%E7%AE%97%E6%B3%95"><span class="nav-text">4. 我的算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%80%BB%E7%BB%93"><span class="nav-text">5. 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%AE%BE%E8%AE%A1%E5%8F%8D%E6%80%9D"><span class="nav-text">六、设计反思</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81Bug-Debug"><span class="nav-text">七、Bug &amp; Debug</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84Bug"><span class="nav-text">遇到的Bug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Debug%E7%AD%96%E7%95%A5"><span class="nav-text">Debug策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E5%BF%83%E5%BE%97%E4%BD%93%E4%BC%9A"><span class="nav-text">八、心得体会</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E8%AF%BE%E7%A8%8B%E5%BB%BA%E8%AE%AE"><span class="nav-text">九、课程建议</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%B5%E6%A2%AF"><span class="nav-text">电梯</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%89%8D%E8%A8%80"><span class="nav-text">一、前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%A2%98%E7%9B%AE%E8%83%8C%E6%99%AF"><span class="nav-text">二、题目背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="nav-text">第五次作业</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="nav-text">第六次作业</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="nav-text">第七次作业</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-text">三、解题思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E6%AC%A1%E4%BD%9C%E4%B8%9A-1"><span class="nav-text">第五次作业</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E6%AC%A1%E4%BD%9C%E4%B8%9A-1"><span class="nav-text">第六次作业</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E6%AC%A1%E4%BD%9C%E4%B8%9A-1"><span class="nav-text">第七次作业</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E5%92%8C%E5%88%86%E6%9E%90"><span class="nav-text">四、架构设计和分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E6%AC%A1%E4%BD%9C%E4%B8%9A-2"><span class="nav-text">第五次作业</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E6%AC%A1%E4%BD%9C%E4%B8%9A-2"><span class="nav-text">第六次作业</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E6%AC%A1%E4%BD%9C%E4%B8%9A-2"><span class="nav-text">第七次作业</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%B0%83%E5%BA%A6%E7%AD%96%E7%95%A5%E9%80%89%E6%8B%A9"><span class="nav-text">五、调度策略选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E6%AC%A1%E4%BD%9C%E4%B8%9A-3"><span class="nav-text">第五次作业</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E6%AC%A1%E4%BD%9C%E4%B8%9A-3"><span class="nav-text">第六次作业</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E6%AC%A1%E4%BD%9C%E4%B8%9A-3"><span class="nav-text">第七次作业</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81Bug-Debug"><span class="nav-text">六、Bug &amp; Debug</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84Bug"><span class="nav-text">遇到的Bug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Debug%E7%AD%96%E7%95%A5"><span class="nav-text">Debug策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%BF%83%E5%BE%97%E4%BD%93%E4%BC%9A"><span class="nav-text">七、心得体会</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E8%AF%BE%E7%A8%8B%E5%BB%BA%E8%AE%AE"><span class="nav-text">八、课程建议</span></a></li></ol></li></ol>
 
     </div>
 </div>
