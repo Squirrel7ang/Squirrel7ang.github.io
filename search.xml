@@ -285,73 +285,6 @@
       </tags>
   </entry>
   <entry>
-    <title>「BUAA CO」Verilog易错点</title>
-    <url>/2024/01/01/CO/verilog_error/</url>
-    <content><![CDATA[<p>在P4以及后续的设计过程中，Verilog的语法不过关可能会带来十分糟糕的体验，因此列出了本人犯的错误和舍友们犯的错误。内容仅供参考交流，如有错误，欢迎指正。</p>
-<p>Verilog可以在<a class="link"   href="https://hdlbits.01xz.net/wiki/Main_Page" >HDLbits <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>进行练习，也可以参考<a class="link"   href="https://www.runoob.com/w3cnote/verilog-tutorial.html" >菜鸟教程 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>，</p>
-<h3 id="1、关于-signed"><a href="#1、关于-signed" class="headerlink" title="1、关于$signed()"></a>1、关于$signed()</h3><p><code>Verilog</code>中默认一切未声明有符号的整型数均为无符号数，并默认有符号数与无符号数运算时，将有符号数自动转化为无符号数。比如：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (opCode == <span class="number">1&#x27;b1</span>) ? <span class="keyword">signed</span>(a) * <span class="keyword">signed</span>(b) : a * b;</span><br></pre></td></tr></table></figure></div>
-<p>上述代码中，<code>signed(a) * signed(b)</code>与<code>a*b</code>通过三目运算符进行运算，因此默认将第二位操作数（<code>signed(a) * signed(b)</code>）转换为无符号的乘法。解决方案在官方教程中有提及。</p>
-<p>上面这个例子很容易看出问题，但是当运用多重三目运算符进行嵌套的时候，结构复杂，很可能会遗漏有符号数和无符号数的问题。</p>
-<p>此外还有一点与C代码不同的是，在<code>Verilog</code>中，不能将“&#x3D;”视为一种运算符。也就是说如果我在某一语句块里这么写：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">  outcome = <span class="built_in">$signed</span>(a) * <span class="built_in">$signed</span>(b);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
-<p><code>outcome</code>仍然是两个有符号数做乘法的运算结果。<code>=</code>应当和<code>&lt;=</code>视为一种<strong>赋值符</strong>。</p>
-<h3 id="2、关于条件运算和浮空"><a href="#2、关于条件运算和浮空" class="headerlink" title="2、关于条件运算和浮空"></a>2、关于条件运算和浮空</h3><p>使用三目运算符时，<strong>当第一位操作数，即条件，为浮空值的时候，表达式返回值也是浮空值。</strong> 比方说:</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (<span class="number">1&#x27;bx</span>) ? <span class="number">1&#x27;b1</span> : <span class="number">1&#x27;b0</span>;</span><br></pre></td></tr></table></figure></div>
-<p>在上述代码中，<code>outcome</code>会得到1位的浮空值。<code>Verilog</code>不知道条件是真是假，因此无法给出结果。</p>
-<p>但是如果这样写：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> [<span class="number">1</span> : <span class="number">0</span>] outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (<span class="number">1&#x27;bx</span>) ? <span class="number">2&#x27;b01</span> : <span class="number">2&#x27;b00</span>;</span><br></pre></td></tr></table></figure></div>
-<p><code>outcome</code>就会得到<code>2&#39;b0x</code>的值，理由是尽管<code>Verilog</code>不知道结果是第二个操作数还是第三个操作数，但是不论是哪一个，其第1位一定是0，但是无法确定其第0位究竟是0还是1，因此第0位浮空。</p>
-<p>在<code>if-else</code>语句中则不一样。比如：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (a == <span class="number">1&#x27;b1</span>) </span><br><span class="line">  b &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">  b &lt;= <span class="number">1&#x27;b0</span>;</span><br></pre></td></tr></table></figure></div>
-<p>在上述代码中，如果<code>a</code>为一位浮空值，程序仍然会执行<code>else</code>语句块内的代码。<code>if-else</code>是安全的。</p>
-<p>在一些情况下，我们希望判断语句能够更加保险，即能够对浮空值也进行判断。这是可以使用<code>===</code>和<code>!===</code>，这双目两个运算符可以连同高阻态<code>z</code>和浮空值<code>x</code>一并进行判断。</p>
-<p>三目运算符在进行简单的<code>if-else</code>判断是非常好用的，主要是写起来和读起来都比较舒服。但是不建议用于多重<code>if-else</code>判断，尤其是当不论<code>if</code>还是<code>else</code>里面都有<code>if-else</code>语句的时候。</p>
-<h3 id="3、关于”-”和”-”以及“自动类型转换”"><a href="#3、关于”-”和”-”以及“自动类型转换”" class="headerlink" title="3、关于”~”和”!”以及“自动类型转换”"></a>3、关于”~”和”!”以及“自动类型转换”</h3><p>省流版就是：不要用位宽不同的两个数进行相互赋值，理由是<code>Verilog</code>在进行位扩展的时候会进行一些很诡异的操作。</p>
-<p>下面讲一个具体的例子。下例由室友LJC提出，愣是把我看傻了。</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> test(</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">1</span> : <span class="number">0</span>] a;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line">    <span class="keyword">reg</span> clk;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">            c = ~a;</span><br><span class="line">            <span class="built_in">$display</span>(<span class="string">&quot;when a = 1&#x27;b%b, c = ~ a = 4&#x27;b%b&quot;</span>, a, c);</span><br><span class="line">            c = !a;</span><br><span class="line">            <span class="built_in">$display</span>(<span class="string">&quot;when a = 1&#x27;b%b, c = ! a = 4&#x27;b%b&quot;</span>, a, c);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">        a = <span class="number">2&#x27;b00</span>;</span><br><span class="line">        c = <span class="number">4&#x27;b00</span>;</span><br><span class="line">        clk = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b01</span>;</span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b10</span>;</span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b11</span>;</span><br><span class="line">        #<span class="number">2</span> <span class="built_in">$finish</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> #<span class="number">1</span> clk &lt;= ~clk;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure></div>
-<p>使用<code>iverilog</code>进行编译和仿真会得到：</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ iverilog -o a.out test.v</span><br><span class="line">$ vvp a.out</span><br><span class="line">when a = 1&#x27;b00, c = ~ a = 4&#x27;b1111</span><br><span class="line">when a = 1&#x27;b00, c = ! a = 4&#x27;b0001</span><br><span class="line">when a = 1&#x27;b01, c = ~ a = 4&#x27;b1110</span><br><span class="line">when a = 1&#x27;b01, c = ! a = 4&#x27;b0000</span><br><span class="line">when a = 1&#x27;b10, c = ~ a = 4&#x27;b1101</span><br><span class="line">when a = 1&#x27;b10, c = ! a = 4&#x27;b0000</span><br><span class="line">when a = 1&#x27;b11, c = ~ a = 4&#x27;b1100</span><br><span class="line">when a = 1&#x27;b11, c = ! a = 4&#x27;b0000</span><br><span class="line">test3.v:23: $finish called at 8 (1s)</span><br></pre></td></tr></table></figure></div>
-<p>可以看出，<code>~a</code>和<code>!a</code>在进行位扩展时十分抽象，编译时会先进行1扩展或者0扩展再进行赋值。因此当一个稍微复杂的表达式中出现了位宽的改变时，强烈建议用<code>vector</code>也就是花括号<code>&#123;,&#125;</code>手动进行扩展。</p>
-<p>P.S.样例中在时序逻辑中进行阻塞赋值是不合规范的，请勿模仿。</p>
-<h3 id="4、位宽"><a href="#4、位宽" class="headerlink" title="4、位宽"></a>4、位宽</h3><p>下例来自舍友ZHX，这种事情一旦发生，debug可就困难了。大家可以试着找找下图中的错误。<br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/CO/verilog_error/1.png"
-                      alt="位宽错误"
-                ></p>
-<details class="blue" data-header-exclude><summary><i class="fa-solid fa-chevron-right"></i>Answer </summary>
-              <div class='content'>
-              <p>不声明位宽时，默认1位。这与整数不同，后者默认32位。<br>Addr是32位的地址，但是声明成了1位。 </p>
-              </div>
-            </details>
-
-<h3 id="5、关于循环"><a href="#5、关于循环" class="headerlink" title="5、关于循环"></a>5、关于循环</h3><p>在P4以及后续的上机题中，可能会需要统计一个32位数中的1的个数，或者32位数中是否存在连续的4个1。这时需要使用循环写组合逻辑。比如前者可写为：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">integer</span> i;</span><br><span class="line"><span class="keyword">reg</span>  [<span class="number">31</span>: <span class="number">0</span>] sum;</span><br><span class="line"><span class="keyword">wire</span> [<span class="number">31</span>: <span class="number">0</span>] target;</span><br><span class="line"><span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">  sum = <span class="number">0</span></span><br><span class="line">  <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;<span class="number">32</span>; i=i+<span class="number">1</span>) <span class="keyword">begin</span></span><br><span class="line">    sum = sum + target[i];</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
-
-<h3 id="6、关于切片"><a href="#6、关于切片" class="headerlink" title="6、关于切片"></a>6、关于切片</h3><p>对于<code>wire</code>类型或者<code>reg</code>类型变量，我们会经常用到<code>[:]</code>取出特定位宽，再利用<code>&#123;,&#125;</code>进行拼接。但是当我们想取出的位置随变量改变时，就会出现问题，比如：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> test(</span><br><span class="line">);</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">integer</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line"><span class="keyword">assign</span> c = c[(i + <span class="number">1</span>):i]</span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure></div>
-<p>用<code>iverilog</code>编译会报错。</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">test.v:6: error: Part select expressions must be constant.</span><br></pre></td></tr></table></figure></div>
-<p>个人猜测Verilog要求返回值的位宽必须是恒定的，因此要求用常数选择位宽。</p>
-<p>解决方案有三。第一个是利用位移运算去挪它，再用常数选出来；第二个是用vector把每一位取出来并进行拼接，如<code>assign c = &#123;&#123;c[i+1]&#125;, &#123;c[i]&#125;&#125;;</code>。</p>
-<p>第三个方案更简洁，利用System Verilog中的切片完成。比如上述例子可写成：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>     <span class="keyword">module</span> test(</span><br><span class="line"><span class="number">2</span>     );</span><br><span class="line">...</span><br><span class="line"><span class="number">12</span>    <span class="keyword">integer</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="number">13</span>    <span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line"><span class="number">14</span>    <span class="keyword">assign</span> c = c[(i + <span class="number">1</span>) -: <span class="number">2</span>]</span><br><span class="line">...</span><br></pre></td></tr></table></figure></div>
-<p>不要用<code>[i+:2]</code>，这会返回<code>[i:i+1]</code>。</p>
-<h3 id="7、关于阻塞和非阻塞"><a href="#7、关于阻塞和非阻塞" class="headerlink" title="7、关于阻塞和非阻塞"></a>7、关于阻塞和非阻塞</h3><p>阻塞赋值和非阻塞赋值看似简单，但实际上在编译过程中又不是那么简单。个人建议将阻塞赋值和非阻塞赋值分开，即在<code>always @(*)</code>中进行阻塞赋值，在<code>always @(posedge clk)</code>中进行非阻塞赋值。请不要在阻塞赋值中掺杂非阻塞赋值。比如我的天才构思，实现了在时钟上升沿的瞬间利用上升沿后的数据对寄存器值进行更新：</p>
-<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    flag = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// process coming data...</span></span><br><span class="line">    flag = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> flag) <span class="keyword">begin</span></span><br><span class="line">    <span class="comment">// do sth...</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
-<p>我不知道第一个语句块中是否真的读到了上升沿后的数据，因为仿真得到的全是浮空值。</p>
-<p>非阻塞赋值是在利用上升沿之前的数据在上升沿对寄存器进行一次更新，所以请不要在同一个上升沿对同一个寄存器更新两次，即不要在同一次<code>always</code>中执行多次对同一个<code>reg</code>类型变量的非阻塞赋值操作。如果需要用上升沿之后的数据输出的话，可以写一个Mealy机。</p>
-<p>待补充~</p>
-]]></content>
-      <categories>
-        <category>CO</category>
-      </categories>
-      <tags>
-        <tag>Verilog</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>「BUAA CO」P7总结</title>
     <url>/2024/01/02/CO/P7/</url>
     <content><![CDATA[<h2 id="主要任务"><a href="#主要任务" class="headerlink" title="主要任务"></a>主要任务</h2><ul>
@@ -459,60 +392,70 @@
       </tags>
   </entry>
   <entry>
-    <title>「BUAA OS」操作系统假期预习</title>
-    <url>/2024/03/03/OS/Pre/</url>
-    <content><![CDATA[<h2 id="预习内容"><a href="#预习内容" class="headerlink" title="预习内容"></a>预习内容</h2><p>OS的假期预习发布时间远晚于 CO 的假期预习，将近开学才开放预习内容，正确的。</p>
-<p>按照个人理解，假期预习大概就是理解这么几件事：</p>
-<ol>
-<li>学习使用<code>linux</code>和 linux 中基本的<code>GNU工具</code>，如<code>ls</code> <code>make</code> <code>vim</code>等等</li>
-<li>学习一个标准一点的、系统一点的 MIPS 程序长什么样子</li>
-<li>学习 C 语言是怎么被翻译成 MIPS 汇编，再翻译成二进制可执行文件，再跑起来的</li>
-<li>学习使用 <code>GDB</code> 和 <code>QEMU</code></li>
-</ol>
-<p>一步步来。</p>
-<h3 id="安装Linux"><a href="#安装Linux" class="headerlink" title="安装Linux"></a>安装Linux</h3><p>我安装的是<code>Ubuntu22.04</code>，使用<code>vmware workstation</code>运行。理由是配置比较白痴。同时我也在WSL上安装了<code>Ubuntu</code>。虽然还没弄明白wsl的图形化界面要怎么安装，但即便没有图形化界面，个人感觉使用体验要远好于<code>vmware</code>。</p>
-<h4 id="本地代理"><a href="#本地代理" class="headerlink" title="本地代理"></a>本地代理</h4><p>wsl的开本地代理可以在本地的”C:\Users%USERNAME%.wslconfig”文件中进行配置完成。一般来说该文件不存在，需要自行创建。创建后向其中写入以下内容:</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">[experimental]</span><br><span class="line">autoMemoryReclaim=gradual</span><br><span class="line">networkingMode=mirrored</span><br><span class="line">dnsTunneling=true</span><br><span class="line">firewall=true</span><br><span class="line">autoProxy=true</span><br></pre></td></tr></table></figure></div>
-<p>然后在命令行将wsl关掉：</p>
-<div class="highlight-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">&gt; wsl --shutdown</span><br><span class="line">&gt; wsl</span><br></pre></td></tr></table></figure></div>
-<p>如果打开wsl没有出现“NAT模式下不支持localhost”之类的文字就算成功了</p>
-<p>在vmware的Ubuntu中进行本地代理则稍微有一点麻烦。我使用的是clash for windows进行联网，在Ubuntu中也可以启动本地代理通过windows的clash访问指定网站。</p>
-<ol>
-<li>先在windows下打开命令行，输入<code>ipconfig</code>，找到<code>无线局域网适配器 WLAN</code>下的<code>IPv4 地址</code></li>
-<li>将clash中的<code>Allow LAN</code>打开，记录<code>Port</code>号。</li>
-<li>在ubuntu的网络设置中选择<code>本地代理-手动</code>，将<code>https代理</code>、<code>http代理</code>、<code>Socks主机</code>三个选项的每一个都分别写入<code>IPv4 地址</code>以及<code>Port</code>号。随后就可以正常上网了</li>
-</ol>
-<h4 id="安装相关GNU工具"><a href="#安装相关GNU工具" class="headerlink" title="安装相关GNU工具"></a>安装相关GNU工具</h4><p>基本gcc工具</p>
-<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">sudo apt install build-essential</span><br></pre></td></tr></table></figure></div>
+    <title>「BUAA CO」Verilog易错点</title>
+    <url>/2024/01/01/CO/verilog_error/</url>
+    <content><![CDATA[<p>在P4以及后续的设计过程中，Verilog的语法不过关可能会带来十分糟糕的体验，因此列出了本人犯的错误和舍友们犯的错误。内容仅供参考交流，如有错误，欢迎指正。</p>
+<p>Verilog可以在<a class="link"   href="https://hdlbits.01xz.net/wiki/Main_Page" >HDLbits <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>进行练习，也可以参考<a class="link"   href="https://www.runoob.com/w3cnote/verilog-tutorial.html" >菜鸟教程 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>，</p>
+<h3 id="1、关于-signed"><a href="#1、关于-signed" class="headerlink" title="1、关于$signed()"></a>1、关于$signed()</h3><p><code>Verilog</code>中默认一切未声明有符号的整型数均为无符号数，并默认有符号数与无符号数运算时，将有符号数自动转化为无符号数。比如：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (opCode == <span class="number">1&#x27;b1</span>) ? <span class="keyword">signed</span>(a) * <span class="keyword">signed</span>(b) : a * b;</span><br></pre></td></tr></table></figure></div>
+<p>上述代码中，<code>signed(a) * signed(b)</code>与<code>a*b</code>通过三目运算符进行运算，因此默认将第二位操作数（<code>signed(a) * signed(b)</code>）转换为无符号的乘法。解决方案在官方教程中有提及。</p>
+<p>上面这个例子很容易看出问题，但是当运用多重三目运算符进行嵌套的时候，结构复杂，很可能会遗漏有符号数和无符号数的问题。</p>
+<p>此外还有一点与C代码不同的是，在<code>Verilog</code>中，不能将“&#x3D;”视为一种运算符。也就是说如果我在某一语句块里这么写：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">  outcome = <span class="built_in">$signed</span>(a) * <span class="built_in">$signed</span>(b);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
+<p><code>outcome</code>仍然是两个有符号数做乘法的运算结果。<code>=</code>应当和<code>&lt;=</code>视为一种<strong>赋值符</strong>。</p>
+<h3 id="2、关于条件运算和浮空"><a href="#2、关于条件运算和浮空" class="headerlink" title="2、关于条件运算和浮空"></a>2、关于条件运算和浮空</h3><p>使用三目运算符时，<strong>当第一位操作数，即条件，为浮空值的时候，表达式返回值也是浮空值。</strong> 比方说:</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (<span class="number">1&#x27;bx</span>) ? <span class="number">1&#x27;b1</span> : <span class="number">1&#x27;b0</span>;</span><br></pre></td></tr></table></figure></div>
+<p>在上述代码中，<code>outcome</code>会得到1位的浮空值。<code>Verilog</code>不知道条件是真是假，因此无法给出结果。</p>
+<p>但是如果这样写：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">wire</span> [<span class="number">1</span> : <span class="number">0</span>] outcome;</span><br><span class="line"><span class="keyword">assign</span> outcome = (<span class="number">1&#x27;bx</span>) ? <span class="number">2&#x27;b01</span> : <span class="number">2&#x27;b00</span>;</span><br></pre></td></tr></table></figure></div>
+<p><code>outcome</code>就会得到<code>2&#39;b0x</code>的值，理由是尽管<code>Verilog</code>不知道结果是第二个操作数还是第三个操作数，但是不论是哪一个，其第1位一定是0，但是无法确定其第0位究竟是0还是1，因此第0位浮空。</p>
+<p>在<code>if-else</code>语句中则不一样。比如：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (a == <span class="number">1&#x27;b1</span>) </span><br><span class="line">  b &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">  b &lt;= <span class="number">1&#x27;b0</span>;</span><br></pre></td></tr></table></figure></div>
+<p>在上述代码中，如果<code>a</code>为一位浮空值，程序仍然会执行<code>else</code>语句块内的代码。<code>if-else</code>是安全的。</p>
+<p>在一些情况下，我们希望判断语句能够更加保险，即能够对浮空值也进行判断。这是可以使用<code>===</code>和<code>!===</code>，这双目两个运算符可以连同高阻态<code>z</code>和浮空值<code>x</code>一并进行判断。</p>
+<p>三目运算符在进行简单的<code>if-else</code>判断是非常好用的，主要是写起来和读起来都比较舒服。但是不建议用于多重<code>if-else</code>判断，尤其是当不论<code>if</code>还是<code>else</code>里面都有<code>if-else</code>语句的时候。</p>
+<h3 id="3、关于”-”和”-”以及“自动类型转换”"><a href="#3、关于”-”和”-”以及“自动类型转换”" class="headerlink" title="3、关于”~”和”!”以及“自动类型转换”"></a>3、关于”~”和”!”以及“自动类型转换”</h3><p>省流版就是：不要用位宽不同的两个数进行相互赋值，理由是<code>Verilog</code>在进行位扩展的时候会进行一些很诡异的操作。</p>
+<p>下面讲一个具体的例子。下例由室友LJC提出，愣是把我看傻了。</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> test(</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">1</span> : <span class="number">0</span>] a;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line">    <span class="keyword">reg</span> clk;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">            c = ~a;</span><br><span class="line">            <span class="built_in">$display</span>(<span class="string">&quot;when a = 1&#x27;b%b, c = ~ a = 4&#x27;b%b&quot;</span>, a, c);</span><br><span class="line">            c = !a;</span><br><span class="line">            <span class="built_in">$display</span>(<span class="string">&quot;when a = 1&#x27;b%b, c = ! a = 4&#x27;b%b&quot;</span>, a, c);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">        a = <span class="number">2&#x27;b00</span>;</span><br><span class="line">        c = <span class="number">4&#x27;b00</span>;</span><br><span class="line">        clk = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b01</span>;</span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b10</span>;</span><br><span class="line">        #<span class="number">2</span> a = <span class="number">2&#x27;b11</span>;</span><br><span class="line">        #<span class="number">2</span> <span class="built_in">$finish</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> #<span class="number">1</span> clk &lt;= ~clk;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure></div>
+<p>使用<code>iverilog</code>进行编译和仿真会得到：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ iverilog -o a.out test.v</span><br><span class="line">$ vvp a.out</span><br><span class="line">when a = 1&#x27;b00, c = ~ a = 4&#x27;b1111</span><br><span class="line">when a = 1&#x27;b00, c = ! a = 4&#x27;b0001</span><br><span class="line">when a = 1&#x27;b01, c = ~ a = 4&#x27;b1110</span><br><span class="line">when a = 1&#x27;b01, c = ! a = 4&#x27;b0000</span><br><span class="line">when a = 1&#x27;b10, c = ~ a = 4&#x27;b1101</span><br><span class="line">when a = 1&#x27;b10, c = ! a = 4&#x27;b0000</span><br><span class="line">when a = 1&#x27;b11, c = ~ a = 4&#x27;b1100</span><br><span class="line">when a = 1&#x27;b11, c = ! a = 4&#x27;b0000</span><br><span class="line">test3.v:23: $finish called at 8 (1s)</span><br></pre></td></tr></table></figure></div>
+<p>可以看出，<code>~a</code>和<code>!a</code>在进行位扩展时十分抽象，编译时会先进行1扩展或者0扩展再进行赋值。因此当一个稍微复杂的表达式中出现了位宽的改变时，强烈建议用<code>vector</code>也就是花括号<code>&#123;,&#125;</code>手动进行扩展。</p>
+<p>P.S.样例中在时序逻辑中进行阻塞赋值是不合规范的，请勿模仿。</p>
+<h3 id="4、位宽"><a href="#4、位宽" class="headerlink" title="4、位宽"></a>4、位宽</h3><p>下例来自舍友ZHX，这种事情一旦发生，debug可就困难了。大家可以试着找找下图中的错误。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/CO/verilog_error/1.png"
+                      alt="位宽错误"
+                ></p>
+<details class="blue" data-header-exclude><summary><i class="fa-solid fa-chevron-right"></i>Answer </summary>
+              <div class='content'>
+              <p>不声明位宽时，默认1位。这与整数不同，后者默认32位。<br>Addr是32位的地址，但是声明成了1位。 </p>
+              </div>
+            </details>
 
-<p>mips相关模拟开发工具</p>
-<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">sudo apt install gcc-mips-linux-gnu qemu-system-mips gdb-multiarch</span><br></pre></td></tr></table></figure></div>
+<h3 id="5、关于循环"><a href="#5、关于循环" class="headerlink" title="5、关于循环"></a>5、关于循环</h3><p>在P4以及后续的上机题中，可能会需要统计一个32位数中的1的个数，或者32位数中是否存在连续的4个1。这时需要使用循环写组合逻辑。比如前者可写为：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">integer</span> i;</span><br><span class="line"><span class="keyword">reg</span>  [<span class="number">31</span>: <span class="number">0</span>] sum;</span><br><span class="line"><span class="keyword">wire</span> [<span class="number">31</span>: <span class="number">0</span>] target;</span><br><span class="line"><span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">  sum = <span class="number">0</span></span><br><span class="line">  <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;<span class="number">32</span>; i=i+<span class="number">1</span>) <span class="keyword">begin</span></span><br><span class="line">    sum = sum + target[i];</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
 
-<p>之后的作业如果遇到奇怪的报错可能还有一下其他的库没有装。这个到时候再说吧。</p>
-<h3 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h3><p>我们直接看Makefile，这里参考了绿导师的makefile查看技巧。</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ make -nB # 查看make命令都会执行哪些命令，并输出到标准输出（但是不执行这些命令）</span><br><span class="line">$ make run -nB # 查看make run命令都会执行哪些命令，并输出到标准输出（但是不执行这些命令）</span><br></pre></td></tr></table></figure></div>
-
-<p><code>-n</code>和<code>-B</code>选项可以用<code>man make | vim -</code>来查看</p>
-<p>对于make中眼花缭乱的指令，可以在vim中输入<code>:%s/ /\n  /g</code>命令来完成一种简单的formatting。</p>
-<p>拿mips-exercise的makefile来说，</p>
-<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># make</span></span><br><span class="line">mips-linux-gnu-gcc --std=gnu99 -EL -G 0 -mno-abicalls -fno-pic -ffreestanding -fno-stack-protector -fno-builtin -Wa,-xgot -Wall -mxgot -mno-fix-r4000 -march=4kc -g -ggdb -I./include/ -c -o hello.o hello.c</span><br><span class="line">mips-linux-gnu-gcc --std=gnu99 -EL -G 0 -mno-abicalls -fno-pic -ffreestanding -fno-stack-protector -fno-builtin -Wa,-xgot -Wall -mxgot -mno-fix-r4000 -march=4kc -g -ggdb -I./include/ -c -o output.o output.c</span><br><span class="line">mips-linux-gnu-gcc --std=gnu99 -EL -G 0 -mno-abicalls -fno-pic -ffreestanding -fno-stack-protector -fno-builtin -Wa,-xgot -Wall -mxgot -mno-fix-r4000 -march=4kc -g -ggdb -I./include/ -c -o start.o start.S</span><br><span class="line">mips-linux-gnu-ld -EL -G 0 -static -n -nostdlib --fatal-warnings -o hello -N -T linker.lds hello.o output.o start.o</span><br><span class="line"></span><br><span class="line"><span class="comment"># make run</span></span><br><span class="line">qemu-system-mipsel -cpu 4Kc -m 64 -nographic -M malta -no-reboot  -kernel hello</span><br><span class="line"></span><br><span class="line"><span class="comment"># make dbg</span></span><br><span class="line">make dbg_run &gt;/dev/null 2&gt;&amp;1 &amp; gdb-multiarch hello -ex <span class="string">"target remote localhost:1234"</span></span><br><span class="line">killall qemu-system-mipsel</span><br><span class="line"></span><br><span class="line"><span class="comment"># make clean</span></span><br><span class="line"><span class="built_in">rm</span> -rf *~ *.o hello *.objdump</span><br><span class="line"></span><br><span class="line"><span class="comment"># make dbg_run</span></span><br><span class="line">qemu-system-mipsel -cpu 4Kc -m 64 -nographic -M malta -no-reboot -s -S  -kernel hello</span><br></pre></td></tr></table></figure></div>
-<p>可以发现：</p>
-<ol>
-<li>make就是简单的生成了一个hello的可执行文件。它忽略了标准库，使用静态链接，禁用内联函数和栈保护器，禁用对mips-r4000的修复。简单来说，这些编译操作都是为了保证我们写的程序能够在裸机上运行</li>
-<li>使用<code>qemu-system-mipsel</code> 在4Kc, MIPS Malta Core运行了hello。在Debug的时候使用了-S选项让CPU在开始运行的时候停下来，使用-s指令在localhost:1234开启了一个gdbserver用于远程调试。</li>
-<li>使用<code>gdb-multiarch</code>进行remote dbg，完成之后再干碎qemu进程。</li>
-</ol>
-<h3 id="观察运行情况"><a href="#观察运行情况" class="headerlink" title="观察运行情况"></a>观察运行情况</h3><p>gdb自带tui，能够方便地查看运行结果</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">(gdb) layout asm</span><br><span class="line">(gdb) layout src</span><br></pre></td></tr></table></figure></div>
-<p>asm这可以将CPU从启动时的0xBFC00000开始执行的所有指令都显示出来，能够很好地观察到每一条指令的运行</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mips-linux-gnu-objdump -d hello | vim -</span><br></pre></td></tr></table></figure></div>
-<p>将可执行文件hello反汇编来看到hello是怎么运行的。在asm的tui下也可以显示相同的内容。</p>
+<h3 id="6、关于切片"><a href="#6、关于切片" class="headerlink" title="6、关于切片"></a>6、关于切片</h3><p>对于<code>wire</code>类型或者<code>reg</code>类型变量，我们会经常用到<code>[:]</code>取出特定位宽，再利用<code>&#123;,&#125;</code>进行拼接。但是当我们想取出的位置随变量改变时，就会出现问题，比如：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">module</span> test(</span><br><span class="line">);</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">integer</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line"><span class="keyword">assign</span> c = c[(i + <span class="number">1</span>):i]</span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure></div>
+<p>用<code>iverilog</code>编译会报错。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">test.v:6: error: Part select expressions must be constant.</span><br></pre></td></tr></table></figure></div>
+<p>个人猜测Verilog要求返回值的位宽必须是恒定的，因此要求用常数选择位宽。</p>
+<p>解决方案有三。第一个是利用位移运算去挪它，再用常数选出来；第二个是用vector把每一位取出来并进行拼接，如<code>assign c = &#123;&#123;c[i+1]&#125;, &#123;c[i]&#125;&#125;;</code>。</p>
+<p>第三个方案更简洁，利用System Verilog中的切片完成。比如上述例子可写成：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>     <span class="keyword">module</span> test(</span><br><span class="line"><span class="number">2</span>     );</span><br><span class="line">...</span><br><span class="line"><span class="number">12</span>    <span class="keyword">integer</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="number">13</span>    <span class="keyword">wire</span> [<span class="number">3</span> : <span class="number">0</span>] c;</span><br><span class="line"><span class="number">14</span>    <span class="keyword">assign</span> c = c[(i + <span class="number">1</span>) -: <span class="number">2</span>]</span><br><span class="line">...</span><br></pre></td></tr></table></figure></div>
+<p>不要用<code>[i+:2]</code>，这会返回<code>[i:i+1]</code>。</p>
+<h3 id="7、关于阻塞和非阻塞"><a href="#7、关于阻塞和非阻塞" class="headerlink" title="7、关于阻塞和非阻塞"></a>7、关于阻塞和非阻塞</h3><p>阻塞赋值和非阻塞赋值看似简单，但实际上在编译过程中又不是那么简单。个人建议将阻塞赋值和非阻塞赋值分开，即在<code>always @(*)</code>中进行阻塞赋值，在<code>always @(posedge clk)</code>中进行非阻塞赋值。请不要在阻塞赋值中掺杂非阻塞赋值。比如我的天才构思，实现了在时钟上升沿的瞬间利用上升沿后的数据对寄存器值进行更新：</p>
+<div class="highlight-container" data-rel="Verilog"><figure class="iseeu highlight verilog"><table><tr><td class="code"><pre><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    flag = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// process coming data...</span></span><br><span class="line">    flag = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> flag) <span class="keyword">begin</span></span><br><span class="line">    <span class="comment">// do sth...</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></div>
+<p>我不知道第一个语句块中是否真的读到了上升沿后的数据，因为仿真得到的全是浮空值。</p>
+<p>非阻塞赋值是在利用上升沿之前的数据在上升沿对寄存器进行一次更新，所以请不要在同一个上升沿对同一个寄存器更新两次，即不要在同一次<code>always</code>中执行多次对同一个<code>reg</code>类型变量的非阻塞赋值操作。如果需要用上升沿之后的数据输出的话，可以写一个Mealy机。</p>
+<p>待补充~</p>
 ]]></content>
       <categories>
-        <category>OS</category>
+        <category>CO</category>
       </categories>
       <tags>
-        <tag>OS</tag>
+        <tag>Verilog</tag>
       </tags>
   </entry>
   <entry>
@@ -1080,6 +1023,7 @@ A(表达式)--&gt; B3( 项3 )
       </categories>
       <tags>
         <tag>OO</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -1339,6 +1283,79 @@ ele --&gt; rq</pre>
       </categories>
       <tags>
         <tag>OO</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>「BUAA OO」Unit-4 UML</title>
+    <url>/2024/06/14/OO/Unit-4/</url>
+    <content><![CDATA[<h1 id="UML-Unified-Modeling-Language"><a href="#UML-Unified-Modeling-Language" class="headerlink" title="UML - Unified Modeling Language"></a>UML - Unified Modeling Language</h1><h2 id="一、第四单元正向建模与开发"><a href="#一、第四单元正向建模与开发" class="headerlink" title="一、第四单元正向建模与开发"></a>一、第四单元正向建模与开发</h2><p>在第四单元中的，课程组让我们体验了一下正向UML建模 + 基于UML进行再开发的项目开发流程。</p>
+<p>第四单元的正向建模开发大概包括四步：</p>
+<ol>
+<li>根据用户需求设计UML图，确定类、接口及其关系，确定方法和属性，完善UML类图</li>
+<li>基于UML类图，也就是原先最初的设计进行代码编写。</li>
+<li>根据实际编写的代码，逆向修改UML图，进行UML图的再设计</li>
+<li>根据UML图的修改，对代码进行再编写。</li>
+</ol>
+<p>当然其中的第三步和第四步会不断重复循环，直到项目编写成了开发者想看到的样子。</p>
+<p>在第四单元中，个人认为正向建模开发最大的好处就是能对项目整体有一个把握。不论是对数据结构的把握（属性、数据结构、继承），还是对象行为上的设计（方法、抽象、实现），设计者都能够在开发先前对整个项目有一个十分全面的把握，从而避免了在开发流程中不断进行小迭代、小重构的可能。</p>
+<h3 id="正向建模开发的缺点"><a href="#正向建模开发的缺点" class="headerlink" title="正向建模开发的缺点"></a>正向建模开发的缺点</h3><p>但是一码归一码。在第四单元中，经过了第十三次作业的正向建模开发后，个人认为正向建模开发同时也存在不少问题：</p>
+<ol>
+<li>首先，正向建模开发需要开发者对用户需求有相当全面的把握和理解，而这种理解需要时间思考。</li>
+<li>其次，正向建模开发可能会让开发者不断在UML设计和代码编写中反复横跳。</li>
+</ol>
+<p>这两点在某种程度上时相互制约的。如果开发者未能做到第一点，也就是未能从整体上把握住项目的整体设计，那么在之后的项目开发中很有可能不断“重写代码 + 重写UML”。而如果开发者想避免第二个缺点带来的苦痛，就需要花时间不断完善自己的设计，等到设计好了再进行代码编写。</p>
+<p>从项目设计的角度而言，正向开发毫无疑问是是一种很强的开发流程。就第四单元来说，正向建模开发似乎显得不必要。但是从课程和学生的角度来说，正向建模开发十分有必要开展并体验一番。</p>
+<h2 id="二、第四单元架构设计"><a href="#二、第四单元架构设计" class="headerlink" title="二、第四单元架构设计"></a>二、第四单元架构设计</h2><p>总体来说，第四单元的三次作业中，除了第十三次作业略微使用了正向建模开发，此外均是抛开UML图进行设计</p>
+<p>三次作业中，整体架构设计的演进如下：</p>
+<h3 id="第十三次作业"><a href="#第十三次作业" class="headerlink" title="第十三次作业"></a>第十三次作业</h3><ul>
+<li>加入了图书馆类，用于表示图书馆的整体运行情况。其中的<code>run()</code>方法能够让一个图书馆对象运行起来。</li>
+<li>加入了书架、周转台、预约处、学生四个类，表示图书的所在位置</li>
+<li>加入了书本类，用于表示大量书籍，同时也是不同部门间传递书籍的最基本的单位。</li>
+</ul>
+<p>第十三次作业的整体设计比较简单，类与类之间的关系如下图所示。</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U4/hw13.jpg" alt="hw13"></p>
+<p>↑ 第十三次作业</p>
+<h3 id="第十四次作业"><a href="#第十四次作业" class="headerlink" title="第十四次作业"></a>第十四次作业</h3><ul>
+<li>加入了<code>BookOwner</code>类来统一管理拥有书籍的类，包括书架、图书角、周转台、书架和学生。这大量简化了周转台和书架的代码量。</li>
+<li>加入了<code>ReservationInfo</code> 和 <code>ReservationInfos</code> 预约信息类来表示预约信息，也正因如此预约台没有继承<code>BookOwner</code>，而是由<code>ReservationInfos</code>组合成。</li>
+</ul>
+<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U4/hw14.jpg" alt="hw14"></p>
+<p>↑ 第十四次作业</p>
+<h3 id="第十五次作业"><a href="#第十五次作业" class="headerlink" title="第十五次作业"></a>第十五次作业</h3><ul>
+<li>没有引入任何新类，只是在原有的基础上进行动刀。类间关系没有任何改变。</li>
+<li>将<code>BookOwner</code>弱化成了抽象类，因为它没有实例化的机会。</li>
+</ul>
+<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U4/hw15.jpg" alt="hw15"></p>
+<p>↑ 第十五次作业</p>
+<h2 id="三、对比最终代码设计和UML模型设计之间的追踪关系"><a href="#三、对比最终代码设计和UML模型设计之间的追踪关系" class="headerlink" title="三、对比最终代码设计和UML模型设计之间的追踪关系"></a>三、对比最终代码设计和UML模型设计之间的追踪关系</h2><p>UML模型设计主要分为三个部分：类图、状态图和时序图</p>
+<p>在类图上，由于代码与UML的一致性难以维持（打字错误），于是用JavaParser写了一个简单的类图生成器，用于生成UML类图中各个类的属性和方法定义，再手动修正类与类之间的关系。效果不错。</p>
+<p>（UML生成的源码在<a class="link" href="https://github.com/Squirrel7ang/Simple-Staruml-Generater/">Github <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>上，个人感觉实际应用不大，主要是为了应对Unit4的UML评测）</p>
+<p>状态图用于维护图书的状态。具体来说，就是图书在不同图书持有者之间的流动。通过编写<code>@Trigger</code>，可以确定状态图中一次状态的转化的初态末态和<code>Trigger</code>，也就是方法名称。因此也可以写一个简单UML状态图生成器，再手搓<code>Guard</code>字段。在第十五次作业中，UML状态如下图所示。</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U4/Statechart.jpg" alt="statechart"></p>
+<p>可以看到，基本包括了应该有的状态。</p>
+<p>顺序图的一致性就很糟糕了。可能也是到最后一次作业了，比较懈怠，并没有保持好代码与顺序图的一致性。另一方面，由于顺序图的绘制过于麻烦，第十五次作业中并没有画好顺序图，在此不做展示。</p>
+<h2 id="四、四个单元中架构设计思维的演进"><a href="#四、四个单元中架构设计思维的演进" class="headerlink" title="四、四个单元中架构设计思维的演进"></a>四、四个单元中架构设计思维的演进</h2><p>个人认为演进过程不是很好描述，毕竟在设计思维在不断变化，而我也没有记录下过膝的设计思维是如何的，所以也只能谈一谈现在的设计思维了。</p>
+<p>总的来说，设计思维和吴老师在课上讲的内容逐渐吻合，最大的特征在于项目的层次化设计愈发明显。</p>
+<p>首先，在拿到任务需求之后，我会合理分析各个类的设计和定义，构建<strong>层次化</strong>的项目结构。同时，在必要时可以抽象出<strong>控制类</strong>用来专门管理不同类和对象之间的关系。</p>
+<p>其次，在先导课中没有得到充分锻炼的实现和继承，经过了四次作业的洗礼之后也能够摸到点皮毛了。基本上，在迭代开发的过程中，遇到了高度相似的数据结构或者行为，就会有意识地抽象出父类或者接口，进而简化代码开发。</p>
+<p>此外，在第一次和第二次作业中，我可能还会出现五六十行的方法。在第四次作业的开发过程中，我慢慢地能够找到要在什么层次完成什么工作。</p>
+<h2 id="五、四个单元中测试思维的演进"><a href="#五、四个单元中测试思维的演进" class="headerlink" title="五、四个单元中测试思维的演进"></a>五、四个单元中测试思维的演进</h2><blockquote>
+<p>debug的最好方式就是不写bug。</p>
+</blockquote>
+<p>在四次作业中，我进行的测试可谓是少之又少。而在这少之又少的测试中，做的最多的毫无疑问就是功能性黑盒测试。</p>
+<p>在Pre中吴老师交了我们如何进行单元测试。但是经过了JML之后，我发现契约式设计比单元测试更为有用。倒不是说真的要用JML，而是定好了一个方法需要满足的前置条件和后置条件之后，但凡是稍微简单一点的方法就很难写错，进而避免了一个方法究竟要在那个层次完成何种功能，前置条件的判断究竟要放在方法体内还是调用者那块儿的苦恼。我并没有在设计中使用适当的 annotation 标明契约，而是用注释的方式清晰地表述了出来。</p>
+<h2 id="六、课程收获"><a href="#六、课程收获" class="headerlink" title="六、课程收获"></a>六、课程收获</h2><p>真心感谢OO，是一门能够学到本事的课。或许在未来里我们不会用到java语言，但是其中包含的面向对象设计思想真能让码农一辈子获益。</p>
+<p>要说课程收获的话，最大的收获就是层次化设计上的收获。这在前文（第四部分）已经叙述过。也希望之后的面向对象思想也能够刻印在我的脑子中。</p>
+<p>此外，OO课程对代码能力的提升也是巨大的。IDEA + Vim插件让代码速度快到飞起。熟练的Java语言编写使得个人能从OO作业中获得强烈快感。</p>
+<p>如果一切幸运的话，希望明年也能与OO再见！</p>
+]]></content>
+      <categories>
+        <category>OO</category>
+      </categories>
+      <tags>
+        <tag>OO</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -1550,6 +1567,64 @@ ele --&gt; rq</pre>
       </categories>
       <tags>
         <tag>OO</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>「BUAA OS」操作系统假期预习</title>
+    <url>/2024/03/03/OS/Pre/</url>
+    <content><![CDATA[<h2 id="预习内容"><a href="#预习内容" class="headerlink" title="预习内容"></a>预习内容</h2><p>OS的假期预习发布时间远晚于 CO 的假期预习，将近开学才开放预习内容，正确的。</p>
+<p>按照个人理解，假期预习大概就是理解这么几件事：</p>
+<ol>
+<li>学习使用<code>linux</code>和 linux 中基本的<code>GNU工具</code>，如<code>ls</code> <code>make</code> <code>vim</code>等等</li>
+<li>学习一个标准一点的、系统一点的 MIPS 程序长什么样子</li>
+<li>学习 C 语言是怎么被翻译成 MIPS 汇编，再翻译成二进制可执行文件，再跑起来的</li>
+<li>学习使用 <code>GDB</code> 和 <code>QEMU</code></li>
+</ol>
+<p>一步步来。</p>
+<h3 id="安装Linux"><a href="#安装Linux" class="headerlink" title="安装Linux"></a>安装Linux</h3><p>我安装的是<code>Ubuntu22.04</code>，使用<code>vmware workstation</code>运行。理由是配置比较白痴。同时我也在WSL上安装了<code>Ubuntu</code>。虽然还没弄明白wsl的图形化界面要怎么安装，但即便没有图形化界面，个人感觉使用体验要远好于<code>vmware</code>。</p>
+<h4 id="本地代理"><a href="#本地代理" class="headerlink" title="本地代理"></a>本地代理</h4><p>wsl的开本地代理可以在本地的”C:\Users%USERNAME%.wslconfig”文件中进行配置完成。一般来说该文件不存在，需要自行创建。创建后向其中写入以下内容:</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">[experimental]</span><br><span class="line">autoMemoryReclaim=gradual</span><br><span class="line">networkingMode=mirrored</span><br><span class="line">dnsTunneling=true</span><br><span class="line">firewall=true</span><br><span class="line">autoProxy=true</span><br></pre></td></tr></table></figure></div>
+<p>然后在命令行将wsl关掉：</p>
+<div class="highlight-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">&gt; wsl --shutdown</span><br><span class="line">&gt; wsl</span><br></pre></td></tr></table></figure></div>
+<p>如果打开wsl没有出现“NAT模式下不支持localhost”之类的文字就算成功了</p>
+<p>在vmware的Ubuntu中进行本地代理则稍微有一点麻烦。我使用的是clash for windows进行联网，在Ubuntu中也可以启动本地代理通过windows的clash访问指定网站。</p>
+<ol>
+<li>先在windows下打开命令行，输入<code>ipconfig</code>，找到<code>无线局域网适配器 WLAN</code>下的<code>IPv4 地址</code></li>
+<li>将clash中的<code>Allow LAN</code>打开，记录<code>Port</code>号。</li>
+<li>在ubuntu的网络设置中选择<code>本地代理-手动</code>，将<code>https代理</code>、<code>http代理</code>、<code>Socks主机</code>三个选项的每一个都分别写入<code>IPv4 地址</code>以及<code>Port</code>号。随后就可以正常上网了</li>
+</ol>
+<h4 id="安装相关GNU工具"><a href="#安装相关GNU工具" class="headerlink" title="安装相关GNU工具"></a>安装相关GNU工具</h4><p>基本gcc工具</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">sudo apt install build-essential</span><br></pre></td></tr></table></figure></div>
+
+<p>mips相关模拟开发工具</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">sudo apt install gcc-mips-linux-gnu qemu-system-mips gdb-multiarch</span><br></pre></td></tr></table></figure></div>
+
+<p>之后的作业如果遇到奇怪的报错可能还有一下其他的库没有装。这个到时候再说吧。</p>
+<h3 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h3><p>我们直接看Makefile，这里参考了绿导师的makefile查看技巧。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ make -nB # 查看make命令都会执行哪些命令，并输出到标准输出（但是不执行这些命令）</span><br><span class="line">$ make run -nB # 查看make run命令都会执行哪些命令，并输出到标准输出（但是不执行这些命令）</span><br></pre></td></tr></table></figure></div>
+
+<p><code>-n</code>和<code>-B</code>选项可以用<code>man make | vim -</code>来查看</p>
+<p>对于make中眼花缭乱的指令，可以在vim中输入<code>:%s/ /\n  /g</code>命令来完成一种简单的formatting。</p>
+<p>拿mips-exercise的makefile来说，</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># make</span></span><br><span class="line">mips-linux-gnu-gcc --std=gnu99 -EL -G 0 -mno-abicalls -fno-pic -ffreestanding -fno-stack-protector -fno-builtin -Wa,-xgot -Wall -mxgot -mno-fix-r4000 -march=4kc -g -ggdb -I./include/ -c -o hello.o hello.c</span><br><span class="line">mips-linux-gnu-gcc --std=gnu99 -EL -G 0 -mno-abicalls -fno-pic -ffreestanding -fno-stack-protector -fno-builtin -Wa,-xgot -Wall -mxgot -mno-fix-r4000 -march=4kc -g -ggdb -I./include/ -c -o output.o output.c</span><br><span class="line">mips-linux-gnu-gcc --std=gnu99 -EL -G 0 -mno-abicalls -fno-pic -ffreestanding -fno-stack-protector -fno-builtin -Wa,-xgot -Wall -mxgot -mno-fix-r4000 -march=4kc -g -ggdb -I./include/ -c -o start.o start.S</span><br><span class="line">mips-linux-gnu-ld -EL -G 0 -static -n -nostdlib --fatal-warnings -o hello -N -T linker.lds hello.o output.o start.o</span><br><span class="line"></span><br><span class="line"><span class="comment"># make run</span></span><br><span class="line">qemu-system-mipsel -cpu 4Kc -m 64 -nographic -M malta -no-reboot  -kernel hello</span><br><span class="line"></span><br><span class="line"><span class="comment"># make dbg</span></span><br><span class="line">make dbg_run &gt;/dev/null 2&gt;&amp;1 &amp; gdb-multiarch hello -ex <span class="string">"target remote localhost:1234"</span></span><br><span class="line">killall qemu-system-mipsel</span><br><span class="line"></span><br><span class="line"><span class="comment"># make clean</span></span><br><span class="line"><span class="built_in">rm</span> -rf *~ *.o hello *.objdump</span><br><span class="line"></span><br><span class="line"><span class="comment"># make dbg_run</span></span><br><span class="line">qemu-system-mipsel -cpu 4Kc -m 64 -nographic -M malta -no-reboot -s -S  -kernel hello</span><br></pre></td></tr></table></figure></div>
+<p>可以发现：</p>
+<ol>
+<li>make就是简单的生成了一个hello的可执行文件。它忽略了标准库，使用静态链接，禁用内联函数和栈保护器，禁用对mips-r4000的修复。简单来说，这些编译操作都是为了保证我们写的程序能够在裸机上运行</li>
+<li>使用<code>qemu-system-mipsel</code> 在4Kc, MIPS Malta Core运行了hello。在Debug的时候使用了-S选项让CPU在开始运行的时候停下来，使用-s指令在localhost:1234开启了一个gdbserver用于远程调试。</li>
+<li>使用<code>gdb-multiarch</code>进行remote dbg，完成之后再干碎qemu进程。</li>
+</ol>
+<h3 id="观察运行情况"><a href="#观察运行情况" class="headerlink" title="观察运行情况"></a>观察运行情况</h3><p>gdb自带tui，能够方便地查看运行结果</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">(gdb) layout asm</span><br><span class="line">(gdb) layout src</span><br></pre></td></tr></table></figure></div>
+<p>asm这可以将CPU从启动时的0xBFC00000开始执行的所有指令都显示出来，能够很好地观察到每一条指令的运行</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mips-linux-gnu-objdump -d hello | vim -</span><br></pre></td></tr></table></figure></div>
+<p>将可执行文件hello反汇编来看到hello是怎么运行的。在asm的tui下也可以显示相同的内容。</p>
+]]></content>
+      <categories>
+        <category>OS</category>
+      </categories>
+      <tags>
+        <tag>OS</tag>
       </tags>
   </entry>
   <entry>
@@ -1568,77 +1643,6 @@ ele --&gt; rq</pre>
       <tags>
         <tag>me</tag>
         <tag>talks</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>「BUAA OO」Unit-4 UML</title>
-    <url>/2024/06/14/OO/Unit-4/</url>
-    <content><![CDATA[<h1 id="UML-Unified-Modeling-Language"><a href="#UML-Unified-Modeling-Language" class="headerlink" title="UML - Unified Modeling Language"></a>UML - Unified Modeling Language</h1><h2 id="一、第四单元正向建模与开发"><a href="#一、第四单元正向建模与开发" class="headerlink" title="一、第四单元正向建模与开发"></a>一、第四单元正向建模与开发</h2><p>在第四单元中的，课程组让我们体验了一下正向UML建模 + 基于UML进行再开发的项目开发流程。</p>
-<p>第四单元的正向建模开发大概包括四步：</p>
-<ol>
-<li>根据用户需求设计UML图，确定类、接口及其关系，确定方法和属性，完善UML类图</li>
-<li>基于UML类图，也就是原先最初的设计进行代码编写。</li>
-<li>根据实际编写的代码，逆向修改UML图，进行UML图的再设计</li>
-<li>根据UML图的修改，对代码进行再编写。</li>
-</ol>
-<p>当然其中的第三步和第四步会不断重复循环，直到项目编写成了开发者想看到的样子。</p>
-<p>在第四单元中，个人认为正向建模开发最大的好处就是能对项目整体有一个把握。不论是对数据结构的把握（属性、数据结构、继承），还是对象行为上的设计（方法、抽象、实现），设计者都能够在开发先前对整个项目有一个十分全面的把握，从而避免了在开发流程中不断进行小迭代、小重构的可能。</p>
-<h3 id="正向建模开发的缺点"><a href="#正向建模开发的缺点" class="headerlink" title="正向建模开发的缺点"></a>正向建模开发的缺点</h3><p>但是一码归一码。在第四单元中，经过了第十三次作业的正向建模开发后，个人认为正向建模开发同时也存在不少问题：</p>
-<ol>
-<li>首先，正向建模开发需要开发者对用户需求有相当全面的把握和理解，而这种理解需要时间思考。</li>
-<li>其次，正向建模开发可能会让开发者不断在UML设计和代码编写中反复横跳。</li>
-</ol>
-<p>这两点在某种程度上时相互制约的。如果开发者未能做到第一点，也就是未能从整体上把握住项目的整体设计，那么在之后的项目开发中很有可能不断“重写代码 + 重写UML”。而如果开发者想避免第二个缺点带来的苦痛，就需要花时间不断完善自己的设计，等到设计好了再进行代码编写。</p>
-<p>从项目设计的角度而言，正向开发毫无疑问是是一种很强的开发流程。就第四单元来说，正向建模开发似乎显得不必要。但是从课程和学生的角度来说，正向建模开发十分有必要开展并体验一番。</p>
-<h2 id="二、第四单元架构设计"><a href="#二、第四单元架构设计" class="headerlink" title="二、第四单元架构设计"></a>二、第四单元架构设计</h2><p>总体来说，第四单元的三次作业中，除了第十三次作业略微使用了正向建模开发，此外均是抛开UML图进行设计</p>
-<p>三次作业中，整体架构设计的演进如下：</p>
-<h3 id="第十三次作业"><a href="#第十三次作业" class="headerlink" title="第十三次作业"></a>第十三次作业</h3><ul>
-<li>加入了图书馆类，用于表示图书馆的整体运行情况。其中的<code>run()</code>方法能够让一个图书馆对象运行起来。</li>
-<li>加入了书架、周转台、预约处、学生四个类，表示图书的所在位置</li>
-<li>加入了书本类，用于表示大量书籍，同时也是不同部门间传递书籍的最基本的单位。</li>
-</ul>
-<p>第十三次作业的整体设计比较简单，类与类之间的关系如下图所示。</p>
-<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U4/hw13.jpg" alt="hw13"></p>
-<p>↑ 第十三次作业</p>
-<h3 id="第十四次作业"><a href="#第十四次作业" class="headerlink" title="第十四次作业"></a>第十四次作业</h3><ul>
-<li>加入了<code>BookOwner</code>类来统一管理拥有书籍的类，包括书架、图书角、周转台、书架和学生。这大量简化了周转台和书架的代码量。</li>
-<li>加入了<code>ReservationInfo</code> 和 <code>ReservationInfos</code> 预约信息类来表示预约信息，也正因如此预约台没有继承<code>BookOwner</code>，而是由<code>ReservationInfos</code>组合成。</li>
-</ul>
-<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U4/hw14.jpg" alt="hw14"></p>
-<p>↑ 第十四次作业</p>
-<h3 id="第十五次作业"><a href="#第十五次作业" class="headerlink" title="第十五次作业"></a>第十五次作业</h3><ul>
-<li>没有引入任何新类，只是在原有的基础上进行动刀。类间关系没有任何改变。</li>
-<li>将<code>BookOwner</code>弱化成了抽象类，因为它没有实例化的机会。</li>
-</ul>
-<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U4/hw15.jpg" alt="hw15"></p>
-<p>↑ 第十五次作业</p>
-<h2 id="三、对比最终代码设计和UML模型设计之间的追踪关系"><a href="#三、对比最终代码设计和UML模型设计之间的追踪关系" class="headerlink" title="三、对比最终代码设计和UML模型设计之间的追踪关系"></a>三、对比最终代码设计和UML模型设计之间的追踪关系</h2><p>UML模型设计主要分为三个部分：类图、状态图和时序图</p>
-<p>在类图上，由于代码与UML的一致性难以维持（打字错误），于是用JavaParser写了一个简单的类图生成器，用于生成UML类图中各个类的属性和方法定义，再手动修正类与类之间的关系。效果不错。</p>
-<p>（UML生成的源码在<a class="link" href="https://github.com/Squirrel7ang/Simple-Staruml-Generater/">Github <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>上，个人感觉实际应用不大，主要是为了应对Unit4的UML评测）</p>
-<p>状态图用于维护图书的状态。具体来说，就是图书在不同图书持有者之间的流动。通过编写<code>@Trigger</code>，可以确定状态图中一次状态的转化的初态末态和<code>Trigger</code>，也就是方法名称。因此也可以写一个简单UML状态图生成器，再手搓<code>Guard</code>字段。在第十五次作业中，UML状态如下图所示。</p>
-<p><img lazyload="" src="/images/loading.svg" data-src="/images/OO/U4/Statechart.jpg" alt="statechart"></p>
-<p>可以看到，基本包括了应该有的状态。</p>
-<p>顺序图的一致性就很糟糕了。可能也是到最后一次作业了，比较懈怠，并没有保持好代码与顺序图的一致性。另一方面，由于顺序图的绘制过于麻烦，第十五次作业中并没有画好顺序图，在此不做展示。</p>
-<h2 id="四、四个单元中架构设计思维的演进"><a href="#四、四个单元中架构设计思维的演进" class="headerlink" title="四、四个单元中架构设计思维的演进"></a>四、四个单元中架构设计思维的演进</h2><p>个人认为演进过程不是很好描述，毕竟在设计思维在不断变化，而我也没有记录下过膝的设计思维是如何的，所以也只能谈一谈现在的设计思维了。</p>
-<p>总的来说，设计思维和吴老师在课上讲的内容逐渐吻合，最大的特征在于项目的层次化设计愈发明显。</p>
-<p>首先，在拿到任务需求之后，我会合理分析各个类的设计和定义，构建<strong>层次化</strong>的项目结构。同时，在必要时可以抽象出<strong>控制类</strong>用来专门管理不同类和对象之间的关系。</p>
-<p>其次，在先导课中没有得到充分锻炼的实现和继承，经过了四次作业的洗礼之后也能够摸到点皮毛了。基本上，在迭代开发的过程中，遇到了高度相似的数据结构或者行为，就会有意识地抽象出父类或者接口，进而简化代码开发。</p>
-<p>此外，在第一次和第二次作业中，我可能还会出现五六十行的方法。在第四次作业的开发过程中，我慢慢地能够找到要在什么层次完成什么工作。</p>
-<h2 id="五、四个单元中测试思维的演进"><a href="#五、四个单元中测试思维的演进" class="headerlink" title="五、四个单元中测试思维的演进"></a>五、四个单元中测试思维的演进</h2><blockquote>
-<p>debug的最好方式就是不写bug。</p>
-</blockquote>
-<p>在四次作业中，我进行的测试可谓是少之又少。而在这少之又少的测试中，做的最多的毫无疑问就是功能性黑盒测试。</p>
-<p>在Pre中吴老师交了我们如何进行单元测试。但是经过了JML之后，我发现契约式设计比单元测试更为有用。倒不是说真的要用JML，而是定好了一个方法需要满足的前置条件和后置条件之后，但凡是稍微简单一点的方法就很难写错，进而避免了一个方法究竟要在那个层次完成何种功能，前置条件的判断究竟要放在方法体内还是调用者那块儿的苦恼。我并没有在设计中使用适当的 annotation 标明契约，而是用注释的方式清晰地表述了出来。</p>
-<h2 id="六、课程收获"><a href="#六、课程收获" class="headerlink" title="六、课程收获"></a>六、课程收获</h2><p>真心感谢OO，是一门能够学到本事的课。或许在未来里我们不会用到java语言，但是其中包含的面向对象设计思想真能让码农一辈子获益。</p>
-<p>要说课程收获的话，最大的收获就是层次化设计上的收获。这在前文（第四部分）已经叙述过。也希望之后的面向对象思想也能够刻印在我的脑子中。</p>
-<p>此外，OO课程对代码能力的提升也是巨大的。IDEA + Vim插件让代码速度快到飞起。熟练的Java语言编写使得个人能从OO作业中获得强烈快感。</p>
-<p>如果一切幸运的话，希望明年也能与OO再见！</p>
-]]></content>
-      <categories>
-        <category>OO</category>
-      </categories>
-      <tags>
-        <tag>OO</tag>
       </tags>
   </entry>
 </search>
