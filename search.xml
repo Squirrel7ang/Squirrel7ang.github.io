@@ -1645,4 +1645,133 @@ ele --&gt; rq</pre>
         <tag>talks</tag>
       </tags>
   </entry>
+  <entry>
+    <title>「学习资料」</title>
+    <url>/2024/11/27/MISC/learning_material/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>进入大三学期，发现学习资料似乎有一点多。因此稍微整理一下放在博客上，顺便给自己参考参考。之后一点一点删掉，只留下有用的东西。我觉得好的东西就打上勾勾，有更好的替代品的就划掉，还没有看过的留空 </p>
+<p>博客莫名其妙坏掉了，访问量突然变得有一点点太多了。不知道怎么修，之后可能换一个博客。</p>
+<h2 id="CS-学习材料"><a href="#CS-学习材料" class="headerlink" title="CS 学习材料"></a>CS 学习材料</h2><h3 id="CS-入门"><a href="#CS-入门" class="headerlink" title="CS 入门"></a>CS 入门</h3><ul>
+<li><input checked="" disabled="" type="checkbox"> <a class="link"   href="https://missing.lcpu.dev/" >lcpu missing semester<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+<li><input disabled="" type="checkbox"> <del><a href="">MIT missing semester</a></del></li>
+<li><input disabled="" type="checkbox"> <a class="link"   href="https://csdiy.wiki/" >CSDIY<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+</ul>
+<h3 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h3><ul>
+<li><input checked="" disabled="" type="checkbox"> <a class="link"   href="https://changkun.de/modern-cpp" >modern c++<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> 非常精炼的一本书，坏处是太精炼了d</li>
+<li><input disabled="" type="checkbox"> <a href="">c++17 the complete guide</a></li>
+</ul>
+<h3 id="体系结构"><a href="#体系结构" class="headerlink" title="体系结构"></a>体系结构</h3><ul>
+<li><input checked="" disabled="" type="checkbox"> <a class="link"   href="https://github.com/shinezyy/micro-arch-training" >Github:micro-arch-training<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>包含了体系结构的基础知识到研究生进阶知识。非常推荐。</li>
+</ul>
+<h3 id="HPC"><a href="#HPC" class="headerlink" title="HPC"></a>HPC</h3><ul>
+<li><a class="link"   href="https://space.bilibili.com/3461562830424779" >linux-club-of-peking-university<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+<li><a href="">hpc-wiki</a>：自从开了之后几乎没有完善过。</li>
+<li><input checked="" disabled="" type="checkbox"> <a href="">hpc-learning-Notes</a> 和 <a href="">hpc-learning</a> 是 github 上的两个比较入门的内容</li>
+</ul>
+]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
+      <tags>
+        <tag>MISC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>「蓝桥杯 Java」</title>
+    <url>/2025/04/09/MISC/java-algo/</url>
+    <content><![CDATA[<h2 id="准备蓝桥杯-Java-赛道"><a href="#准备蓝桥杯-Java-赛道" class="headerlink" title="准备蓝桥杯 Java 赛道"></a>准备蓝桥杯 Java 赛道</h2><p>大致框架：</p>
+<div class="code-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyStruct</span> {</span><br><span class="line">  <span class="keyword">public</span> <span class="type">int</span> <span class="keyword">var</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">MyStruct</span><span class="params">(<span class="type">int</span> v)</span> { <span class="built_in">this</span>.<span class="keyword">var</span> = v;} <span class="comment">// ...</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> {</span><br><span class="line">  <span class="keyword">static</span> <span class="type">int</span> globalVar;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[])</span> {</span><br><span class="line">    <span class="type">Scanner</span> <span class="variable">sc</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Scanner</span>(System.in);</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">myFunc</span><span class="params">()</span> {</span><br><span class="line"></span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h2><h3 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h3><ul>
+<li>Character: <code>ch = System.in.read()</code> </li>
+<li>Integer: <code>var = scanner.nextInt()</code> </li>
+<li>Long: <code>var = scanner.nextLong()</code> </li>
+<li>BigInteger: <code>var = scanner.nextBigInteger()</code> </li>
+<li>String: <code>var = scanner.next()</code></li>
+</ul>
+<h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><ul>
+<li><code>System.out.println(Object o)</code> – 调用 <code>toString()</code></li>
+<li><code>System.out.println(String.format())</code></li>
+</ul>
+<h2 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h2><h3 id="Queue"><a href="#Queue" class="headerlink" title="Queue<T>"></a>Queue&lt;T&gt;</h3><p>队列是接口。可以使用 <code>LinkList&lt;T&gt;</code> 实现</p>
+<ul>
+<li><code>offer</code> 入队</li>
+<li><code>poll</code> 出队</li>
+<li><code>peek</code> 队首元素</li>
+</ul>
+<h3 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList<T>"></a>ArrayList&lt;T&gt;</h3><ul>
+<li><p><code>size()</code>;</p>
+</li>
+<li><p><code>add(T ele)</code>;</p>
+</li>
+<li><p><code>remove(int index)</code>; – 自动前移</p>
+</li>
+<li><p><code>get(int index)</code>;</p>
+</li>
+<li><p><code>set(index, newVal)</code>;</p>
+</li>
+<li><p>排序</p>
+</li>
+<li><p><code>Collection.sort(listName)</code></p>
+</li>
+<li><p><code>Collection.sort(listName, new Comparator&lt;T&gt;(){ public compare(T a1, T a2) { return ... } })</code></p>
+</li>
+<li><p><code>Collection.sort(listName, Comparator.reverseOrder())</code></p>
+</li>
+</ul>
+<h3 id="TreeSet"><a href="#TreeSet" class="headerlink" title="TreeSet<T>"></a>TreeSet&lt;T&gt;</h3><ul>
+<li><p>初始化</p>
+<div class="code-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line">TreeSet&lt;T&gt; treeSet = <span class="keyword">new</span> <span class="title class_">TreeSet</span>&lt;&gt;();</span><br><span class="line">TreeSet&lt;T&gt; treeSet = <span class="keyword">new</span> <span class="title class_">TreeSet</span>&lt;&gt;(Comparator.reverseOrder());</span><br><span class="line">TreeSet&lt;T&gt; treeSet = <span class="keyword">new</span> <span class="title class_">TreeSet</span>&lt;&gt;(<span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;T&gt;() {</span><br><span class="line">  <span class="meta">@Override</span> </span><br><span class="line">  <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(T a1, T a2)</span> {</span><br><span class="line">    <span class="comment">// 返回值正则 a1 在 a2 前面</span></span><br><span class="line">  }</span><br><span class="line">});</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p><code>add(T ele)</code></p>
+</li>
+<li><p><code>remove(T ele)</code></p>
+</li>
+<li><p><code>clear()</code></p>
+</li>
+<li><p><code>contains(T ele)</code></p>
+</li>
+<li><p><code>size()</code></p>
+</li>
+<li><p><code>isEmpty()</code></p>
+</li>
+<li><p><code>first()</code> – 最小值</p>
+</li>
+<li><p><code>last()</code> – 最大值</p>
+</li>
+<li><p><code>ceiling(T ele)</code> – 大于等于 ele 的第一个元素</p>
+</li>
+<li><p><code>higher(T ele)</code> – 大于 ele 的第一个元素</p>
+</li>
+<li><p><code>flooring(T ele)</code> – 小于等于 ele 的第一个元素</p>
+</li>
+<li><p><code>lower(T ele)</code> – 小于 ele 的第一个元素</p>
+</li>
+<li><p><code>headSet(T ele)</code> – 小于 ele 元素的集合</p>
+</li>
+<li><p><code>headSet(T ele)</code> – 大于等于 ele 元素的集合</p>
+</li>
+<li><p>遍历</p>
+<div class="code-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (T ele: treeSet) {</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h3 id="TreeMap"><a href="#TreeMap" class="headerlink" title="TreeMap<K, V>"></a>TreeMap&lt;K, V&gt;</h3><ul>
+<li><code>containsKey(K ele)</code></li>
+<li><code>containsValue(V ele)</code></li>
+<li><code>put(K key, V value)</code></li>
+<li><code>get(K key)</code></li>
+<li><code>remove(K key)</code></li>
+<li><code>firstKey()</code></li>
+<li><code>higherEntry()</code></li>
+<li><code>higherKey()</code></li>
+<li>…</li>
+<li></li>
+<li>遍历<div class="code-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (Map.Entry&lt;K, V&gt; entry: treeMap.entrySet()) {</span><br><span class="line">  <span class="type">K</span> <span class="variable">k</span> <span class="operator">=</span> entry.getKey();</span><br><span class="line">  <span class="type">V</span> <span class="variable">v</span> <span class="operator">=</span> entry.getValue();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">Iterator&lt;Map.Entry&lt;K, V&gt;&gt; iter = treeMap.entrySet().iterator();</span><br><span class="line"><span class="keyword">while</span> (iter.hasNext()) {</span><br><span class="line">  Map.Entry&lt;K, V&gt; entry = iter.next();</span><br><span class="line">}</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+]]></content>
+      <categories>
+        <category>MISC</category>
+      </categories>
+      <tags>
+        <tag>MISC</tag>
+      </tags>
+  </entry>
 </search>
